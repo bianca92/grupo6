@@ -4,7 +4,7 @@
 <?php
 
 include("clases.php");  
-    include("cabecera.php");
+include("cabecera.php");
 include("conexion.php");
 $con=conectar();
 
@@ -19,7 +19,7 @@ $con=conectar();
 
 $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
             $result = mysqli_query($con, $query);
-                   $num=mysqli_num_rows($result); 
+            $num=mysqli_num_rows($result); 
      ?>
 
   <div class="container">
@@ -33,8 +33,7 @@ $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
   ?>
   <div class="row">
 
-    <?php for($i= 1; $i<= 3; $i++){
-             $row = mysqli_fetch_array($result); ?>
+    <?php while ($row = mysqli_fetch_array($result))  { ?>
       <div class="col-sm-4">
      
         <div class="thumbnail">
@@ -42,7 +41,7 @@ $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
            <?php echo "<img src=mostrarImagen.php?idPropiedad=".$row['idPropiedad']  ;?> alt=propiedad style=width:100%; >
           <div class="caption">
             <h4><?php echo "$row[titulo] en la ciudad de: $row[ciudad] ";?></h4>
-            <p><a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>Modificar</button> </a></p>
+            <?php echo "<a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>Modificar</button> </a>" ;?>
           </div>
        </div>
       </div>

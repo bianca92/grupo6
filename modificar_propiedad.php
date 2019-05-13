@@ -59,21 +59,19 @@ $row = mysqli_fetch_array($var_resultado);
 					<label for="ubicacion">Ciudad: </br></label>
 					<input type="text" name="ubicacion" value='<?php echo "$row[3]" ?>' maxlength="8" size="25">
 					
-					
-
 
 					
-					<input type="hidden" name="imagen1" value='<?php echo "$row[5]" ?>' id="imagen">
 
 					<label for="imagen">Imagen: </br></label>
-					<input type="file" name="imagen2" id="imagen">
-
+					
+					<input type="file" name="imagen2" id="imagen" >
+                    
 					
 					
 					
 				</div>
 				<div class="footer">
-					<input type="submit" name="login" value="Modificar propiedad" class="button" />
+					<input type="submit" name="login" value="GUARDAR" class="button" />
 				</div>
 
 			</form>

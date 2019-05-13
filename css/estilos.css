@@ -3,8 +3,9 @@
 body {background-color:#ffffff ; font-family:'Bree Serif', serif; /*color: #1769CB*/}
 
 #logoinicio { width:20%; height: 200%; float: center; margin-bottom: -80px; margin-top: -110px; padding:10px;}
+.navbar>.container-fluid .navbar-brand {margin-top: -15px}
 
-#header { background-color: #B6D3F6; padding: 10px; text-align: center; height: 130px; width: 100%}
+#header { background-color: #B6D3F6; /*padding: 10px; text-align: center; height: 130px; width: 100%*/}
 
 
 #header h3 a {color:black; font-size:large; 

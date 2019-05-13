@@ -24,23 +24,23 @@ $titulo=$_POST['titulo'];
 $descripcion=$_POST['descripcion'];
 $idUbicacion=$_POST['ubicacion'];
 
-if ($_FILES['imagen2']['error']>0){
-	$destino=$_POST['imagen1'];
+if (($_FILES['imagen2']['size'])== ""){
+
+	$var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo',ciudad='$idUbicacion', descripcion='$descripcion' WHERE idPropiedad='$Propiedad' ";
+  $var_resultado = $link->query($var_consulta);
 }
 else {
-	$foto=$_FILES['imagen2']['name'];
-  $ruta=$_FILES['imagen2']['tmp_name'];
-    $destino="imgs/".$foto;
-    copy($ruta,$destino);
+	
+	$image = addslashes(file_get_contents($_FILES['imagen2']['tmp_name']));
+  $var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo',ciudad='$idUbicacion', descripcion='$descripcion',  imagen='$image' WHERE idPropiedad='$Propiedad' ";
+$var_resultado = $link->query($var_consulta);
+
 }
 
 
 
 
-$var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo',ciudad='$idUbicacion', descripcion='$descripcion',  imagen='$destino' WHERE idPropiedad='$Propiedad' ";
-$var_resultado = $link->query($var_consulta);
-
-header("Location:listarPropiedades.php");
+header("Location:index.php");
 
  
 ?>

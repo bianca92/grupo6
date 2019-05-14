@@ -26,14 +26,14 @@
 					<input type="text" name="titulo" class="input username" size="25"  pattern="{2,20}">
 
 					<label for="ubicacion">Ciudad: </br></label>
-					<input type="text" name="ubicacion" class="input username" maxlength="8" required="required">
+					<input type="text" name="ubicacion" class="input username" required="required">
 					
 					<label for="descripcion">Descripcion: </br></label>
 					 <textarea name="descripcion" rows="4" cols="50"></textarea></br></br>
 					
 					
 					<label for="imagen">Imagen: </br></label>
-					<input type="file" name="imagen" id="imagen" accept="image/*" required="required" >
+					<input type="file" class="form-control" id="imagen[]" name="imagen[]" multiple="" accept="image/*" required="required" >
 					
 					
 					

@@ -17,7 +17,7 @@ $con=conectar();
   	}
 
 
-$query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
+$query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
      ?>

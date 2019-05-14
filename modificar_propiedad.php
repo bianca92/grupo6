@@ -57,14 +57,14 @@ $row = mysqli_fetch_array($var_resultado);
 					<input type="text" name="descripcion" value='<?php echo "$row[2]" ?>' size="25" pattern="{2,20}">
 					
 					<label for="ubicacion">Ciudad: </br></label>
-					<input type="text" name="ubicacion" value='<?php echo "$row[3]" ?>' maxlength="8" size="25">
+					<input type="text" name="ubicacion" value='<?php echo "$row[3]" ?>' size="25">
 					
 
 					
 
 					<label for="imagen">Imagen: </br></label>
 					
-					<input type="file" name="imagen2" id="imagen" >
+					<input type="file" class="form-control" id="imagen[]" name="imagen[]" multiple="" accept="image/*" upload_max_filesize = 1M >
                     
 					
 					

@@ -24,23 +24,40 @@ $titulo=$_POST['titulo'];
 $descripcion=$_POST['descripcion'];
 $idUbicacion=$_POST['ubicacion'];
 
-if (($_FILES['imagen2']['size'])== ""){
+//if (($_FILES['imagen']['error'])> 0)
+if (count(array_filter($_FILES['imagen']['name']))==0)
+{
 
 	$var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo',ciudad='$idUbicacion', descripcion='$descripcion' WHERE idPropiedad='$Propiedad' ";
   $var_resultado = $link->query($var_consulta);
 }
 else {
 	
-	$image = addslashes(file_get_contents($_FILES['imagen2']['tmp_name']));
-  $var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo',ciudad='$idUbicacion', descripcion='$descripcion',  imagen='$image' WHERE idPropiedad='$Propiedad' ";
-$var_resultado = $link->query($var_consulta);
+  $var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo',ciudad='$idUbicacion', descripcion='$descripcion' WHERE idPropiedad='$Propiedad' ";
 
+$resu=mysqli_query($link,$var_consulta);
+$query="DELETE FROM imagen WHERE idpropiedad='$Propiedad'";
+      $resu=mysqli_query($link,$query);
+
+ //insertar nuevas imagenes
+for($i = 0; $i < count($_FILES['imagen']['name']); $i++){
+
+    $imagen= $_FILES['imagen']['tmp_name'][$i]; //archivo temporal
+    $imagen2= file_get_contents("$imagen");//leer el contenido de un archivo en una cadena.
+     $imagen2=addslashes($imagen2); // agrega barra invertidas /
+
+     $extension = $_FILES['imagen']['type'][$i];
+      $extension=str_replace("image/", "", $extension); //remplaza en la cadena "image/" por ""
+
+       $query="INSERT INTO imagen (contenidoImagen,tipoImagen,idPropiedad)values('$imagen2','$extension','$Propiedad')";
+             $resu=mysqli_query($link,$query);
+}
 }
 
 
 
 
-header("Location:index.php");
+header("Location:propiedadesAdmin.php");
 
  
 ?>

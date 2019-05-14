@@ -4,7 +4,7 @@
 	<div id="menu">
              
                  <ul class="nav nav-pills">
-                  <li><a href="listarPropiedades.php">PROPIEDADES</a></li>
+                  <li><a href="listarPropiedades">PROPIEDADES</a></li>
              	         
     <?php
 			if(isset($_SESSION['estado'])){
@@ -31,11 +31,12 @@
                                             
     <?php						  		
 			                }
-		            }
-	            }
-			    
+		            } 
+                 
 
-            ?>
+	     
+           }
+			    ?>
               </ul>
            </div>
          <div class="clearfix visible-lg"></div>       

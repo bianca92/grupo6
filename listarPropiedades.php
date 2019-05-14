@@ -6,6 +6,7 @@
 include("clases.php");  
 include("cabecera.php");
 include("conexion.php");
+include("mostrarImagen.php");
 $con=conectar();
 
 	if(isset($_GET['msj'])){
@@ -38,7 +39,11 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
      
         <div class="thumbnail">
         
-           <?php echo "<img src=mostrarImagen.php?idPropiedad=".$row['idPropiedad']  ;?> alt=propiedad style=width:100%; >
+           <?php $imgs=ObtenerImgs($row['idPropiedad']);
+            
+            echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:100% />';
+           
+           ?>
           <div class="caption">
             <h4><?php echo "$row[titulo] en la ciudad de: $row[ciudad] ";?></h4>
             <?php echo "<a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>Modificar</button> </a>" ;?>

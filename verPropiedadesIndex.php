@@ -5,7 +5,7 @@
 <?php
 
 include("clases.php");  
-  
+  include("mostrarImagen.php");
 include("conexion.php");
 $con=conectar();
 
@@ -42,7 +42,13 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
      
         <div class="thumbnail">
         
-           <?php echo "<img src=mostrarImagen.php?idPropiedad=".$row['idPropiedad']  ;?> alt=propiedad style=width:100%; >
+           <?php $imgs=ObtenerImgs($row['idPropiedad']);
+            
+            echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:100% />';
+           
+           ?>
+         
+
           <div class="caption">
             <h4><?php echo "$row[titulo] en la ciudad de: $row[ciudad] ";?></h4>
            

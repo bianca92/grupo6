@@ -17,10 +17,8 @@ $con=conectar();
   		 echo"<script> alert ('DEBE ESTAR REGISTRADO PARA ACCEDER')</script>"; 
   	}
 
-$query = "SELECT s.precioMinimo, s.fechaInicioSubasta, s.fechaInicioInscripcion,se.numero,p.idPropiedad, p.titulo,p.ciudad FROM subasta s 
-INNER JOIN semana se ON s.idSemana= se.idSemana
-INNER JOIN semanatienepropiedad sp ON s.idSemana=sp.idSemana
-INNER JOIN propiedad p ON sp.idPropiedad=p.idPropiedad";
+$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion
+          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
   if ($num==0) {

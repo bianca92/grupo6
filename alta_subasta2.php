@@ -32,8 +32,8 @@ $consulta2="INSERT INTO semanatienepropiedad (idSemana, idPropiedad, year)values
 mysqli_free_result($resu);
 
 	
-$var_consulta="INSERT INTO subasta (precioMinimo, idSemana, fechaInicioSubasta, fechaFinSubasta, fechaInicioInscripcion, fechaFinInscripcion)
-                     values('$precioInicial','$idSemana','$ofDesde','$ofHasta','$insDesde','$insHasta')";
+$var_consulta="INSERT INTO subasta (idPropiedad,precioMinimo, idSemana, fechaInicioSubasta, fechaFinSubasta, fechaInicioInscripcion, fechaFinInscripcion)
+                     values('$propiedad','$precioInicial','$idSemana','$ofDesde','$ofHasta','$insDesde','$insHasta')";
             	
 $var_resultado = $link->query($var_consulta);
 

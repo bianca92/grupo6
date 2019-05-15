@@ -6,7 +6,6 @@
 include("clases.php");  
 include("cabecera.php");
 include("conexion.php");
-include("mostrarImagen.php");
 $con=conectar();
 
 	if(isset($_GET['msj'])){
@@ -18,7 +17,7 @@ $con=conectar();
   	}
 
 
-$query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
+$query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
      ?>
@@ -46,17 +45,11 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
     <?php while ($row = mysqli_fetch_array($result))  { ?>
   
       <tr>
-          <td> <?php $imgs=ObtenerImgs($row['idPropiedad']);
-            for($i = 0; $i < count($imgs); $i++){
-            echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[$i]).'" width=50 height=50 />';
-           }
-          ?>
-
-          </td>
-          
+          <td> <?php echo "<img src=mostrarImagen.php?idPropiedad=".$row['idPropiedad']." style=width:10%" ;?>></td>
            <td><h4><?php echo "$row[titulo]" ?></h4> </td>
             <td><h4><?php echo" $row[ciudad] ";?></h4></td>
-            <td><?php echo "<a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>Modificar</button> </a>" ;?></td>
+            <td><?php echo "<a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>MODIFICAR</button> </a>" ;?></td>
+            <td><?php echo "<a href='alta_subasta.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>SUBASTAR</button> </a>" ;?></td>
          </tr>  
          <?php } ?>      
       

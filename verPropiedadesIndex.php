@@ -27,19 +27,27 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
    
  
  <?php
+ //comtempla la cantidad de propiedades , xq 4, 5 o7 propiedades no se listaban
+
+ //$resto= $num%3; $filas=$num/3;
+ //if(($resto)!=0){
+   //$filas=$filas+1;}
+ 
    
-  for($x = 1; $x <=($num/3) ; $x++){
+  //for($x = 1; $x <= $filas ; $x++){
         
 
   ?>
   <div class="row">
 
-    <?php  for($i= 1; $i<= 3; $i++){
-             $row = mysqli_fetch_array($result);
-
-              ?>
+    <?php 
+    while ($row = mysqli_fetch_array($result)) {
+   
+     //for($i= 1; $i<= 3; $i++){
+             //$row = mysqli_fetch_array($result);
+     ?>
       <div class="col-sm-4">
-     
+           
         <div class="thumbnail">
         
            <?php $imgs=ObtenerImgs($row['idPropiedad']);
@@ -59,7 +67,7 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
     
     </div>
 
-<?php } ?>
+<?php// } ?>
  </div>
 
  <?php

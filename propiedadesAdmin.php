@@ -6,6 +6,7 @@
 include("clases.php");  
 include("cabecera.php");
 include("conexion.php");
+include("mostrarImagen.php");
 $con=conectar();
 
 	if(isset($_GET['msj'])){
@@ -42,11 +43,11 @@ $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
     <tbody>
   
 
-    <?php while ($row = mysqli_fetch_array($result))  { ?>
-  
+    <?php while ($row = mysqli_fetch_array($result))  { 
+      $imgs=ObtenerImgs($row['idPropiedad']); ?>
       <tr>
-          <td> <?php echo "<img src=mostrarImagen.php?idPropiedad=".$row['idPropiedad']." style=width:10%" ;?>></td>
-           <td><h4><?php echo "$row[titulo]" ?></h4> </td>
+            <td><?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:20% />';?></td>
+            <td><h4><?php echo "$row[titulo]" ?></h4> </td>
             <td><h4><?php echo" $row[ciudad] ";?></h4></td>
             <td><?php echo "<a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>MODIFICAR</button> </a>" ;?></td>
             <td><?php echo "<a href='alta_subasta.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>SUBASTAR</button> </a>" ;?></td>

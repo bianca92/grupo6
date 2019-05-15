@@ -17,7 +17,6 @@ $con=conectar();
   		 echo"<script> alert ('DEBE ESTAR REGISTRADO PARA ACCEDER')</script>"; 
   	}
 
-
 $query = "SELECT s.precioMinimo, s.fechaInicioSubasta, s.fechaInicioInscripcion,se.numero,p.idPropiedad, p.titulo,p.ciudad FROM subasta s 
 INNER JOIN semana se ON s.idSemana= se.idSemana
 INNER JOIN semanatienepropiedad sp ON s.idSemana=sp.idSemana

@@ -52,7 +52,7 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
         
            <?php $imgs=ObtenerImgs($row['idPropiedad']);
             
-            echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:100% />';
+            echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style="width:822px;height:300px;" />';
            
            ?>
          

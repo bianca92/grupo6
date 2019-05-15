@@ -41,12 +41,12 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
         
            <?php $imgs=ObtenerImgs($row['idPropiedad']);
             
-            echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:100% />';
+            echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style="width:822px;height:300px;" />';
            
            ?>
           <div class="caption">
             <h4><?php echo "$row[titulo] en la ciudad de: $row[ciudad] ";?></h4>
-            <?php echo "<a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>Modificar</button> </a>" ;?>
+           
           </div>
        </div>
       </div>

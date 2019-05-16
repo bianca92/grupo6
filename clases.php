@@ -10,14 +10,14 @@
         function set(){//no lo use pero lo dejo para un uso en el futuro
         	$this->estado="logueado";
         	$this->usuario=$this->fila['email'];
-        	$this->id=$this->fila['idPersona'];
+        	$this->id=$this->fila['IdPersona'];
         	$this->nombre=$this->fila['nombre'];
         }
         /*creamos una sesion de usuario*/
         function crear_sesion($fila){
         	$this->estado="logeado";
         	$this->usuario=$fila['email'];
-        	$this->id=$fila['idPersona'];
+        	$this->id=$fila['IdPersona'];
             $this->nombre=$fila['nombre'];
             $this->rol=$fila['rol'];
 

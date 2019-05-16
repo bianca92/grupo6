@@ -9,6 +9,7 @@ include("conexion.php");
 include("mostrarImagen.php");
 $con=conectar();
 
+
 	if(isset($_GET['msj'])){
   		 $mensaje= $_GET['msj'];
 //
@@ -18,14 +19,21 @@ $con=conectar();
   	}
 
 
-$query = "SELECT s.idSubasta, p.idPropiedad, p.titulo,p.ciudad FROM subasta s 
-INNER JOIN semana se ON s.idSemana= se.idSemana
-INNER JOIN semanatienepropiedad sp ON s.idSemana=sp.idSemana
-INNER JOIN propiedad p ON sp.idPropiedad=p.idPropiedad";
+
+           
+          
+
+$query = "SELECT su.idSubasta, s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, 
+su.fechaInicioInscripcion, su.fechaFinInscripcion
+          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
+      
 
-
+    if ($num==0) {
+  echo"<h4>NO SE ENCONTRARON RESULTADO</h4>";
+ }
+else{
      ?>
      <link  href="css/bootstrap1.min.css">
 <div class="container">
@@ -40,33 +48,22 @@ INNER JOIN propiedad p ON sp.idPropiedad=p.idPropiedad";
   <div class="row">
 
     <?php 
+    //nombre de los botones de la galeria
     $nombre=1;
     while ($row = mysqli_fetch_array($result))  { 
-
+       //selecciona para luego revisar que el usuario no este inscripto en la subasta
+        $id=($_SESSION['id']);
+       $Inscripto = "SELECT *
+        FROM inscripto
+        WHERE idPersona= $id";
+           $resuInscripto = mysqli_query($con, $Inscripto);
       
   ?>
 
-        <?php
-    
-
-
-
-
-       
-           
-      $consulta3 = "SELECT *
-        FROM propiedad
-        WHERE idPropiedad= $row[idPropiedad]";
-           $result3 = mysqli_query($con, $consulta3);
-           $row3 = mysqli_fetch_array($result3);
-           
-
- 
-       
-           ?>  
+        
       <div class="col-sm-4">
      
-        <div class="thumbnail">
+        <div class="thumbnail" >
 
           <!-- Galeria Carrusel -->
              <div id="<?php echo $nombre; ?>" class="carousel slide" data-ride="carousel">
@@ -75,7 +72,7 @@ INNER JOIN propiedad p ON sp.idPropiedad=p.idPropiedad";
         
         <div class="carousel-inner" role="listbox">
           
-          <?php  $imgs=ObtenerImgs($row3['idPropiedad']);?>
+          <?php  $imgs=ObtenerImgs($row['idPropiedad']);?>
           <!-- Indicadores -->
           <ol class="carousel-indicators">
             <!-- crear primer indicador -->
@@ -122,12 +119,46 @@ INNER JOIN propiedad p ON sp.idPropiedad=p.idPropiedad";
         </div>
       </div>
       <!-- Aca Termina Galeria Carrusel -->
-            <h4><?php echo "$row3[titulo] en la ciudad de $row3[ciudad] ";?></h4>
-            <h4><?php echo "$row3[descripcion]";?></h4>
+            <h4><?php echo "$row[titulo] en la ciudad de $row[ciudad] ";?></h4>
+           
+             <h4><?php echo "Precio Minimo: $ $row[precioMinimo].";?></h4>
             <?php 
                  
+                 $fecha_actual = date('Y-m-d');
+                 if ($fecha_actual>=$row['fechaInicioInscripcion'] && $fecha_actual<=$row['fechaFinInscripcion'] ){
+                 
+                        //revisa que el usuario no este iscripto en la subasta
+                      $inscripto=false;
+                     while ($row2 = mysqli_fetch_array($resuInscripto)){
+                              if ($row2['idSubasta']==$row['idSubasta']){
+                                 $inscripto= true;  
+
+                              }
+
+                             // echo "$row2[idSubasta] y $row[idSubasta]";
+                     }
                 
-                  echo "<a href='inscribirseSubasta.php?idS=".$row[0]."'> <button type='button' class='btn btn-succes'>Inscribirse</button> </a>" ;
+                    
+
+                       if ($inscripto==true){
+                   // echo "<p </p>";
+                    
+                            echo "Ya estas inscripto a esta subasta";
+                            echo "<p </p>";
+                            echo "La subasta abrira el dia $row[fechaInicioSubasta]";
+                             }
+                       else { 
+                        echo "Tienes tiempo de inscribirte hasta el $row[fechaFinInscripcion]";
+                        echo "<a href='inscribirseSubasta.php?idS=".$row[0]."&idU=".$id."'> <button type='button' class='btn btn-succes'>Inscribirse</button> </a>" ; }
+                }
+                else 
+
+                {
+                  
+                  echo "La inscripcion comienza el $row[fechaInicioInscripcion]";
+                    
+                 
+                }
                
 
             ?>
@@ -150,6 +181,6 @@ $nombre= $nombre + 1;
 
   <script src="jquery-3.2.1.min.js"></script>
   <script src="js/bootstrap1.min.js"></script>
-   
+   <?php } ?>
    </body>
    </html>

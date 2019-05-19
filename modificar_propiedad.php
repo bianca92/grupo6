@@ -1,4 +1,5 @@
-
+<html>
+<head>
 		
 <?php
 		
@@ -21,14 +22,11 @@ else
 $Propiedad=$_GET['no'];
 
 
-
 $var_consulta= "SELECT * FROM propiedad WHERE idPropiedad='$Propiedad' ";
 $var_resultado = $link->query($var_consulta);
 $row = mysqli_fetch_array($var_resultado);
 
 
-
- 
 ?>
 	<title>Propiedades</title>
 	
@@ -50,26 +48,22 @@ $row = mysqli_fetch_array($var_resultado);
 					<input type="hidden" name="propiedad" value='<?php echo "$row[0]" ?>' size="25">
 
 					<label for="titulo">Titulo: </br></label>
-					<input type="text" name="titulo" value='<?php echo "$row[1]" ?>' size="25">
+					<input type="text" name="titulo" class="input username" value='<?php echo "$row[1]" ?>' size="25">
 
-					
-					<label for="descripcion">Descripcion: </br></label>
-					<input type="text" name="descripcion" value='<?php echo "$row[2]" ?>' size="25" pattern="{2,20}">
-					
 					<label for="ubicacion">Ciudad: </br></label>
-					<input type="text" name="ubicacion" value='<?php echo "$row[3]" ?>' size="25">
-					
+					<input type="text" name="ubicacion" class="input username" value='<?php echo "$row[3]" ?>' size="25">
 
 					
-
+					<label for="descripcion">Descripcion: </br></la'<?php echo "$row[2]" ?>'bel></br>
+					<textarea id="area" name="descripcion"  rows="4" cols="25"><?php echo "$row[2]" ?></textarea></br>
+					
+					
 					<label for="imagen">Imagen: </br></label>
-					
 					<input type="file" class="form-control" id="imagen[]" name="imagen[]" multiple="" accept="image/*" upload_max_filesize = 1M >
                     
 					
 					
-					
-				</div>
+			</div>
 				<div class="footer">
 					<input type="submit" name="login" value="GUARDAR" class="button" />
 				</div>

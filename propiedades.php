@@ -29,7 +29,7 @@
 					<input type="text" name="ubicacion" class="input username" required="required">
 					
 					<label for="descripcion">Descripcion: </br></label>
-					 <textarea name="descripcion" rows="4" cols="50"></textarea></br></br>
+					<textarea id="area" name="descripcion" rows="4" cols="25"></textarea></br></br>
 					
 					
 					<label for="imagen">Imagen: </br></label>

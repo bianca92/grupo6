@@ -12,7 +12,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 	<style type="text/css"></style>
 	<link rel="stylesheet" type="text/css" href="css/estilos.css">
 
@@ -21,26 +21,26 @@
 <body>
 	<div id="header">
 
-<?php   $archivop=""; $archivosu="";
+	<?php   $archivop=""; $archivosu=""; $archivoActUsu="";
              if(isset($_SESSION['estado'])){
       	  		 if($_SESSION['estado']=="logeado"){
 
                         if($_SESSION['rol']=="1"){
                         	//echo"<h3><a href=index.php><span class= 'glyphicon glyphicon-home'</span></a> | 
       	           	         //    HOLA ADMINISTRADOR ".$_SESSION['nombre']." ! | <a href=salir.php><span class='glyphicon glyphicon-log-out'></span>CERRAR SESIÓN</a></h3>";
-      	           	              $opcion1="<a href'#'><span class'glyphicon-user'></span>Hola Administrador!</a>";
+      	           	             $opcion1="<a href'#'><span class'glyphicon-user'></span>Hola Administrador!</a>";
                                   $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>Salir</a>";  
                                   $archivop="propiedadesAdmin.php"; $archivosu="subastasAdmin.php";
         
                         }
-                        else{
+                      else {
 
 						
 				      //echo" <h3><a href=index.php><span class= 'glyphicon glyphicon-home'</span></a> | 
 	      	           	   //  HOLA ".$_SESSION['nombre']." ! | <a href=salir.php><span class='glyphicon glyphicon-log-out'></span>CERRAR SESIÓN</a></h3>";
-	                             $opcion1="<a href'#'><span class'glyphicon-user'></span>Hola $_SESSION[nombre] !</a>" ;
+	                             $opcion1="  Hola ".$_SESSION['nombre']." !  ";  
                                $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>Salir</a>";
-	                             $archivop="listarPropiedades.php"; $archivosu="subastasUsuario.php";
+	                             $archivop="listarPropiedades.php"; $archivosu="subastasUsuario.php"; $archivoActUsu="subastasActivasUsuario4.php";
 			                }
 		            }
 	            }
@@ -51,15 +51,18 @@
                     }
             ?>		
 
+
+
 <nav class="navbar navbar">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.php"><img src="imgs/HSH-Complete.svg" class="img-thumbnail" width="110" height="100" margin-bottom: -60px></a>
+      <a class="navbar-brand" href="#"><img src="imgs/HSH-Complete.svg" class="img-thumbnail" width="110" height="100" margin-bottom: -60px></a>
     </div>
     <ul class="nav navbar-nav">
       
       <li><a href=<?php echo $archivop; ?>>PROPIEDADES</a></li>
       <li><a href=<?php echo "$archivosu"; ?>>SUBASTAS</a></li>
+      <li><a href=<?php echo $archivoActUsu; ?>>SUBASTAS ACTIVAS</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><?php echo"$opcion1"; ?></li>
@@ -70,8 +73,8 @@
 
 </div>
     <script src="js/jquery.js"></script>
-	  <script src="js/bootstrap.min.js"></script>
-	  <script src="js/bootstrapValidator.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrapValidator.min.js"></script>
 
 
 </body>

@@ -9,13 +9,15 @@ include("conexion.php");
 include("mostrarImagen.php");
 $con=conectar();
 
-	if(isset($_GET['msj'])){
-  		 $mensaje= $_GET['msj'];
-//
-
-   	if($mensaje="2")
-  		 echo"<script> alert ('DEBE ESTAR REGISTRADO PARA ACCEDER')</script>"; 
-  	}
+//para que no se pueda acceder a esta pagina si no esta logeado
+	try{
+$login= new Login();
+$login->autorizar();
+}
+catch(Exception $e){
+   echo $e->getMessage();
+   header("Location:index.php");
+}
 
 $query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";

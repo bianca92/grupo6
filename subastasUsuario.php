@@ -15,18 +15,7 @@ catch(Exception $e){
    echo $e->getMessage();
    header("Location:index.php");
 }
-
-
 $con=conectar();
-
-
-	if(isset($_GET['msj'])){
-  		 $mensaje= $_GET['msj'];
-//
-
-   	if($mensaje="2")
-  		 echo"<script> alert ('DEBE ESTAR REGISTRADO PARA ACCEDER')</script>"; 
-  	}
 
 
 $query = "SELECT su.idSubasta, s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, 
@@ -44,13 +33,9 @@ else{
      <link  href="css/bootstrap1.min.css">
 <div class="container">
    
- 
- <?php
-   
+<?php 
   //for($x = 1; $x <=($num/3) ; $x++){
-        
-
-  ?>
+?>
   <div class="row">
 
     <?php 
@@ -146,18 +131,18 @@ else{
                 
                 if ($inscripto==true){
                    // echo "<p </p>";
-                    
+                            // funcion date() par cambiar el formato a dia/mes/año
                             echo "<p class=bg-info>Ya estas inscripto a esta subasta</p>";
                             echo "<p </p>";
-                            echo "<p class= text-danger>La subasta abrira el dia $row[fechaInicioSubasta]</p>";
+                            echo "<p class= text-danger>La subasta abrira el dia ".date('d/m/Y', strtotime($row['fechaInicioSubasta']))."</p>";
                              }
                        else { 
-                        echo "<p class=bg-primary >Tienes tiempo de inscribirte hasta el $row[fechaFinInscripcion]<p>";
+                        echo "<p class=bg-primary >Tienes tiempo de inscribirte hasta el ".date('d/m/Y', strtotime($row['fechaFinInscripcion']))."<p>";
                         echo "<a href='inscribirseSubasta.php?idS=".$row[0]."&idU=".$id."'> <button  type='button' class='btn btn-success'>Inscribirse</button> </a>" ; }
                         }
                 else{
                   
-                  echo "<p class= bg-danger>La inscripcion comienza el $row[fechaInicioInscripcion]</p>";
+                  echo "<p class= bg-danger>La inscripcion comienza el ".date('d/m/Y', strtotime($row['fechaInicioInscripcion']))."</p>"; 
                     
                 }
                

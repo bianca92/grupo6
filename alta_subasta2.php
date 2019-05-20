@@ -1,10 +1,10 @@
-<?php
-	
+
+
+
+<?php	
 	include("clases.php");  
     include("cabecera.php");
     include("conexion.php");
-
-
 
 
 $link=conectar();
@@ -26,6 +26,19 @@ $row = mysqli_fetch_array($resultado);
 $idSemana=$row['idSemana'];
 mysqli_free_result($resultado);
 
+//VER SI EXISTE UNA SUBASTA PARA ESA SEMANA Y PROPIEDAD
+$consulta1="SELECT idSemana, idPropiedad FROM subasta WHERE idPropiedad=$propiedad AND idSemana=$idSemana";
+$resul1 =$link->query($consulta1);
+$num=mysqli_num_rows($resul1); 
+
+if($num==1) { 
+    
+    echo '<script> alert("YA EXISTE UNA SUBASTA EN ESA SEMANA");</script>';
+    echo "<script> window.location ='alta_subasta.php?no=".$propiedad."' ;</script>";
+
+}
+
+else{
 // cargo la tabla semana tiene propiedad
 $consulta2="INSERT INTO semanatienepropiedad (idSemana, idPropiedad, year)values('$idSemana','$propiedad','$year')";
             $resu = $link->query($consulta2); 
@@ -44,7 +57,7 @@ mysqli_free_result($var_resultado);
 
 
 
-header("Location:index.php");
-
+header("Location:subastasAdmin.php");
+}
  
 ?>

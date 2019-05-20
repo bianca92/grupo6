@@ -9,13 +9,15 @@ include("conexion.php");
 include("mostrarImagen.php");
 $con=conectar();
 
-	if(isset($_GET['msj'])){
-  		 $mensaje= $_GET['msj'];
-//
-
-   	if($mensaje="2")
-  		 echo"<script> alert ('DEBE ESTAR REGISTRADO PARA ACCEDER')</script>"; 
-  	}
+//para que no se pueda acceder a esta pagina si no esta logeado
+try{
+$login= new Login();
+$login->autorizar();
+}
+catch(Exception $e){
+   echo $e->getMessage();
+   header("Location:index.php");
+}
 
 
 $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";

@@ -1,12 +1,22 @@
 <html>
-
-
 <?php
 
 include("clases.php");  
 include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
+ 
+ //para que no se pueda acceder a esta pagina si no esta logeado
+try{
+$login= new Login();
+$login->autorizar();
+}
+catch(Exception $e){
+   echo $e->getMessage();
+   header("Location:index.php");
+}
+
+
 $con=conectar();
 
 
@@ -134,35 +144,33 @@ else{
                              // echo "$row2[idSubasta] y $row[idSubasta]";
                      }
                 
-                    
-
-                       if ($inscripto==true){
+                if ($inscripto==true){
                    // echo "<p </p>";
                     
-                            echo "Ya estas inscripto a esta subasta";
+                            echo "<p class=bg-info>Ya estas inscripto a esta subasta</p>";
                             echo "<p </p>";
-                            echo "La subasta abrira el dia $row[fechaInicioSubasta]";
+                            echo "<p class= text-danger>La subasta abrira el dia $row[fechaInicioSubasta]</p>";
                              }
                        else { 
-                        echo "Tienes tiempo de inscribirte hasta el $row[fechaFinInscripcion]";
-                        echo "<a href='inscribirseSubasta.php?idS=".$row[0]."&idU=".$id."'> <button type='button' class='btn btn-succes'>Inscribirse</button> </a>" ; }
-                }
-                else 
-
-                {
+                        echo "<p class=bg-primary >Tienes tiempo de inscribirte hasta el $row[fechaFinInscripcion]<p>";
+                        echo "<a href='inscribirseSubasta.php?idS=".$row[0]."&idU=".$id."'> <button  type='button' class='btn btn-success'>Inscribirse</button> </a>" ; }
+                        }
+                else{
                   
-                  echo "La inscripcion comienza el $row[fechaInicioInscripcion]";
+                  echo "<p class= bg-danger>La inscripcion comienza el $row[fechaInicioInscripcion]</p>";
                     
-                 
                 }
                
+                ?><button class="btn btn-info " onclick="myFunction()" >Comprar</button>
 
-            ?>
+<script>
+function myFunction() {
+  alert("DEBE SER USUARIO PREMIUM!");
+}
+</script>
+            
 
-
-
-          
-       </div>
+         </div>
       </div>
      <?php 
 $nombre= $nombre + 1;

@@ -19,7 +19,7 @@ catch(Exception $e){
    header("Location:index.php");
 }
 
-$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion
+$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, su.idSubasta,su.activa
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -27,6 +27,7 @@ $query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su
   echo"<h4>NO SE ENCONTRARON RESULTADO</h4>";
  }
 else{
+  
      ?>
 
   <div class="container">
@@ -49,7 +50,7 @@ else{
   
 
     <?php while ($row = mysqli_fetch_array($result))  { 
-    //<img src=mostrarImagen.php?idPropiedad=".$row['idPropiedad']." style=width:60%"
+           if($row['activa']!=1){
     $imgs=ObtenerImgs($row['idPropiedad']);
     ?>
         <tr>
@@ -58,11 +59,11 @@ else{
             <td><h4><?php echo" $row[ciudad] ";?></h4></td>
             <td><h4><?php echo "$row[numero]" ;?></h4></td>
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
-            <td><h4><?php echo "$row[fechaInicioSubasta]" ?></h4></td>
-            <td><h4><?php echo "$row[fechaInicioInscripcion]" ?></h4></td>
-            <td><?php echo "<a href='cerrar_subasta.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>CERRAR</button> </a>" ;?></td>
+            <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
+            <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
+            <td><?php echo "<a href='cerrar_subasta.php?no=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>CERRAR</button> </a></td>"  ?>
          </tr>  
-         <?php } ?>      
+         <?php } }?>      
       
       </tbody>
   </table>
@@ -73,6 +74,7 @@ else{
 
  <?php
  }
+
             mysqli_free_result($result);
             mysqli_close($con);
 

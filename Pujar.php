@@ -52,12 +52,12 @@ while ($row = mysqli_fetch_array($result)){
                   
                     <?php
                      //LE DIGO AL USUARIO CUAL ES LA PUJA MAYOR HASTA EL MOMENTO
-                     echo "La puja mayor es $ $minimo .";
+                     echo "La puja minima es $ $minimo ";
                     echo " <p> </p>";
                     //SI ESTE USUARIO NO HA HECHO NINGUNA OFERTA ANTERIOR O SEA NO HAY REGISTRO EN LA TABLA
                     $primeraOferta=0;
                      if($row2==false){
-   	                  echo "Aun no has echo ninguna oferta";
+   	                  echo "Aun no has hecho ninguna oferta";
                        $primeraOferta=1;
                              }
                     //SI HAY UNA OFERTA ANTERIOR DE ESTE USUARIO QUE SE LA DIGA

@@ -70,7 +70,7 @@ else{
                      }
                   //--------------------------------------------------------------------
                   //SI ESTA ACTIVA QUE LA MUESTRE
-     if(($inscripto==true)&&($row['activa']==1)&&($row['cerrada']!=1)){
+     if(($inscripto==true)&&($row['activa']==1)&&($row['cerrada']==1)){
       
   ?>
 
@@ -137,45 +137,114 @@ else{
            
             
             <?php 
-           $pujaMaxima= $row['precioMinimo'];
-           $var_consulta4= "SELECT cantidad FROM puja WHERE idSubasta=$row[idSubasta]";
-            $result4 = mysqli_query($con, $var_consulta4);
+          // $pujaMaxima= $row['precioMinimo'];
+          /// $var_consulta4= "SELECT cantidad FROM puja WHERE idSubasta=$row[idSubasta]";
+           // $result4 = mysqli_query($con, $var_consulta4);
 
               //ACTUALIZO EL MINIMO SI YA HAY OFERTAS ANTERIORES
-              while ($row4 = mysqli_fetch_array($result4)){
-                  if ($row4['cantidad']>=$pujaMaxima){
-                        $pujaMaxima=$row4['cantidad'];    }
+             // while ($row4 = mysqli_fetch_array($result4)){
+              //    if ($row4['cantidad']>=$pujaMaxima){
+               //         $pujaMaxima=$row4['cantidad'];    }
+               // }
+
+
+            //OBTENER DATOS DEL GANADOR
+           // $winnerPersona="NADIE HA GANADO";
+            //$winnerCantidad=$row['precioMinimo'];
+
+          //  $winnerConsul= "SELECT cantidad FROM puja WHERE idSubasta=$row[idSubasta]";
+   //         $winnerResult = mysqli_query($con, $winnerConsul);
+     //       $winnerNumPuja = mysqli_num_rows($winnerResult);
+            //CHEQUEA SI HUBO PUJAS PARA ESA PROPIEDAD
+       //     if($winnerNumPuja!=0){
+              //RECUPERO LOS DATOS DE LA PUJA GANADORA
+      //        $winnerConsul2= "SELECT idPersona, cantidad
+       //                         FROM puja
+        //                        WHERE idSubasta= $row[idSubasta] and idPuja IN (SELECT idPuja FROM ganador)";
+         //     $winnerResult2=mysqli_query($con,$winnerConsul2);
+          //    $row7=mysql_fetch_array($winnerResult2);
+              //ACTUALIZO EL MONTO GANADOR
+          //    $winnerCantidad=$row7['cantidad'];
+              //CHEQUEO SI EL QUE GANO FUE EL USUARIO ACTUAL
+          //    if($row7['idPersona']==$id){
+           //     $winnerPersona="GANASTE LA SUBASTA !!";
+          //    }
+           //   else{$winnerPersona="Perdiste la subasta";}
+         //   }
+
+
+          //OBTENGO PUJA GANADORA 
+
+           $pujaMaxima= $row['precioMinimo'];
+           $winnerPersona="";
+           $winnerMsj="NADIE HA GANADO";
+           
+
+           $consulWinner= "SELECT cantidad, idPersona FROM puja WHERE idSubasta=$row[idSubasta]";
+            $resultWinner = mysqli_query($con, $consulWinner);
+            $numPujasWinner = mysqli_num_rows($resultWinner);
+            //CHEQUEA SI HUBO PUJAS PARA ESA PROPIEDAD
+            if($numPujasWinner!=0){
+
+              //OBTENGO EL MONTO MAXIMO DE PUJA Y QUIEN LO HIZO (GANADOR)
+              while ($rowWinner = mysqli_fetch_array($resultWinner)){
+                  if ($rowWinner['cantidad']>=$pujaMaxima){
+                        $pujaMaxima=$rowWinner['cantidad'];
+                        $winnerPersona= $rowWinner['idPersona'];  
+                          }
                 }
+                if($winnerPersona=$id){
+                    $winnerMsj="GANASTE LA SUBASTA !!";
+                }
+                else{$winnerMsj="Perdiste la subasta";} }
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
                  //OBTENGO CUAL ES EL ULTIMO MONTO DE ESTE USUARIO
-            $var_consulta5= "SELECT cantidad FROM puja WHERE idSubasta=$row[idSubasta] and idPersona=$id";
-             $result5 = mysqli_query($con, $var_consulta5);
-              $row5= mysqli_fetch_array($result5);
+          //  $var_consulta5= "SELECT cantidad FROM puja WHERE idSubasta=$row['idSubasta'] and idPersona=$id";
+            // $result5 = mysqli_query($con, $var_consulta5);
+             // $row5= mysqli_fetch_array($result5);
 
                //SI ESTE USUARIO NO HA HECHO NINGUNA OFERTA ANTERIOR O SEA NO HAY REGISTRO EN LA TABLA
-                    $primeraOferta=0;
-                     if($row5==false){
-                      echo "Aun no has echo ninguna oferta";
-                       $primeraOferta=1;
-                             }
+                   // $primeraOferta=0;
+                    // if($row5==false){
+                     // echo "Aun no has echo ninguna oferta";
+                      // $primeraOferta=1;
+                           //  }
                     //SI HAY UNA OFERTA ANTERIOR DE ESTE USUARIO QUE SE LA DIGA
-                             else{
-                                 if($pujaMaxima==$row5[0]){
-                                  echo "Vas ganando la puja";
-                                 }
-                                 else {  echo "Tu oferta anterior fue de $ $row5[0] ."; }
+                           //  else{
+                             //    if($pujaMaxima==$row5[0]){
+                               //   echo "Vas ganando la puja";
+                                // }
+                                // else {  echo "Tu oferta anterior fue de $ $row5[0] ."; }
 
                      
-                    }
+                   // }
 
 
     
               ?>
 
-             <h4><?php echo "Puja Actual: $ $pujaMaxima.";?></h4>
-             <?php
-             echo "La subasta cerrara el dia $row[fechaFinSubasta]";
-               echo "<a href='Pujar.php?idS=".$row[0]."&idU=".$id."&min=".$row['precioMinimo']."'> <button type='button' class='btn btn-succes'>Pujar</button> </a>" ;
-               ?>
+             <h4><?php echo "Puja ganadora: $ $pujaMaxima.";?></h4>
+             <h6><?php
+             echo "La subasta cerro el dia $row[fechaFinSubasta]";
+             ?></h6>
+
+             <h6><?php
+             echo "$winnerMsj";
+              // echo "<a href='Pujar.php?idS=".$row[0]."&idU=".$id."&min=".$row['precioMinimo']."'> <button type='button' class='btn btn-succes'>Pujar</button> </a>" ;
+               ?></h6>
 
 
 

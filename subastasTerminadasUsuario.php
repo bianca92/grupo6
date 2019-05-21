@@ -41,7 +41,7 @@ else{
  
  <?php
    
-  for($x = 1; $x <=($num/3) ; $x++){
+  //for($x = 1; $x <=($num/3) ; $x++){
         
 
   ?>
@@ -193,7 +193,8 @@ else{
                         $winnerPersona= $rowWinner['idPersona'];  
                           }
                 }
-                if($winnerPersona=$id){
+                echo "la persona ganadora es $winnerPersona el usuario actual es  $id";
+                if($winnerPersona==$id){
                     $winnerMsj="GANASTE LA SUBASTA !!";
                 }
                 else{$winnerMsj="Perdiste la subasta";} }
@@ -254,7 +255,8 @@ else{
      <?php 
 $nombre= $nombre + 1;
 
-   } }?>
+   } 
+ //}?>
     
     </div>
 

@@ -31,7 +31,7 @@ su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada
       
 
     if ($num==0) {
-  echo"<h4>NO SE ENCONTRARON RESULTADO</h4>";
+  echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
  }
 else{
      ?>

@@ -23,6 +23,8 @@ catch(Exception $e){
 $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
+
+         
      ?>
 
   <div class="container">
@@ -34,17 +36,20 @@ $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
 
 ?>
   <div>
+
     <table class="table table-hover">
     <thead>
       <tr>
+
         <th>Propiedad</th>
         <th></th>
-        <th>ciudad</th>
+        <th>Ciudad</th>
       </tr>
     </thead>
     <tbody>
-  
-
+      <?php  if ($num==0) {
+                  echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>"; } ?>
+ 
     <?php while ($row = mysqli_fetch_array($result))  { 
       $imgs=ObtenerImgs($row['idPropiedad']); ?>
       <tr>
@@ -54,7 +59,8 @@ $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
             <td><?php echo "<a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>MODIFICAR</button> </a>" ;?></td>
             <td><?php echo "<a href='alta_subasta.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>SUBASTAR</button> </a>" ;?></td>
          </tr>  
-         <?php } ?>      
+         <?php } ?>  
+           
       
       </tbody>
   </table>

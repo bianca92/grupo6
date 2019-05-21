@@ -22,7 +22,7 @@ $query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
   if ($num==0) {
-  echo"<h4>NO SE ENCONTRARON RESULTADO</h4>";
+  echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
  }
 else{
      

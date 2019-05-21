@@ -23,8 +23,10 @@ catch(Exception $e){
 $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
+            
      ?>
-
+<?php  if ($num==0) {
+                  echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>"; } ?>
   <div class="container">
    
  

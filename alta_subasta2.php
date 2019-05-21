@@ -1,5 +1,7 @@
-<?php
-	
+
+
+
+<?php	
 	include("clases.php");  
     include("cabecera.php");
     include("conexion.php");
@@ -57,7 +59,9 @@ mysqli_free_result($var_resultado);
 
 
 
-header("Location:propiedadesAdmin.php");
 
- }
+header("Location:subastasAdmin.php");
+}
+ 
+
 ?>

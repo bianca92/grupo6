@@ -19,7 +19,7 @@ catch(Exception $e){
    header("Location:index.php");
 }
 
-$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, su.idSubasta,su.activa, su.cerrada
+$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, su.idSubasta,su.activa
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -50,7 +50,7 @@ else{
   
 
     <?php while ($row = mysqli_fetch_array($result))  { 
-           if(($row['activa']!=1)&&($row['cerrada']!=1)){
+           if($row['activa']!=1){
     $imgs=ObtenerImgs($row['idPropiedad']);
     ?>
         <tr>
@@ -61,7 +61,7 @@ else{
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
-            <td><?php echo "<a href='cerrar_subasta.php?no=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>CERRAR INSCRIPCION</button> </a></td>"  ?>
+            <td><?php echo "<a href='cerrar_subasta.php?no=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>CERRAR</button> </a></td>"  ?>
          </tr>  
          <?php } }?>      
       

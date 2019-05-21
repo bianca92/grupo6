@@ -32,7 +32,7 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
  
  <?php
    
-  for($x = 1; $x <=($num/3) ; $x++){
+ //for($x = 1; $x <=($num/3) ; $x++){
         
 
   ?>
@@ -58,7 +58,7 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
     
     </div>
 
-<?php } ?>
+<?php //} ?>
  </div>
 
  <?php

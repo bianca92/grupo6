@@ -19,7 +19,7 @@ $con=conectar();
 
 
 $query = "SELECT su.idSubasta, s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, 
-su.fechaInicioInscripcion, su.fechaFinInscripcion
+su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -49,8 +49,9 @@ else{
         WHERE idPersona= $id";
            $resuInscripto = mysqli_query($con, $Inscripto);
       
+      if(($row['activa']!=1)&&($row['cerrada']!=1)){
   ?>
-
+        
         
       <div class="col-sm-4">
      
@@ -160,7 +161,7 @@ function myFunction() {
      <?php 
 $nombre= $nombre + 1;
 
-   } ?>
+   }} ?>
     
     </div>
 

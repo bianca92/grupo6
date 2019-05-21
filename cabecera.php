@@ -21,7 +21,7 @@
 <body>
 	<div id="header">
 
-	<?php   $archivop=""; $archivosu=""; $archivoActUsu="";
+	<?php   $archivop=""; $archivosu=""; $archivoActUsu=""; $archivoTerminadas=""; 
              if(isset($_SESSION['estado'])){
       	  		 if($_SESSION['estado']=="logeado"){
 
@@ -30,7 +30,7 @@
       	           	         //    HOLA ADMINISTRADOR ".$_SESSION['nombre']." ! | <a href=salir.php><span class='glyphicon glyphicon-log-out'></span>CERRAR SESIÓN</a></h3>";
       	           	             $opcion1="<a href'#'><span class'glyphicon-user'></span>Hola Administrador!</a>";
                                   $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>Salir</a>";  
-                                  $archivop="propiedadesAdmin.php"; $archivosu="subastasAdmin.php";
+                                  $archivop="propiedadesAdmin.php"; $archivosu="subastasAdmin.php"; $archivoActUsu="subastasActivasAdministrador2.php"; $archivoTerminadas="subastasTerminadasAdministrador2.php";
         
                         }
                       else {
@@ -40,7 +40,7 @@
 	      	           	   //  HOLA ".$_SESSION['nombre']." ! | <a href=salir.php><span class='glyphicon glyphicon-log-out'></span>CERRAR SESIÓN</a></h3>";
 	                             $opcion1="  Hola ".$_SESSION['nombre']." !  ";  
                                $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>Salir</a>";
-	                             $archivop="listarPropiedades.php"; $archivosu="subastasUsuario.php"; $archivoActUsu="subastasActivasUsuario4.php";
+	                             $archivop="listarPropiedades.php"; $archivosu="subastasUsuario.php"; $archivoActUsu="subastasActivasUsuario4.php"; $archivoTerminadas="subastasTerminadasUsuario.php";
 			                }
 		            }
 	            }
@@ -63,6 +63,7 @@
       <li><a href=<?php echo $archivop; ?>>PROPIEDADES</a></li>
       <li><a href=<?php echo "$archivosu"; ?>>SUBASTAS</a></li>
       <li><a href=<?php echo $archivoActUsu; ?>>SUBASTAS ACTIVAS</a></li>
+      <li><a href=<?php echo $archivoTerminadas; ?>>SUBASTAS TERMINADAS</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><?php echo"$opcion1"; ?></li>

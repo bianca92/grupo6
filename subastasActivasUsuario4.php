@@ -41,7 +41,7 @@ else{
  
  <?php
    
-  for($x = 1; $x <=($num/3) ; $x++){
+ // for($x = 1; $x <=($num/3) ; $x++){
         
 
   ?>
@@ -185,7 +185,8 @@ else{
      <?php 
 $nombre= $nombre + 1;
 
-   } }?>
+   } 
+   //}?>
     
     </div>
 

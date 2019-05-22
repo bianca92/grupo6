@@ -9,13 +9,15 @@ include("conexion.php");
 include("mostrarImagen.php");
 $con=conectar();
 
-	if(isset($_GET['msj'])){
-  		 $mensaje= $_GET['msj'];
-//
-
-   	if($mensaje="2")
-  		 echo"<script> alert ('DEBE ESTAR REGISTRADO PARA ACCEDER')</script>"; 
-  	}
+	//para que no se pueda acceder a esta pagina si no esta logeado
+  try{
+$login= new Login();
+$login->autorizar();
+}
+catch(Exception $e){
+   echo $e->getMessage();
+   header("Location:index.php");
+}
 
 $query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, su.activa, su.idSubasta, su.cerrada
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
@@ -36,13 +38,13 @@ else{
     <thead>
       <tr>
         <th>Subastas</th>
-        <th></th>
-        <th>ciudad</th>
-        <th>semana</th>
-        <th>precio inicial</th>
-        <th>subasta</th>
-        <th>inscripcion</th>
-        <th>puja actual</th>
+        <th>Titulo</th>
+        <th>Ciudad</th>
+        <th>Semana</th>
+        <th>Precio Inicial</th>
+        <th>Inicia Subasta</th>
+        <th>Inicia Inscripcion</th>
+        <th>Puja Actual</th>
       </tr>
     </thead>
     <tbody>
@@ -73,10 +75,11 @@ else{
             <td><h4><?php echo" $row[ciudad] ";?></h4></td>
             <td><h4><?php echo "$row[numero]" ;?></h4></td>
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
-            <td><h4><?php echo "$row[fechaInicioSubasta]" ?></h4></td>
-            <td><h4><?php echo "$row[fechaInicioInscripcion]" ?></h4></td>
-            <td><h4><?php echo "$pujaMaxima" ?></h4></td>
-            <td><?php echo "<a href='cerrar_subastaActiva.php?pugano=".$pujaMaximaPuja."&sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>CERRAR SUBASTA</button> </a>" ;?></td>
+            <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
+            <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
+            <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
+            <td><?php echo "<a href='cerrar_subastaActiva.php?pugano=".$pujaMaximaPuja."&sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>CERRAR SUBASTA</button> </a></br>" ;?>
+                 </br><a href="#"><button type='button' class='btn btn-succes'>INSCRIPTOS</button></a></td>
          </tr>  
          <?php } } ?>      
       

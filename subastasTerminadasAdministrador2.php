@@ -37,14 +37,14 @@ else{
     <thead>
       <tr>
         <th>Subastas</th>
-        <th></th>
-        <th>ciudad</th>
-        <th>semana</th>
-        <th>precio inicial</th>
-        <th>subasta</th>
-        <th>inscripcion</th>
-        <th>precio venta</th>
-        <th>ganador</th>
+        <th>Titulo</th>
+        <th>Ciudad</th>
+        <th>Semana</th>
+        <th>Precio Inicial</th>
+        <th>Inicio Subasta</th>
+        <th>Inicio Inscripcion</th>
+        <th>Precio Venta</th>
+        <th>Ganador</th>
       </tr>
     </thead>
     <tbody>
@@ -90,10 +90,11 @@ else{
             <td><h4><?php echo" $row[ciudad] ";?></h4></td>
             <td><h4><?php echo "$row[numero]" ;?></h4></td>
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
-            <td><h4><?php echo "$row[fechaInicioSubasta]" ?></h4></td>
-            <td><h4><?php echo "$row[fechaInicioInscripcion]" ?></h4></td>
-            <td><h4><?php echo "$pujaMaxima" ?></h4></td>
+            <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
+            <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
+            <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
             <td><h4><?php echo "$mailPer" ?></h4></td>
+            <td><a href="#"><button type='button' class='btn btn-succes'>PUJAS</button></a></td>
            
          </tr>  
          <?php } } ?>      

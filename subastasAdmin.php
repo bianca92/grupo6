@@ -61,7 +61,7 @@ else{
        if ($row['fechaFinInscripcion']<=date("Y-m-d") ){
           $configuracion="disabled"; $accion="#";
       }
-      else{$accion='cerrar_subasta.php?no=".$row[idSubasta]."';}
+      else{$accion="cerrar_subasta.php?no=".$row['idSubasta']."";}
       //activas segun la fecha y que no se haya presionado el boton cerrar
 
       if ($row['fechaInicioSubasta']<=date('Y-m-d')) {

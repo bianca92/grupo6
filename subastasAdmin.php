@@ -19,7 +19,9 @@ catch(Exception $e){
    header("Location:index.php");
 }
 
-$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, su.idSubasta,su.activa
+
+$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, 
+                 su.idSubasta,su.activa,su.fechaFinInscripcion
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -52,7 +54,21 @@ else{
     <?php while ($row = mysqli_fetch_array($result))  { 
            if($row['activa']!=1){
     $imgs=ObtenerImgs($row['idPropiedad']);
-    ?>
+    
+
+      // PASADA LA FECHA DE FIN inscripcion EL BOTON CERRAR DEBE DESHABILITARSE
+       $configuracion="active";
+       if ($row['fechaFinInscripcion']<=date("Y-m-d") ){
+          $configuracion="disabled";
+      }
+      //activas segun la fecha y que no se haya presionado el boton cerrar
+
+      if ($row['fechaInicioSubasta']<=date('Y-m-d')) {
+        $consulta="UPDATE subasta SET activa=1 WHERE idSubasta=$row[idSubasta] ";
+        $resu = mysqli_query($con,$consulta); 
+            mysqli_free_result($resu);
+      }
+     ?>
         <tr>
           <td> <?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:30% />';?></td>
            <td><h4><?php echo "$row[titulo]" ?></h4> </td>
@@ -61,7 +77,7 @@ else{
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
-            <td><?php echo "<a href='cerrar_subasta.php?no=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>CERRAR</button> </a></td>"  ?>
+            <td><?php echo "<a href='cerrar_subasta.php?no=".$row['idSubasta']."'> <button type='button' class='btn btn-succes ".$configuracion."'>CERRAR INSCRIPCION</button></a></td>"  ?>
          </tr>  
          <?php } }?>      
       

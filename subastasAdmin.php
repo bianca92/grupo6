@@ -40,12 +40,12 @@ else{
     <thead>
       <tr>
         <th>Subastas</th>
-        <th></th>
-        <th>ciudad</th>
-        <th>semana</th>
-        <th>precio inicial</th>
-        <th>subasta</th>
-        <th>inscripcion</th>
+        <th>Titulo</th>
+        <th>Ciudad</th>
+        <th>Semana</th>
+        <th>Precio Inicial</th>
+        <th>Inicial Subasta</th>
+        <th>Inicial Inscripcion</th>
       </tr>
     </thead>
     <tbody>
@@ -57,16 +57,17 @@ else{
     
 
       // PASADA LA FECHA DE FIN inscripcion EL BOTON CERRAR DEBE DESHABILITARSE
-       $configuracion="active";
+       $configuracion="active"; $accion='';
        if ($row['fechaFinInscripcion']<=date("Y-m-d") ){
-          $configuracion="disabled";
+          $configuracion="disabled"; $accion="#";
       }
+      else{$accion='cerrar_subasta.php?no=".$row[idSubasta]."';}
       //activas segun la fecha y que no se haya presionado el boton cerrar
 
       if ($row['fechaInicioSubasta']<=date('Y-m-d')) {
         $consulta="UPDATE subasta SET activa=1 WHERE idSubasta=$row[idSubasta] ";
         $resu = mysqli_query($con,$consulta); 
-            mysqli_free_result($resu);
+            
       }
      ?>
         <tr>
@@ -75,9 +76,9 @@ else{
             <td><h4><?php echo" $row[ciudad] ";?></h4></td>
             <td><h4><?php echo "$row[numero]" ;?></h4></td>
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
-            <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
-            <td><?php echo "<a href='cerrar_subasta.php?no=".$row['idSubasta']."'> <button type='button' class='btn btn-succes ".$configuracion."'>CERRAR INSCRIPCION</button></a></td>"  ?>
+            <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
+            <td><?php echo "<a href=$accion> <button type='button' class='btn btn-succes ".$configuracion."'>CERRAR INSCRIPCION</button></a></td>"  ?>
          </tr>  
          <?php } }?>      
       

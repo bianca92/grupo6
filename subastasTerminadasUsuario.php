@@ -257,11 +257,11 @@ else{
 $nombre= $nombre + 1;
 
    } 
- //}?>
+ }?>
     
     </div>
 
-<?php } ?>
+<?php //} ?>
  </div>
 
 

@@ -1,6 +1,4 @@
 <html>
-
-
 <?php
 
 include("clases.php");  
@@ -37,14 +35,10 @@ else{
      ?>
      <link  href="css/bootstrap1.min.css">
 <div class="container">
-   
- 
- <?php
-   
- // for($x = 1; $x <=($num/3) ; $x++){
-        
-
-  ?>
+    
+<?php  
+ // for($x = 1; $x <=($num/3) ; $x++){      
+?>
   <div class="row">
 
     <?php 
@@ -187,11 +181,11 @@ else{
 $nombre= $nombre + 1;
 
    } 
-   //}?>
+   }?>
     
     </div>
 
-<?php } ?>
+<?php //} ?>
  </div>
 
 

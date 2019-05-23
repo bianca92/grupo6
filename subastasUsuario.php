@@ -179,10 +179,10 @@ $nombre= $nombre + 1;
 
   <script src="jquery-3.2.1.min.js"></script>
   <script src="js/bootstrap1.min.js"></script>
-   <?php } 
-if ($auxiliar==true){
+   <?php if ($auxiliar==true){
     echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
-   } 
+   }} 
+ 
 
 
    ?>

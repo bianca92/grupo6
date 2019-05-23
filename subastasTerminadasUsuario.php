@@ -196,7 +196,7 @@ else{
                 }
                
                 if($winnerPersona==$id){
-                    $winnerMsj="GANASTE LA SUBASTA !!";
+                    $winnerMsj="¡¡GANASTE LA SUBASTA!!";
                 }
                 else{$winnerMsj="Perdiste la subasta";} }
       
@@ -244,14 +244,14 @@ else{
              ?></h6>
 
              <h6><?php
-             echo "$winnerMsj";
+             echo "<h4><p class= text-danger> $winnerMsj </p></h4";
               // echo "<a href='Pujar.php?idS=".$row[0]."&idU=".$id."&min=".$row['precioMinimo']."'> <button type='button' class='btn btn-succes'>Pujar</button> </a>" ;
                ?></h6>
 
 
 
           
-       </div>
+         </div>
       </div>
      <?php 
 $nombre= $nombre + 1;
@@ -267,10 +267,10 @@ $nombre= $nombre + 1;
 
   <script src="jquery-3.2.1.min.js"></script>
   <script src="js/bootstrap1.min.js"></script>
-   <?php } 
-if ($auxiliar==true){
+   <?php if ($auxiliar==true){
     echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
-   } 
+   } } 
+
 
    ?>
    </body>

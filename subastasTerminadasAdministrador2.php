@@ -106,9 +106,9 @@ else{
       </tbody>
   </table>
    <?php
- }  if ($auxiliar==true){
+  if ($auxiliar==true){
     echo"<tr><td><h4>NO SE HAN ENCONTRADO RESULTADOS</h4></td></tr>";
-   } 
+   } } 
 
             mysqli_free_result($result);
             mysqli_close($con);

@@ -161,7 +161,7 @@ else{
                     //SI HAY UNA OFERTA ANTERIOR DE ESTE USUARIO QUE SE LA DIGA
                              else{
                                  if($pujaMaxima==$row5[0]){
-                                  echo "Vas ganando la puja";
+                                  echo "<p class=bg-info> Vas ganando la puja </p>";
                                  }
                                  else {  echo "Tu oferta anterior fue de $ $row5[0] ."; }
 
@@ -197,8 +197,8 @@ $nombre= $nombre + 1;
 
   <script src="jquery-3.2.1.min.js"></script>
   <script src="js/bootstrap1.min.js"></script>
-   <?php } if ($auxiliar==true){
+   <?php if ($auxiliar==true){
     echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
-   } ?>
+   }}  ?>
    </body>
    </html>

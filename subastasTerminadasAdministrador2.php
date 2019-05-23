@@ -42,8 +42,8 @@ else{
         <th>Semana</th>
         <th>Año</th>
         <th>Precio Inicial</th>
-        <th>Inicio Subasta</th>
         <th>Inicio Inscripcion</th>
+        <th>Inicio Subasta</th>
         <th>Precio Venta</th>
         <th>Ganador</th>
       </tr>

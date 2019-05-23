@@ -60,11 +60,13 @@ while ($row = mysqli_fetch_array($result)){
                     <?php
                      //LE DIGO AL USUARIO CUAL ES LA PUJA MAYOR HASTA EL MOMENTO
                      if ($minimo==$minaux && $alguienOfertoMinimo==false){
-                   echo "El precio minimo es $ $minimo.";
+                  // echo "El precio minimo es $ $minimo.";
                      }
                       else {
-                        echo "La puja mayor actual es $ $minimo.";
+                        //echo "La puja mayor actual es $ $minimo.";
                       	$minimo=$minimo +1;}
+                      	echo " <p> </p>";
+                      echo "El monto minimo para la puja a realizar es $$minimo";
                      
                     echo " <p> </p>";
                     //SI ESTE USUARIO NO HA HECHO NINGUNA OFERTA ANTERIOR O SEA NO HAY REGISTRO EN LA TABLA

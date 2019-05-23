@@ -7,6 +7,7 @@ include("clases.php");
 include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
+include("actualizarSegunFecha.php");
 $con=conectar();
 
 //para que no se pueda acceder a esta pagina si no esta logeado
@@ -56,6 +57,9 @@ else{
  $auxiliar=true;
 
     while ($row = mysqli_fetch_array($result))  { 
+      $actualizar=actualizar($row['idSubasta']);
+       $row['activa']=$actualizar[0];
+      $row['cerrada']=$actualizar[1];
 
            if($row['activa']!=1){
 
@@ -71,11 +75,7 @@ else{
       else{$accion="cerrar_subasta.php?no=".$row['idSubasta']."";}
       //activas segun la fecha y que no se haya presionado el boton cerrar
 
-      if ($row['fechaInicioSubasta']<=date('Y-m-d')) {
-        $consulta="UPDATE subasta SET activa=1 WHERE idSubasta=$row[idSubasta] ";
-        $resu = mysqli_query($con,$consulta); 
-            
-      }
+   
      ?>
         <tr>
           <td> <?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:30% />';?></td>

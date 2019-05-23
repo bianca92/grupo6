@@ -5,6 +5,7 @@ include("clases.php");
 include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
+include("actualizarSegunFecha.php");
  
  //para que no se pueda acceder a esta pagina si no esta logeado
 try{
@@ -44,6 +45,9 @@ else{
     //significa que hubo subastas disponibles pero o ya estan activas o ya terminaron y por eso no las muestra en esta subasta
     $auxiliar=true;
     while ($row = mysqli_fetch_array($result))  { 
+      $actualizar=actualizar($row['idSubasta']);
+      $row['activa']=$actualizar[0];
+      $row['cerrada']=$actualizar[1];
        //selecciona para luego revisar que el usuario no este inscripto en la subasta
         $id=($_SESSION['id']);
        $Inscripto = "SELECT *
@@ -52,10 +56,11 @@ else{
            $resuInscripto = mysqli_query($con, $Inscripto);
 
             $fecha_actual = date('Y-m-d');
+            $inscripto=false;
                  if ($fecha_actual>=$row['fechaInicioInscripcion'] ){
                  
                         //revisa que el usuario no este iscripto en la subasta
-                      $inscripto=false;
+                      
                      while ($row2 = mysqli_fetch_array($resuInscripto)){
                               if ($row2['idSubasta']==$row['idSubasta']){
                                  $inscripto= true;  
@@ -141,7 +146,7 @@ else{
                  
                 
                 
-                if ($inscripto==true){
+                       if ($inscripto==true){
                    // echo "<p </p>";
                             // funcion date() par cambiar el formato a dia/mes/año
                             echo "<p class=bg-info>Ya estas inscripto a esta subasta</p>";
@@ -149,13 +154,19 @@ else{
                             echo "<p class= text-danger>La subasta abrira el dia ".date('d/m/Y', strtotime($row['fechaInicioSubasta']))."</p>";
                              }
                        else { 
+
+                         if ($fecha_actual<$row['fechaInicioInscripcion']){
+
+                         echo "<p class= bg-danger>La inscripcion comienza el ".date('d/m/Y', strtotime($row['fechaInicioInscripcion']))."</p>"; 
+                          }
+                          else{
                         echo "<p class=bg-primary >Tienes tiempo de inscribirte hasta el ".date('d/m/Y', strtotime($row['fechaFinInscripcion']))."<p>";
                         echo "<a href='inscribirseSubasta.php?idS=".$row[0]."&idU=".$id."'> <button  type='button' class='btn btn-success'>Inscribirse</button> </a>" ; }
-                        
-              if ($fecha_actual<$row['fechaInicioInscripcion']){
 
-                 echo "<p class= bg-danger>La inscripcion comienza el ".date('d/m/Y', strtotime($row['fechaInicioInscripcion']))."</p>"; 
-              }
+
+                      }
+                        
+             
                   
                  
                     

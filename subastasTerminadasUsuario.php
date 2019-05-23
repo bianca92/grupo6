@@ -7,6 +7,7 @@ include("clases.php");
 include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
+include("actualizarSegunFecha.php");
 $con=conectar();
 
 
@@ -54,6 +55,9 @@ else{
     $id=($_SESSION['id']);
   $auxiliar=true;
     while ($row = mysqli_fetch_array($result))  { 
+      $actualizar=actualizar($row['idSubasta']);
+      $row['activa']=$actualizar[0];
+      $row['cerrada']=$actualizar[1];
        //selecciona para luego revisar que el usuario no este inscripto en la subasta    
        $Inscripto = "SELECT *
         FROM inscripto

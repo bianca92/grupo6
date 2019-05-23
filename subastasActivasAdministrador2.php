@@ -7,6 +7,7 @@ include("clases.php");
 include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
+include("actualizarSegunFecha.php");
 $con=conectar();
 
 	//para que no se pueda acceder a esta pagina si no esta logeado
@@ -55,6 +56,9 @@ else{
  $auxiliar=true;
 
     while ($row = mysqli_fetch_array($result))  { 
+      $actualizar=actualizar($row['idSubasta']);
+       $row['activa']=$actualizar[0];
+      $row['cerrada']=$actualizar[1];
     //<img src=mostrarImagen.php?idPropiedad=".$row['idPropiedad']." style=width:60%"
     if(($row['activa']==1)&&($row['cerrada']!=1)){
        $auxiliar=false;

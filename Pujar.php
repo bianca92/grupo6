@@ -13,19 +13,26 @@ $con=conectar();
 $subasta=$_GET['idS'];
 $usuario=$_GET['idU'];
 $minimo=$_GET['min'];
-
-
+$minaux=$_GET['min'];;
+$alguienOfertoMinimo=false;
 //HAGO LA CONSULTA PARA SABER LOS MONTOS OFERTADOS PARA ESTA SUBASTA
 $var_consulta= "SELECT cantidad FROM puja WHERE idSubasta=$subasta";
    $result = mysqli_query($con, $var_consulta);
 
 //ACTUALIZO EL MINIMO SI YA HAY OFERTAS ANTERIORES
 while ($row = mysqli_fetch_array($result)){
+      
+
         if ($row['cantidad']>$minimo){
                
                $minimo=$row['cantidad'];               
                               }
+          if ($row['cantidad']==$minimo) {
+          	$alguienOfertoMinimo=true;
+          }                 
  }
+
+
 
  //OBTENGO CUAL ES EL ULTIMO MONTO DE ESTE USUARIO
  $var_consulta= "SELECT cantidad FROM puja WHERE idSubasta=$subasta and idPersona=$usuario";
@@ -52,12 +59,18 @@ while ($row = mysqli_fetch_array($result)){
                   
                     <?php
                      //LE DIGO AL USUARIO CUAL ES LA PUJA MAYOR HASTA EL MOMENTO
-                     echo "La puja minima es $ $minimo ";
+                     if ($minimo==$minaux && $alguienOfertoMinimo==false){
+                   echo "El precio minimo es $ $minimo.";
+                     }
+                      else {
+                        echo "La puja mayor actual es $ $minimo.";
+                      	$minimo=$minimo +1;}
+                     
                     echo " <p> </p>";
                     //SI ESTE USUARIO NO HA HECHO NINGUNA OFERTA ANTERIOR O SEA NO HAY REGISTRO EN LA TABLA
                     $primeraOferta=0;
                      if($row2==false){
-   	                  echo "Aun no has hecho ninguna oferta";
+   	                  echo "Aun no has echo ninguna oferta";
                        $primeraOferta=1;
                              }
                     //SI HAY UNA OFERTA ANTERIOR DE ESTE USUARIO QUE SE LA DIGA
@@ -70,7 +83,7 @@ while ($row = mysqli_fetch_array($result)){
 					<label for="Tu oferta">Tu nueva oferta: </br></label>
                     
                     <?php //ACA ENTRA LA NUEVA OFERTA Y ESTABLECI QUE EL MONTO MINIMO SEA LA OFERTA MAYOR, OBVIAMENTE PARA QUE NO PUEDA OFERTAR UN MONTO MENOR AL ACTUAL 
-                    $minimo=$minimo +1; ?>
+                     ?>
 					<input type="number" name="monto" class="input username" min='<?php echo "$minimo" ?>' required="required">
                     <?php //ESTOS DATOS LOS NECESITO PARA EL INSERT DE ESTA MANERA LOS PASO AL PUJAR2.PHP ?>
 					<input type="hidden" name="usuario" value='<?php echo "$usuario" ?>' />

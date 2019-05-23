@@ -24,7 +24,7 @@ $con=conectar();
           
 
 $query = "SELECT su.idSubasta, s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
-su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, s.fecha
+su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, s.fecha, su.year
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -133,7 +133,7 @@ else{
         </div>
       </div>
       <!-- Aca Termina Galeria Carrusel -->
-      <h4><?php echo "Para la semana del $row[fecha] del 2019.";?></h4>
+      <h4><?php echo "Para la semana del $row[fecha] del $row[year].";?></h4>
             <h4><?php echo "$row[titulo] en la ciudad de $row[ciudad] ";?></h4>
            
             

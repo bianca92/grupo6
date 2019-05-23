@@ -19,7 +19,7 @@ catch(Exception $e){
    header("Location:index.php");
 }
 
-$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, su.activa, su.idSubasta, su.cerrada
+$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, su.activa, su.idSubasta, su.cerrada, su.year
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -41,9 +41,10 @@ else{
         <th>Titulo</th>
         <th>Ciudad</th>
         <th>Semana</th>
+        <th>Año</th>
         <th>Precio Inicial</th>
-        <th>Inicia Subasta</th>
-        <th>Inicia Inscripcion</th>
+        <th>Inicio Inscripcion</th>
+        <th>Inicio Subasta</th>
         <th>Puja Actual</th>
       </tr>
     </thead>
@@ -77,6 +78,7 @@ else{
            <td><h4><?php echo "$row[titulo]" ?></h4> </td>
             <td><h4><?php echo" $row[ciudad] ";?></h4></td>
             <td><h4><?php echo "$row[numero]" ;?></h4></td>
+            <td><h4><?php echo "$row[year]" ;?></h4></td>
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  

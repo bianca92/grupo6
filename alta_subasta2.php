@@ -28,7 +28,7 @@ mysqli_free_result($resultado);
 
 
 //VER SI EXISTE UNA SUBASTA PARA ESA SEMANA Y PROPIEDAD
-$consulta1="SELECT idSemana, idPropiedad FROM subasta WHERE idPropiedad=$propiedad AND idSemana=$idSemana";
+$consulta1="SELECT idSemana, idPropiedad FROM subasta WHERE idPropiedad=$propiedad AND idSemana=$idSemana AND year=$year";
 $resul1 =$link->query($consulta1);
 $num=mysqli_num_rows($resul1); 
 
@@ -47,8 +47,8 @@ $consulta2="INSERT INTO semanatienepropiedad (idSemana, idPropiedad, year)values
 mysqli_free_result($resu);
 
 	
-$var_consulta="INSERT INTO subasta (idPropiedad,precioMinimo, idSemana, fechaInicioSubasta, fechaFinSubasta, fechaInicioInscripcion, fechaFinInscripcion)
-                     values('$propiedad','$precioInicial','$idSemana','$ofDesde','$ofHasta','$insDesde','$insHasta')";
+$var_consulta="INSERT INTO subasta (idPropiedad,precioMinimo, idSemana, fechaInicioSubasta, fechaFinSubasta, fechaInicioInscripcion, fechaFinInscripcion,year)
+                     values('$propiedad','$precioInicial','$idSemana','$ofDesde','$ofHasta','$insDesde','$insHasta', '$year')";
             	
 $var_resultado = $link->query($var_consulta);
 

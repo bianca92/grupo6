@@ -51,8 +51,14 @@ else{
     <tbody>
   
 
-    <?php while ($row = mysqli_fetch_array($result))  { 
+    <?php 
+ $auxiliar=true;
+
+    while ($row = mysqli_fetch_array($result))  { 
+
            if($row['activa']!=1){
+
+             $auxiliar=false;
     $imgs=ObtenerImgs($row['idPropiedad']);
     
 
@@ -84,17 +90,21 @@ else{
       
       </tbody>
   </table>
-</div>
-     
-
- </div>
-
- <?php
- }
+<?php
+ }  if ($auxiliar==true){
+    echo"<tr><td><h4>NO SE HAN ENCONTRADO RESULTADOS</h4></td></tr>";
+   } 
 
             mysqli_free_result($result);
             mysqli_close($con);
 
 ?> 
+  
+</div>
+     
+
+ </div>
+
+ 
    
    </html>

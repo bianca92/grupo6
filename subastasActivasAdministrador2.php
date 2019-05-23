@@ -50,10 +50,13 @@ else{
     <tbody>
   
 
-    <?php while ($row = mysqli_fetch_array($result))  { 
+    <?php 
+ $auxiliar=true;
+
+    while ($row = mysqli_fetch_array($result))  { 
     //<img src=mostrarImagen.php?idPropiedad=".$row['idPropiedad']." style=width:60%"
     if(($row['activa']==1)&&($row['cerrada']!=1)){
-
+       $auxiliar=false;
       //OBTENGO PUJA GANADORA DEL MOMENTO
        $pujaMaxima= $row['precioMinimo'];
        $pujaMaximaPuja="";
@@ -85,16 +88,20 @@ else{
       
       </tbody>
   </table>
+  <?php
+ }  if ($auxiliar==true){
+    echo"<tr><td><h4>NO SE HAN ENCONTRADO RESULTADOS</h4></td></tr>";
+   } 
+
+            mysqli_free_result($result);
+            mysqli_close($con);
+
+?> 
 </div>
      
 
  </div>
 
- <?php
- }
-            mysqli_free_result($result);
-            mysqli_close($con);
 
-?> 
    
    </html>

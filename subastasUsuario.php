@@ -19,7 +19,7 @@ $con=conectar();
 
 
 $query = "SELECT su.idSubasta, s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, 
-su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada
+su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, s.fecha
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -41,6 +41,8 @@ else{
     <?php 
     //nombre de los botones de la galeria
     $nombre=1;
+    //significa que hubo subastas disponibles pero o ya estan activas o ya terminaron y por eso no las muestra en esta subasta
+    $auxiliar=true;
     while ($row = mysqli_fetch_array($result))  { 
        //selecciona para luego revisar que el usuario no este inscripto en la subasta
         $id=($_SESSION['id']);
@@ -50,6 +52,9 @@ else{
            $resuInscripto = mysqli_query($con, $Inscripto);
       
       if(($row['activa']!=1)&&($row['cerrada']!=1)){
+        //si entra aca quiere decir que va a visualizar al menos 1 resultado.
+        $auxiliar=false;
+        
   ?>
         
         
@@ -111,6 +116,7 @@ else{
         </div>
       </div>
       <!-- Aca Termina Galeria Carrusel -->
+      <h4><?php echo "Para la semana del $row[fecha] del 2019.";?></h4>
             <h4><?php echo "$row[titulo] en la ciudad de $row[ciudad] ";?></h4>
            
              <h4><?php echo "Precio Minimo: $ $row[precioMinimo].";?></h4>
@@ -161,7 +167,9 @@ function myFunction() {
      <?php 
 $nombre= $nombre + 1;
 
-   }} ?>
+   }
+
+ } ?>
     
     </div>
 
@@ -171,6 +179,12 @@ $nombre= $nombre + 1;
 
   <script src="jquery-3.2.1.min.js"></script>
   <script src="js/bootstrap1.min.js"></script>
-   <?php } ?>
+   <?php } 
+if ($auxiliar==true){
+    echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
+   } 
+
+
+   ?>
    </body>
    </html>

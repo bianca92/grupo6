@@ -24,7 +24,7 @@ $con=conectar();
           
 
 $query = "SELECT su.idSubasta, s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
-su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada
+su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, s.fecha
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -52,7 +52,7 @@ else{
     $nombre=1;
 //OBTIENE EL ID DEL USUARIO ACTUAL
     $id=($_SESSION['id']);
- 
+ $auxiliar=true;
     while ($row = mysqli_fetch_array($result))  { 
        //selecciona para luego revisar que el usuario no este inscripto en la subasta    
        $Inscripto = "SELECT *
@@ -71,7 +71,7 @@ else{
                   //--------------------------------------------------------------------
                   //SI ESTA ACTIVA QUE LA MUESTRE
      if(($inscripto==true)&&($row['activa']==1)&&($row['cerrada']!=1)){
-      
+      $auxiliar=false;
   ?>
 
         
@@ -133,6 +133,7 @@ else{
         </div>
       </div>
       <!-- Aca Termina Galeria Carrusel -->
+      <h4><?php echo "Para la semana del $row[fecha] del 2019.";?></h4>
             <h4><?php echo "$row[titulo] en la ciudad de $row[ciudad] ";?></h4>
            
             
@@ -196,6 +197,8 @@ $nombre= $nombre + 1;
 
   <script src="jquery-3.2.1.min.js"></script>
   <script src="js/bootstrap1.min.js"></script>
-   <?php } ?>
+   <?php } if ($auxiliar==true){
+    echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
+   } ?>
    </body>
    </html>

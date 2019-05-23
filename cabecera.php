@@ -21,7 +21,7 @@
 <body>
 	<div id="header">
 
-	<?php   $archivop=""; $archivosu=""; $archivoActUsu=""; $archivoTerminadas=""; $verOpcionesLogeado=false;
+	<?php   $archivop=""; $archivosu=""; $archivoActUsu=""; $archivoTerminadas=""; $premium=""; $verOpcionesLogeado=false; 
              if(isset($_SESSION['estado'])){
       	  		 if($_SESSION['estado']=="logeado"){
                         
@@ -41,7 +41,8 @@
 	      	           	   //  HOLA ".$_SESSION['nombre']." ! | <a href=salir.php><span class='glyphicon glyphicon-log-out'></span>CERRAR SESIÓN</a></h3>";
 	                             $opcion1="<a href'#'><span class'glyphicon-user'></span>Hola $_SESSION[nombre] !</a>" ;  
                                $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>Salir</a>";
-	                             $archivop="listarPropiedades.php"; $archivosu="subastasUsuario.php"; $archivoActUsu="subastasActivasUsuario4.php"; $archivoTerminadas="subastasTerminadasUsuario.php";
+	                             $archivop="listarPropiedades.php"; $archivosu="subastasUsuario.php"; $archivoActUsu="subastasActivasUsuario4.php"; $archivoTerminadas="subastasTerminadasUsuario.php"; 
+                               $premium="volverPremium.php";
 			                         $verOpcionesLogeado=true;
                       }
 		            }
@@ -68,12 +69,21 @@
       <li><a href=<?php echo "$archivosu"; ?>>SUBASTAS</a></li>
       <li><a href=<?php echo $archivoActUsu; ?>>SUBASTAS ACTIVAS</a></li>
       <li><a href=<?php echo $archivoTerminadas; ?>>SUBASTAS TERMINADAS</a></li>
+     
 
     </ul>
    <?php  }
      //Siempre se muestan estas opciones
      ?>
     <ul class="nav navbar-nav navbar-right">
+      <?php // Mostra solo si esta logueado
+    if($verOpcionesLogeado==true and $_SESSION['rol']!="1"){                                   ?>
+       <li><a href=<?php echo $premium; ?>>¡QUIERO SER PREMIUM!</a></li>
+     
+      <?php  }
+     //Siempre se muestan estas opciones
+     ?>
+
       <li><?php echo"$opcion1"; ?></li>
       <li><?php echo"$opcion2";?></li>
     </ul>

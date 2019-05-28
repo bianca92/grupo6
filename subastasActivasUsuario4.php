@@ -131,6 +131,8 @@ else{
         </div>
       </div>
       <!-- Aca Termina Galeria Carrusel -->
+
+
       <h4><?php echo "Para la semana del $row[fecha] del $row[year].";?></h4>
             <h4><?php echo "$row[titulo] en la ciudad de $row[ciudad] ";?></h4>
            
@@ -146,15 +148,15 @@ else{
                         $pujaMaxima=$row4['cantidad'];    }
                 }
                  //OBTENGO CUAL ES EL ULTIMO MONTO DE ESTE USUARIO
-            $var_consulta5= "SELECT cantidad FROM puja WHERE idSubasta=$row[idSubasta] and idPersona=$id";
+            $var_consulta5= "SELECT MAX(cantidad) AS maximo FROM puja WHERE idSubasta=$row[idSubasta] and idPersona=$id";
              $result5 = mysqli_query($con, $var_consulta5);
               $row5= mysqli_fetch_array($result5);
 
                //SI ESTE USUARIO NO HA HECHO NINGUNA OFERTA ANTERIOR O SEA NO HAY REGISTRO EN LA TABLA
-                    $primeraOferta=0;
-                     if($row5==false){
+                   
+                     if($row5[0]==false){
                       echo "Aun no has echo ninguna oferta";
-                       $primeraOferta=1;
+                    
                              }
                     //SI HAY UNA OFERTA ANTERIOR DE ESTE USUARIO QUE SE LA DIGA
                              else{

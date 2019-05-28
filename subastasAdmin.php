@@ -86,7 +86,9 @@ else{
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
-            <td><?php echo "<a href=$accion> <button type='button' class='btn btn-succes ".$configuracion."'>CERRAR INSCRIPCION</button></a></td>"  ?>
+            <td><?php echo "<a href=$accion> <button type='button' class='btn btn-succes ".$configuracion."'>CERRAR INSCRIPCION</button></a></td>"  
+            ?>
+             <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;?>  
          </tr>  
          <?php } }?>      
       

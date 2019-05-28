@@ -23,19 +23,13 @@ else
 $monto=$_POST['monto'];
 $subasta=$_POST['subasta'];
 $usuario=$_POST['usuario'];
-$primeraOferta=$_POST['primeraOferta'];
 //SI ESLA PRIMERA OFERTA QUE CREE LA TABLA
 
-if($primeraOferta==1){
+
 	$var_consulta= "INSERT INTO puja (idPersona,idSubasta,cantidad)values('$usuario','$subasta','$monto') ";
   $var_resultado = $link->query($var_consulta);
-}
- else {
-//SI NO ES LA PRIMERA OFERTA QUE ACTUALICE LA TABLA
-$var_consulta= "UPDATE puja SET cantidad='$monto' WHERE idPersona='$usuario' AND idSubasta=$subasta ";
-  $var_resultado = $link->query($var_consulta);
 
- }
+ 
 
 
 

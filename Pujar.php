@@ -34,9 +34,9 @@ while ($row = mysqli_fetch_array($result)){
 
 
 
- //OBTENGO CUAL ES EL ULTIMO MONTO DE ESTE USUARIO
- $var_consulta= "SELECT cantidad FROM puja WHERE idSubasta=$subasta and idPersona=$usuario";
-   $result2 = mysqli_query($con, $var_consulta);
+ //OBTENGO CUAL ES EL MAXIMO MONTO DE ESTE USUARIO
+ $var_consulta2= "SELECT MAX(cantidad) as maximo FROM puja WHERE idSubasta=$subasta and idPersona=$usuario";
+   $result2 = mysqli_query($con, $var_consulta2);
    $row2= mysqli_fetch_array($result2);
 
 
@@ -70,13 +70,14 @@ while ($row = mysqli_fetch_array($result)){
                      
                     echo " <p> </p>";
                     //SI ESTE USUARIO NO HA HECHO NINGUNA OFERTA ANTERIOR O SEA NO HAY REGISTRO EN LA TABLA
-                    $primeraOferta=0;
-                     if($row2==false){
+                   
+                     if($row2[0]==false){
    	                  echo "Aun no has echo ninguna oferta";
-                       $primeraOferta=1;
+                   
                              }
                     //SI HAY UNA OFERTA ANTERIOR DE ESTE USUARIO QUE SE LA DIGA
                              else{
+                             	
                      echo "Tu oferta anterior es $ $row2[0] ";
                     }
 
@@ -90,7 +91,7 @@ while ($row = mysqli_fetch_array($result)){
                     <?php //ESTOS DATOS LOS NECESITO PARA EL INSERT DE ESTA MANERA LOS PASO AL PUJAR2.PHP ?>
 					<input type="hidden" name="usuario" value='<?php echo "$usuario" ?>' />
 					<input type="hidden" name="subasta" value='<?php echo "$subasta" ?>' />
-					<input type="hidden" name="primeraOferta" value='<?php echo "$primeraOferta" ?>' />
+				
 
 					
                      

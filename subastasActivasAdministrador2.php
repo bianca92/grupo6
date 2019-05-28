@@ -87,8 +87,9 @@ else{
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
             <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
-            <td><?php echo "<a href='cerrar_subastaActiva.php?pugano=".$pujaMaximaPuja."&sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>CERRAR SUBASTA</button> </a></br>" ;?>
-                 </br><a href="#"><button type='button' class='btn btn-succes'>INSCRIPTOS</button></a></td>
+            <td><?php echo "<a href='cerrar_subastaActiva.php?pugano=".$pujaMaximaPuja."&sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>CERRAR SUBASTA</button> </a></br>" ;
+            ?>
+              <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;?>   
          </tr>  
          <?php } } ?>      
       

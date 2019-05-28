@@ -102,7 +102,8 @@ else{
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
             <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
             <td><h4><?php echo "$mailPer" ?></h4></td>
-            <td><a href="#"><button type='button' class='btn btn-succes'>PUJAS</button></a></td>
+            <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
+            <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;?>  
            
          </tr>  
          <?php } } ?>      

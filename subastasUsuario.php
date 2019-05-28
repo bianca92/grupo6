@@ -152,7 +152,9 @@ else{
                             echo "<p class=bg-info>Ya estas inscripto a esta subasta</p>";
                             echo "<p </p>";
                             echo "<p class= text-danger>La subasta abrira el dia ".date('d/m/Y', strtotime($row['fechaInicioSubasta']))."</p>";
+                             echo "<a href='eliminarSuscripcion.php?idS=".$row[0]."&idU=".$id."'> <button  type='button' class='btn btn-success'>Eliminar Suscripcion</button> </a>" ;
                              }
+
                        else { 
 
                          if ($fecha_actual<$row['fechaInicioInscripcion']){

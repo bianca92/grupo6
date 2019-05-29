@@ -20,7 +20,7 @@ catch(Exception $e){
    header("Location:index.php");
 }
 
-$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, su.activa, su.idSubasta, su.cerrada, su.year
+$query = "SELECT  p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, su.activa, su.idSubasta, su.cerrada, su.year, s.fecha
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -81,7 +81,7 @@ else{
           <td> <?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:30% />';?></td>
            <td><h4><?php echo "$row[titulo]" ?></h4> </td>
             <td><h4><?php echo" $row[ciudad] ";?></h4></td>
-            <td><h4><?php echo "$row[numero]" ;?></h4></td>
+            <td><h4><?php echo "$row[fecha]" ;?></h4></td>
             <td><h4><?php echo "$row[year]" ;?></h4></td>
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>

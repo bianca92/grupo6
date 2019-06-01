@@ -11,57 +11,69 @@ $link=conectar();
 
 $propiedad=$_POST['propiedad'];
 
-$year=$_POST['year'];
-$numSemana=$_POST['semana'];
+$semana=$_POST['datepicker'];
 $precioInicial=$_POST['precioInicial'];
-$insDesde=$_POST['insDesde'];
-$insHasta=$_POST['insHasta'];
-$ofDesde=$_POST['ofDesde'];
-$ofHasta=$_POST['ofHasta'];
 
-// busco el id de semana en la tabla semana para insertar en la nueba tabla
-$consulta= "SELECT idSemana FROM semana WHERE numero='$numSemana' ";
-$resultado = $link->query($consulta);
-$row = mysqli_fetch_array($resultado);
-$idSemana=$row['idSemana'];
-mysqli_free_result($resultado);
+#W (mayúscula) te devuelve el número de semana
+#w (minúscula) te devuelve el número de día dentro de la semana (0=domingo, #6=sabado)
 
-
-//VER SI EXISTE UNA SUBASTA PARA ESA SEMANA Y PROPIEDAD
-$consulta1="SELECT idSemana, idPropiedad FROM subasta WHERE idPropiedad=$propiedad AND idSemana=$idSemana AND year=$year";
-$resul1 =$link->query($consulta1);
-$num=mysqli_num_rows($resul1); 
-
-if($num==1) { 
-    
-    echo '<script> alert("YA EXISTE UNA SUBASTA EN ESA SEMANA");</script>';
-    echo "<script> window.location ='alta_subasta.php?no=".$propiedad."' ;</script>";
-
+//OBTENGO EL NUMERO DE LA SEMANA QUE EL ADMIN INGRESO
+$numero=date('W', strtotime($semana));
+//OBTENGO EL MES
+$mes=date('m', strtotime($semana));
+//OBTENGO EL AÑO
+$year=date('Y', strtotime($semana));
+if($mes=="12" && $numero=="1"){
+	$year=$year+1;
+}
+if($mes=="01" && $numero=="53"){
+	$year=$year-1;
+}
+if($mes=="01" && $numero=="52"){
+	$year=$year-1;
 }
 
-else{
+//OBTENGO EL INICIO DE LA SEMANA QUE EL ADMIN INGRESO
+$week_start = new DateTime();
+	//le paso como parametros el año, la semana
+$week_start->setISODate($year,$numero);
+     //CREO LA NUEVA FECHA, QUE ES EL INICIO DE LA SEMANA
+$fi= $week_start->format('Y-m-j');
 
-// cargo la tabla semana tiene propiedad
-$consulta2="INSERT INTO semanatienepropiedad (idSemana, idPropiedad, year)values('$idSemana','$propiedad','$year')";
-            $resu = $link->query($consulta2); 
-mysqli_free_result($resu);
+        
 
-	
-$var_consulta="INSERT INTO subasta (idPropiedad,precioMinimo, idSemana, fechaInicioSubasta, fechaFinSubasta, fechaInicioInscripcion, fechaFinInscripcion,year)
-                     values('$propiedad','$precioInicial','$idSemana','$ofDesde','$ofHasta','$insDesde','$insHasta', '$year')";
+$insDesde=strtotime ( '-6 month' , strtotime ( $fi ) ) ;
+$insDesde = date ( 'Y-m-j' , $insDesde);
+
+$insHasta=strtotime ( '+7 day' , strtotime ( $insDesde ) ) ;
+$insHasta = date ( 'Y-m-j' , $insHasta);
+
+$ofDesde=strtotime ( '-5 month' , strtotime ( $fi) ) ;
+$ofDesde = date ( 'Y-m-j' , $ofDesde);
+
+$ofHasta=strtotime ( '+7 day' , strtotime ( $ofDesde ) ) ;
+$ofHasta = date ( 'Y-m-j' , $ofHasta);
+
+$var_consulta="INSERT INTO subasta (idPropiedad,precioMinimo, idSemana, fechaInicioInscripcion, fechaFinInscripcion,fechaInicioSubasta, fechaFinSubasta,year)
+                     values('$propiedad','$precioInicial','$numero','$insDesde','$insHasta','$ofDesde','$ofHasta', '$year')";
+            	
+$var_resultado = $link->query($var_consulta);
+
+$var_consulta="INSERT INTO semanatienepropiedad (idSemana,idPropiedad,year)
+                     values('$numero', '$propiedad','$year')";
             	
 $var_resultado = $link->query($var_consulta);
 
 
 
-mysqli_free_result($var_resultado);
-            mysqli_close($con);
+
+            mysqli_close($link);
 
 
 
 
 header("Location:subastasAdmin.php");
-}
+
  
 
 ?>

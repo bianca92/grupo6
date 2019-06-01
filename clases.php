@@ -6,6 +6,7 @@
 		var $nombre;
 		var $fila;
         var $rol;
+        var $tipoU;
         
         function set(){//no lo use pero lo dejo para un uso en el futuro
         	$this->estado="logueado";
@@ -20,12 +21,16 @@
         	$this->id=$fila['IdPersona'];
             $this->nombre=$fila['nombre'];
             $this->rol=$fila['rol'];
+            $this->tipoU=$fila['tipoU'];
 
             $_SESSION['usuario']=$this->usuario;
             $_SESSION['nombre']=$this->nombre;
             $_SESSION['id']=$this->id;
             $_SESSION['rol']=$this->rol;
+             $_SESSION['tipoU']=$this->tipoU;
+
             $_SESSION['estado']="logeado"; 
+
         }
 
         function autentificar($con,$c,$u){/*recibe del archivo validarlogin*/

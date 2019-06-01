@@ -1,6 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
-<?php
+<?php  
+
+
 	session_start();
+
+
 ?>
 
 <html lang="es">
@@ -21,7 +25,7 @@
 <body>
 	<div id="header">
 
-	<?php   $archivop=""; $archivosu=""; $archivoActUsu=""; $archivoTerminadas=""; $premium=""; $verOpcionesLogeado=false; 
+	<?php   $archivop=""; $archivosu=""; $archivoActUsu=""; $archivoTerminadas=""; $premium="";$mensajes=""; $verOpcionesLogeado=false; 
              if(isset($_SESSION['estado'])){
       	  		 if($_SESSION['estado']=="logeado"){
                         
@@ -43,6 +47,7 @@
                                $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>Salir</a>";
 	                             $archivop="listarPropiedades.php"; $archivosu="subastasUsuario.php"; $archivoActUsu="subastasActivasUsuario4.php"; $archivoTerminadas="subastasTerminadasUsuario.php"; 
                                $premium="volverPremium.php";
+                               $mensajes="mensajes.php";
 			                         $verOpcionesLogeado=true;
                       }
 		            }
@@ -73,17 +78,38 @@
 
     </ul>
    <?php  }
-     //Siempre se muestan estas opciones
+    
      ?>
     <ul class="nav navbar-nav navbar-right">
       <?php // Mostra solo si esta logueado
-    if($verOpcionesLogeado==true and $_SESSION['rol']!="1"){                                   ?>
+    if($verOpcionesLogeado==true and $_SESSION['tipoU']=="clasico"){                                   ?>
        <li><a href=<?php echo $premium; ?>>¡QUIERO SER PREMIUM!</a></li>
      
       <?php  }
+
+    
+     ?>
+     <?php // Mostra solo si esta logueado la casilla de mensajes
+    if($verOpcionesLogeado==true and $_SESSION['rol']!="1"){ 
+      
+      $sql = "SELECT * FROM mensaje WHERE idPersona='".$_SESSION['id']."' and leido IS NULL";
+      $res = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$sql);
+      $tot = mysqli_num_rows($res);
+                                      ?>
+       <li><a href=<?php echo $mensajes; ?>><?php 
+
+       $numero="($tot)";
+       $color = "*FF0000";
+       echo "Mensajes"; 
+      echo "<font color='".$color."'>".$numero."</font>";
+
+       ?></a></li>
+     
+      <?php  }
+      
      //Siempre se muestan estas opciones
      ?>
-
+      
       <li><?php echo"$opcion1"; ?></li>
       <li><?php echo"$opcion2";?></li>
     </ul>

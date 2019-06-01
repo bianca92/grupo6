@@ -24,9 +24,9 @@ $con=conectar();
           
           
 
-$query = "SELECT su.idSubasta, s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
-su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, s.fecha, su.year
-          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
+$query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
+su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year,su.idSemana
+          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
       
@@ -137,7 +137,9 @@ else{
         </div>
       </div>
       <!-- Aca Termina Galeria Carrusel -->
-      <h4><?php echo "Para la semana del $row[fecha] del $row[year].";?></h4>
+      <h4><?php $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
+                                           $fi= $week_start->format('d/m/Y');
+                echo "Para la semana del $fi.";?></h4>
             <h4><?php echo "$row[titulo] en la ciudad de $row[ciudad] ";?></h4>
            
             
@@ -244,7 +246,7 @@ else{
 
              <h4><?php echo "Puja ganadora: $ $pujaMaxima.";?></h4>
              <h6><?php
-             echo "La subasta cerro el dia $row[fechaFinSubasta]";
+              echo "<p class=bg-primary >La subasta cerró el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."<p>";
              ?></h6>
 
              <h6><?php

@@ -21,9 +21,9 @@ catch(Exception $e){
 }
 
 
-$query = "SELECT s.numero, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, 
-                 su.idSubasta,su.activa,su.fechaFinInscripcion, su.year
-          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad INNER JOIN semana s ON s.idSemana=su.idSemana";
+$query = "SELECT p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, 
+                 su.idSubasta,su.activa,su.fechaFinInscripcion, su.year, su.idSemana
+          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
   if ($num==0) {
@@ -67,13 +67,8 @@ else{
     $imgs=ObtenerImgs($row['idPropiedad']);
     
 
-      // PASADA LA FECHA DE FIN inscripcion EL BOTON CERRAR DEBE DESHABILITARSE
-       $configuracion="active"; $accion='';
-       if ($row['fechaFinInscripcion']<=date("Y-m-d") ){
-          $configuracion="disabled"; $accion="#";
-      }
-      else{$accion="cerrar_subasta.php?no=".$row['idSubasta']."";}
-      //activas segun la fecha y que no se haya presionado el boton cerrar
+     
+    
 
    
      ?>
@@ -81,14 +76,36 @@ else{
           <td> <?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:30% />';?></td>
            <td><h4><?php echo "$row[titulo]" ?></h4> </td>
             <td><h4><?php echo" $row[ciudad] ";?></h4></td>
-            <td><h4><?php echo "$row[numero]" ;?></h4></td>
-            <td><h4><?php echo "$row[year]" ;?></h4></td>
+            <td><h4><?php $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
+                                           $fi= $week_start->format('d/m');echo "$fi" ;?></h4></td>
+            <td><h4><?php  $fi= $week_start->format('Y');echo "$fi" ;?></h4></td>
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioInscripcion'])); echo"$fi" ?></h4></td>
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
-            <td><?php echo "<a href=$accion> <button type='button' class='btn btn-succes ".$configuracion."'>CERRAR INSCRIPCION</button></a></td>"  
-            ?>
+
              <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;?>  
+            <td> <?php 
+             $fecha_actual = date('Y-m-d');
+                    //SI TODAVIA NO LLEGO LA FECHA DE INSCRIPCION QUE PUEDA ABRIR LA INSCRIPCION AHORA
+                      if($fecha_actual<$row['fechaInicioInscripcion']){
+                        echo "<a href='abrirInscripcion.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Abrir inscripcion</button> </a></br>" ;
+                      }
+                      else{
+                        //SI LA INSCRIPCION YA INICIO PUEDE CERRARLA ANTES DE LA FECHA DE CIERRE.
+                      if($fecha_actual>=$row['fechaInicioInscripcion']&&$fecha_actual<$row['fechaFinInscripcion']){
+                        echo "<a href='cerrarInscripcion.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Cerrar inscripcion</button> </a></br>" ;
+                      }
+                      else {
+                        //SI LA INSCRIPCION YA CERRO QUE PUEDA ABRIR LA SUBASTA ANTES DE LA FECHA
+                        if($fecha_actual>=$row['fechaFinInscripcion']&&$fecha_actual<$row['fechaInicioSubasta']){
+
+                          echo "<a href='abrirPuja.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Habilitar pujas</button> </a></br>" ;
+                        }
+                      }
+
+                    }
+
+             ?>
          </tr>  
          <?php } }?>      
       

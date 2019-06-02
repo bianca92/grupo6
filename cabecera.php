@@ -12,6 +12,7 @@
        <title> Home switch Home </title> 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/fbb224999c.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
@@ -19,6 +20,8 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 	<style type="text/css"></style>
 	<link rel="stylesheet" type="text/css" href="css/estilos.css">
+ 
+
 
 </head>	
 
@@ -34,9 +37,10 @@
                         	//echo"<h3><a href=index.php><span class= 'glyphicon glyphicon-home'</span></a> | 
       	           	         //    HOLA ADMINISTRADOR ".$_SESSION['nombre']." ! | <a href=salir.php><span class='glyphicon glyphicon-log-out'></span>CERRAR SESIÓN</a></h3>";
       	           	             $opcion1="<a href'#'><span class'glyphicon-user'></span>Hola Administrador!</a>";
-                                  $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>Salir</a>";  
+                                  $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>SALIR</a>";  
                                   $archivop="propiedadesAdmin.php"; $archivosu="subastasAdmin.php"; $archivoActUsu="subastasActivasAdministrador2.php"; $archivoTerminadas="subastasTerminadasAdministrador2.php";
                                   $verOpcionesLogeado=true;
+                                  $mensajes="mensajes.php";
                         }
                       else {
                       // USUARIO REGISTRADO
@@ -44,9 +48,9 @@
 				                  //echo" <h3><a href=index.php><span class= 'glyphicon glyphicon-home'</span></a> | 
 	      	           	   //  HOLA ".$_SESSION['nombre']." ! | <a href=salir.php><span class='glyphicon glyphicon-log-out'></span>CERRAR SESIÓN</a></h3>";
 	                             $opcion1="<a href'#'><span class'glyphicon-user'></span>Hola $_SESSION[nombre] !</a>" ;  
-                               $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>Salir</a>";
+                               $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>SALIR</a>";
 	                             $archivop="listarPropiedades.php"; $archivosu="subastasUsuario.php"; $archivoActUsu="subastasActivasUsuario4.php"; $archivoTerminadas="subastasTerminadasUsuario.php"; 
-                               $premium="volverPremium.php";
+                               $premium="solicitarPremium.php";
                                $mensajes="mensajes.php";
 			                         $verOpcionesLogeado=true;
                       }
@@ -66,22 +70,28 @@
       <a class="navbar-brand" href="#"><img src="imgs/HSH-Complete.svg" class="img-thumbnail" width="110" height="100" margin-bottom: -60px></a>
     </div>
 
-    <?php // Mostra solo si esta logueado
-    if($verOpcionesLogeado==true){                                   ?>
-    <ul class="nav navbar-nav">
-      
-      <li><a href=<?php echo $archivop; ?>>PROPIEDADES</a></li>
-      <li><a href=<?php echo "$archivosu"; ?>>SUBASTAS</a></li>
-      <li><a href=<?php echo $archivoActUsu; ?>>SUBASTAS ACTIVAS</a></li>
-      <li><a href=<?php echo $archivoTerminadas; ?>>SUBASTAS TERMINADAS</a></li>
-     
+    <?php // Mostra solo si esta logueado PROPIEDADES Y SUBASTAS
+    if($verOpcionesLogeado==true){   ?>
 
-    </ul>
+    <ul class="menu" style="float:left">
+      
+      <li><a href=<?php echo $archivop; ?>></i>PROPIEDADES</a></li>
+      <li><a href=<?php echo "$archivosu"; ?>><i class="fas fa-gavel"></i>SUBASTAS</a>
+       <ul class="submenu">
+            
+             <li><a href=<?php echo $archivoActUsu; ?>>MIS SUBASTAS ACTIVAS</a></li>
+      <li><a href=<?php echo $archivoTerminadas; ?>>MIS SUBASTAS TERMINADAS</a></li>
+          </ul>
+      </li>
+     
+     </ul>
+
+  
    <?php  }
     
      ?>
-    <ul class="nav navbar-nav navbar-right">
-      <?php // Mostra solo si esta logueado
+     <ul class="menu" style="float:right">
+      <?php // Mostra solo si es usurio clasico
     if($verOpcionesLogeado==true and $_SESSION['tipoU']=="clasico"){                                   ?>
        <li><a href=<?php echo $premium; ?>>¡QUIERO SER PREMIUM!</a></li>
      
@@ -90,29 +100,54 @@
     
      ?>
      <?php // Mostra solo si esta logueado la casilla de mensajes
-    if($verOpcionesLogeado==true and $_SESSION['rol']!="1"){ 
+    if($verOpcionesLogeado==true){ 
       
       $sql = "SELECT * FROM mensaje WHERE idPersona='".$_SESSION['id']."' and leido IS NULL";
       $res = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$sql);
       $tot = mysqli_num_rows($res);
                                       ?>
-       <li><a href=<?php echo $mensajes; ?>><?php 
+       <li><a href=<?php echo $mensajes; ?>><i class="fas fa-envelope-open-text"></i><?php 
 
        $numero="($tot)";
        $color = "*FF0000";
-       echo "Mensajes"; 
+      // echo "Mensajes"; 
       echo "<font color='".$color."'>".$numero."</font>";
 
        ?></a></li>
      
       <?php  }
-      
-     //Siempre se muestan estas opciones
+      if($verOpcionesLogeado==true){
+        if ($_SESSION['rol']!="1"){?>     
+            <li><a href=# ><i class="fas fa-cogs"></i>AJUSTES</a>
+                <ul class="submenu"> 
+                     <li><a href=misDatos.php><i class="fas fa-user-alt"></i>-MIS DATOS</a></li>
+                     <li><a href=<?php ?>><i class="far fa-credit-card"></i>-CONFIG. DE PAGO</a></li>
+               </ul>
+            </li>
+        <?php
+        }?>
+
+       <li><?php echo"$opcion1"; ?>   
+         <ul class="submenu">
+             <li><?php echo"$opcion2";?></li>
+         </ul>
+
+       </li>
+
+<?php
+      }
+        
+if($verOpcionesLogeado!=true){
      ?>
-      
+  
       <li><?php echo"$opcion1"; ?></li>
       <li><?php echo"$opcion2";?></li>
     </ul>
+    <?php
+      }
+  
+    
+     ?>
   </div>
 </nav>
 

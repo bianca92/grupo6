@@ -39,7 +39,7 @@ else{
 			
 			<form name="formulario" class="login-form" style="width:600px;">
 				<div class="header">
-					<h1>  PUJAS</h1>
+					<h1> MENSAJES</h1>
 				</div>
 			 
 				

@@ -8,6 +8,7 @@ include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
 include("actualizarSegunFecha.php");
+include("busqueda.php");
 $con=conectar();
 
 
@@ -19,10 +20,33 @@ $con=conectar();
        echo"<script> alert ('DEBE ESTAR REGISTRADO PARA ACCEDER')</script>"; 
     }
 
-
+?>
 
           
-          
+  <?php   
+   //BUSQUEDA
+if (!empty($_GET)){
+$fechaIngresada=$_GET['week'];
+
+//OBTENGO EL NUMERO DE LA SEMANA DE LA FECHA
+$numeroS=date('W', strtotime($fechaIngresada));
+//OBTENGO EL MES
+$mes=date('m', strtotime($fechaIngresada));
+//OBTENGO EL AÑO
+$year=date('Y', strtotime($fechaIngresada));
+if($mes=="12" && $numeroS=="1"){
+  $year=$year+1;
+}
+if($mes=="01" && $numeroS=="53"){
+  $year=$year-1;
+}
+if($mes=="01" && $numeroS=="52"){
+  $year=$year-1;
+}
+
+}
+
+
 
 $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
 su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year,su.idSemana
@@ -55,6 +79,18 @@ else{
     $id=($_SESSION['id']);
   $auxiliar=true;
     while ($row = mysqli_fetch_array($result))  { 
+  
+       if (!empty($_GET)){
+           //si se recibio GET pero esta no es la subasta que no la muestre
+           $muestra=false;
+           if($row['idSemana']==$numeroS && $row['year']==$year){
+            //si esta es la subasta que la muestre
+            $muestra=true;
+           }
+       }
+       else {//si no se recibio nada por GET que me muestre todo
+        $muestra=true;}
+
       $actualizar=actualizar($row['idSubasta']);
       $row['activa']=$actualizar[0];
       $row['cerrada']=$actualizar[1];
@@ -74,7 +110,7 @@ else{
                      }
                   //--------------------------------------------------------------------
                   //SI ESTA ACTIVA QUE LA MUESTRE
-     if(($inscripto==true)&&($row['activa']==1)&&($row['cerrada']==1)){
+     if(($inscripto==true)&&($row['activa']==1)&&($row['cerrada']==1)&&$muestra==true){
       $auxiliar=false;
   ?>
 
@@ -144,102 +180,35 @@ else{
            
             
             <?php 
-          // $pujaMaxima= $row['precioMinimo'];
-          /// $var_consulta4= "SELECT cantidad FROM puja WHERE idSubasta=$row[idSubasta]";
-           // $result4 = mysqli_query($con, $var_consulta4);
+          
+        
 
-              //ACTUALIZO EL MINIMO SI YA HAY OFERTAS ANTERIORES
-             // while ($row4 = mysqli_fetch_array($result4)){
-              //    if ($row4['cantidad']>=$pujaMaxima){
-               //         $pujaMaxima=$row4['cantidad'];    }
-               // }
-
-
-            //OBTENER DATOS DEL GANADOR
-           // $winnerPersona="NADIE HA GANADO";
-            //$winnerCantidad=$row['precioMinimo'];
-
-          //  $winnerConsul= "SELECT cantidad FROM puja WHERE idSubasta=$row[idSubasta]";
-   //         $winnerResult = mysqli_query($con, $winnerConsul);
-     //       $winnerNumPuja = mysqli_num_rows($winnerResult);
-            //CHEQUEA SI HUBO PUJAS PARA ESA PROPIEDAD
-       //     if($winnerNumPuja!=0){
-              //RECUPERO LOS DATOS DE LA PUJA GANADORA
-      //        $winnerConsul2= "SELECT idPersona, cantidad
-       //                         FROM puja
-        //                        WHERE idSubasta= $row[idSubasta] and idPuja IN (SELECT idPuja FROM ganador)";
-         //     $winnerResult2=mysqli_query($con,$winnerConsul2);
-          //    $row7=mysql_fetch_array($winnerResult2);
-              //ACTUALIZO EL MONTO GANADOR
-          //    $winnerCantidad=$row7['cantidad'];
-              //CHEQUEO SI EL QUE GANO FUE EL USUARIO ACTUAL
-          //    if($row7['idPersona']==$id){
-           //     $winnerPersona="GANASTE LA SUBASTA !!";
-          //    }
-           //   else{$winnerPersona="Perdiste la subasta";}
-         //   }
-
-
-          //OBTENGO PUJA GANADORA 
-
-           $pujaMaxima= $row['precioMinimo'];
-           $winnerPersona="";
-           $winnerMsj="NADIE HA GANADO";
-           
-
-           $consulWinner= "SELECT cantidad, idPersona FROM puja WHERE idSubasta=$row[idSubasta]";
+ 
+           $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
             $resultWinner = mysqli_query($con, $consulWinner);
-            $numPujasWinner = mysqli_num_rows($resultWinner);
-            //CHEQUEA SI HUBO PUJAS PARA ESA PROPIEDAD
-            if($numPujasWinner!=0){
-
-              //OBTENGO EL MONTO MAXIMO DE PUJA Y QUIEN LO HIZO (GANADOR)
-              while ($rowWinner = mysqli_fetch_array($resultWinner)){
-                  if ($rowWinner['cantidad']>=$pujaMaxima){
-                        $pujaMaxima=$rowWinner['cantidad'];
-                        $winnerPersona= $rowWinner['idPersona'];  
-                          }
-                }
-               
-                if($winnerPersona==$id){
+            $num = mysqli_num_rows($resultWinner);
+           
+           if ($num==0){
+            $winnerMsj="NADIE HA GANADO";
+            $pujaMaxima="No hubo pujas";
+          }
+           else {
+            $rowWinner = mysqli_fetch_array($resultWinner);
+            $consulPuja= "SELECT cantidad FROM puja WHERE idPuja=$rowWinner[idPuja]";
+            $resultPuja = mysqli_query($con, $consulPuja);
+            $rowPuja = mysqli_fetch_array($resultPuja);
+            $pujaMaxima= $rowPuja['cantidad'];
+            $winnerPersona=$rowWinner['idPersona'];
+          
+                 if($winnerPersona==$id){
                     $winnerMsj="¡¡GANASTE LA SUBASTA!!";
                 }
-                else{$winnerMsj="Perdiste la subasta";} }
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-                 //OBTENGO CUAL ES EL ULTIMO MONTO DE ESTE USUARIO
-          //  $var_consulta5= "SELECT cantidad FROM puja WHERE idSubasta=$row['idSubasta'] and idPersona=$id";
-            // $result5 = mysqli_query($con, $var_consulta5);
-             // $row5= mysqli_fetch_array($result5);
-
-               //SI ESTE USUARIO NO HA HECHO NINGUNA OFERTA ANTERIOR O SEA NO HAY REGISTRO EN LA TABLA
-                   // $primeraOferta=0;
-                    // if($row5==false){
-                     // echo "Aun no has echo ninguna oferta";
-                      // $primeraOferta=1;
-                           //  }
-                    //SI HAY UNA OFERTA ANTERIOR DE ESTE USUARIO QUE SE LA DIGA
-                           //  else{
-                             //    if($pujaMaxima==$row5[0]){
-                               //   echo "Vas ganando la puja";
-                                // }
-                                // else {  echo "Tu oferta anterior fue de $ $row5[0] ."; }
-
-                     
-                   // }
-
+                else{$winnerMsj="Perdiste la subasta";} 
+           }
+          
+           
+           
+        
 
     
               ?>
@@ -276,7 +245,6 @@ $nombre= $nombre + 1;
    <?php if ($auxiliar==true){
     echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
    } } 
-
 
    ?>
    </body>

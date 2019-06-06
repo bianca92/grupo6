@@ -331,7 +331,8 @@ FOOTER
 /* Submenu*/
 /* color del fondo del cuadrado del submenu*/
 .submenu{
-   
+   padding-left: 5px;
+   padding-bottom: 5px;
   list-style: none;
   position: absolute;
   background: #28a3db;
@@ -342,9 +343,8 @@ FOOTER
 }
 /* color de las letras del submenu*/
 .submenu li a{
-  
+  padding-bottom: 5px;
   display: block;
-  padding: 5px;
   color: #353535;
  font-family: 'Bree Serif', serif;
   text-decoration: none;

@@ -79,8 +79,8 @@
       <li><a href=<?php echo "$archivosu"; ?>><i class="fas fa-gavel"></i>SUBASTAS</a>
        <ul class="submenu">
             
-             <li><a href=<?php echo $archivoActUsu; ?>>MIS SUBASTAS ACTIVAS</a></li>
-      <li><a href=<?php echo $archivoTerminadas; ?>>MIS SUBASTAS TERMINADAS</a></li>
+             <li><a href=<?php echo $archivoActUsu; ?>>SUBASTAS ACTIVAS</a></li>
+      <li><a href=<?php echo $archivoTerminadas; ?>>SUBASTAS TERMINADAS</a></li>
           </ul>
       </li>
      
@@ -93,20 +93,29 @@
      <ul class="menu" style="float:right">
       <?php // Mostra solo si es usurio clasico
     if($verOpcionesLogeado==true and $_SESSION['tipoU']=="clasico"){                                   ?>
-       <li><a href=<?php echo $premium; ?>>¡QUIERO SER PREMIUM!</a></li>
-     
+       
+       <?php  //me fijo si el usuario no tiene una solicitud pendiente
+           $var_consulta="SELECT idPersona FROM enesperapremium
+                     WHERE idPersona='".$_SESSION['id']."'";
+           $var_resultado = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$var_consulta);
+           $num=mysqli_num_rows($var_resultado);  
+           if ($num==0){?>
+                 <li><a href=<?php echo $premium; ?>>¡QUIERO SER PREMIUM!</a></li>
+           <?php } 
+           else{ ?>
+                <li><a href=#>SOLICITUD ENVIADA</a></li>
       <?php  }
+    }
 
-    
      ?>
      <?php // Mostra solo si esta logueado la casilla de mensajes
     if($verOpcionesLogeado==true){ 
       
-      $sql = "SELECT * FROM mensaje WHERE idPersona='".$_SESSION['id']."' and leido IS NULL";
+      $sql = "SELECT * FROM mensaje WHERE idPara='".$_SESSION['id']."' and leido IS NULL";
       $res = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$sql);
       $tot = mysqli_num_rows($res);
                                       ?>
-       <li><a href=<?php echo $mensajes; ?>><i class="fas fa-envelope-open-text"></i><?php 
+       <li><a href=<?php echo $mensajes; ?>><i class="fas fa-envelope"></i><?php 
 
        $numero="($tot)";
        $color = "*FF0000";
@@ -117,7 +126,7 @@
      
       <?php  }
       if($verOpcionesLogeado==true){
-        if ($_SESSION['rol']!="1"){?>     
+        if ($_SESSION['rol']!="1"){//config del usuario?>     
             <li><a href=# ><i class="fas fa-cogs"></i>AJUSTES</a>
                 <ul class="submenu"> 
                      <li><a href=misDatos.php><i class="fas fa-user-alt"></i>-MIS DATOS</a></li>
@@ -125,7 +134,16 @@
                </ul>
             </li>
         <?php
-        }?>
+        }  else{ //menu del administrador?>        
+                    <li><a href=# > <i class="fas fa-bars"></i>     <i class="fas fa-bars"></i></a>
+                <ul class="submenu"> 
+                     <li><a href=verListaEspera.php><i class="fas fa-ellipsis-v"></i>-VER LISTA EN ESPERA</a></li>
+                    
+               </ul>
+            </li>
+            <?php
+             }  
+        ?>
 
        <li><?php echo"$opcion1"; ?>   
          <ul class="submenu">

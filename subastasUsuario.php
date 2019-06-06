@@ -6,6 +6,8 @@ include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
 include("actualizarSegunFecha.php");
+
+
  
  //para que no se pueda acceder a esta pagina si no esta logeado
 try{
@@ -25,6 +27,9 @@ su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.idS
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
             
+$fecha_actual = date('Y-m-d');
+$nuevafecha = strtotime ( '+6 month' , strtotime ( $fecha_actual ) ) ;
+$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 
     if ($num==0) {
   echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
@@ -33,8 +38,30 @@ else{
      ?>
      <link  href="css/bootstrap1.min.css">
 <div class="container">
+
+<form method="GET" action="subastasUsuario.php" >
+ <p></i><input type="date" name="inicio" min='<?php echo $nuevafecha; ?>' required="required" />
+ </i><input type="date" name="fin" min='<?php echo $nuevafecha; ?>' required="required"/>
+ <input type="submit" value="Buscar"/> 
+</form>
    
 <?php 
+ //BUSQUEDA
+if (!empty($_GET)){
+$inicio=$_GET['inicio'];
+$fin=$_GET['fin'];
+
+
+$nuevafecha = strtotime ( '+2 month' , strtotime ( $inicio ) ) ;
+$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+
+if ($fin>$nuevafecha){
+  echo '<script> alert("El rango debe ser inferior a 2 meses");</script>';
+  echo "<script> window.location ='subastasUsuario.php' ;</script>";}
+
+
+
+}
   //for($x = 1; $x <=($num/3) ; $x++){
 ?>
   <div class="row">
@@ -45,6 +72,26 @@ else{
     //significa que hubo subastas disponibles pero o ya estan activas o ya terminaron y por eso no las muestra en esta subasta
     $auxiliar=true;
     while ($row = mysqli_fetch_array($result))  { 
+        if (!empty($_GET)){
+           //si se recibio GET pero esta no es la subasta que no la muestre
+          $muestra=false;
+           $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
+          $week_start= $week_start->format('Y-m-j');
+           $week_end = strtotime ( '+6 day' , strtotime ( $week_start ) ) ;
+           $week_end = date ( 'Y-m-j' , $week_end);
+            
+
+         if($week_start>=$inicio && $week_end<=$fin){
+            //si esta es la subasta que la muestre
+
+          $muestra=true;
+         }
+      }
+       else {//si no se recibio nada por GET que me muestre todo
+        $muestra=true;
+        }
+
+
       $actualizar=actualizar($row['idSubasta']);
       $row['activa']=$actualizar[0];
       $row['cerrada']=$actualizar[1];
@@ -70,7 +117,8 @@ else{
                              // echo "$row2[idSubasta] y $row[idSubasta]";
                      }}
       
-      if(($row['activa']!=1)&&($row['cerrada']!=1)){
+      if(($row['activa']!=1)&&($row['cerrada']!=1)&&$muestra==true){
+        
         //si entra aca quiere decir que va a visualizar al menos 1 resultado.
        if($inscripto==false && $fecha_actual>=$row['fechaFinInscripcion'] ){}
 

@@ -23,11 +23,25 @@ else
 $monto=$_POST['monto'];
 $subasta=$_POST['subasta'];
 $usuario=$_POST['usuario'];
-//SI ESLA PRIMERA OFERTA QUE CREE LA TABLA
+$ganador=$_POST['ganador'];
+$fecha=$_POST['fecha'];
 
 
-	$var_consulta= "INSERT INTO puja (idPersona,idSubasta,cantidad)values('$usuario','$subasta','$monto') ";
+
+	$var_consulta= "INSERT INTO puja (idPersona,idSubasta,cantidad,fecha)values('$usuario','$subasta','$monto','$fecha') ";
   $var_resultado = $link->query($var_consulta);
+  $ultimo_id=mysqli_insert_id($link);
+
+if($ganador=="1"){
+	$var_consulta= "INSERT INTO ganador (idPersona,idSubasta,idPuja)values('$usuario','$subasta','$ultimo_id') ";
+  $var_resultado = $link->query($var_consulta);
+}
+else{
+
+	$consulta="UPDATE ganador SET idPersona='$usuario', idPuja='$ultimo_id' WHERE idSubasta='$subasta' ";
+
+$resu = $link->query($consulta); 
+}
 
  
 

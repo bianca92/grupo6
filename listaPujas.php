@@ -15,7 +15,7 @@ $subasta=$_GET['sub'];
 
 
 //HAGO LA CONSULTA PARA SABER LOS ID DE LOS INSCRIPTOS A ESTA SUBASTA
-$var_consulta= "SELECT idPersona, cantidad FROM puja WHERE idSubasta=$subasta";
+$var_consulta= "SELECT idPersona, cantidad, fecha FROM puja WHERE idSubasta=$subasta ORDER BY cantidad DESC";
    $result = mysqli_query($con, $var_consulta);
    $num=mysqli_num_rows($result); 
 if ($num==0) {
@@ -49,12 +49,16 @@ else{
 					 	<?php $primero = "Nombre y apellido";
                               $segundo="E-mail";
                               $tercero="Monto";
+                              $cuarto="Fecha";
+                               $quinto="Hora";
                                $color = "#2E86C1"; 
   ?>
  <tr>
   <td><?php echo "<p><font color='".$color."'>".$primero."</font></p>";  ?> </td> 
   <td ><?php echo "<p><font color='".$color."'>".$segundo."</font></p>";  ?></td> 
   <td ><?php echo "<p><font color='".$color."'>".$tercero."</font></p>";  ?> </td>
+  <td ><?php echo "<p><font color='".$color."'>".$cuarto."</font></p>";  ?></td> 
+  <td ><?php echo "<p><font color='".$color."'>".$quinto."</font></p>";  ?> </td>
  </tr>
                   
                     <?php
@@ -67,9 +71,12 @@ else{
                          $row2 = mysqli_fetch_array($result2); ?>
                         
                          <tr>
-                             <td> <br><?php echo "$i - $row2[1] $row2[0]" ; ?> </td>
+                             <td> <br><?php echo "- $row2[1] $row2[0]" ; ?> </td>
                               <td> <br><?php echo "$row2[2]"; ?> </td>
                                 <td><br><?php echo "$$row[1]"; ?> </td>
+                                 <td> <br><?php echo "".date('d/m/Y', strtotime($row['fecha'])).""; ?> </td>
+                                <td> <br><?php echo "".date('H:i', strtotime($row['fecha'])).""; ?> </td>
+                                
                           </tr>
                          
   

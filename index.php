@@ -16,8 +16,12 @@
 <body>
 	
 	<?php
-		Include ("cabecera.php");
-		Include("verPropiedadesIndex.php");
+		Include ("cabecera.php");?>
+		<div class="container">
+		<div class="row"> <?php if(isset($_SESSION['estado'])){ if($_SESSION['estado']=="logeado" && $_SESSION['rol']!=="1"){ include("busqueda.php");} }?></div></div>
+		
+
+		<?php Include("verPropiedadesIndex.php");
 		
 	?>
 

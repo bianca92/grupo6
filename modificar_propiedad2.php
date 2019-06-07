@@ -22,18 +22,21 @@ $Propiedad=$_POST['propiedad'];
 
 $titulo=$_POST['titulo'];
 $descripcion=$_POST['descripcion'];
-$idUbicacion=$_POST['ubicacion'];
+ $pais=$_POST['pais'];
+     $provincia=$_POST['provincia'];
+      $localidad=$_POST['localidad'];
+       $direccion=$_POST['direccion'];
 
 //if (($_FILES['imagen']['error'])> 0)
 if (count(array_filter($_FILES['imagen']['name']))==0)
 {
 
-	$var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo',ciudad='$idUbicacion', descripcion='$descripcion' WHERE idPropiedad='$Propiedad' ";
+	$var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo', descripcion='$descripcion', pais='$pais', provincia='$provincia',localidad='$localidad', direccion='$direccion' WHERE idPropiedad='$Propiedad' ";
   $var_resultado = $link->query($var_consulta);
 }
 else {
 	
-  $var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo',ciudad='$idUbicacion', descripcion='$descripcion' WHERE idPropiedad='$Propiedad' ";
+  $var_consulta= "UPDATE propiedad SET idPropiedad='$Propiedad', titulo='$titulo', descripcion='$descripcion', pais='$pais', provincia='$provincia',localidad='$localidad', direccion='$direccion' WHERE idPropiedad='$Propiedad' ";
 
 $resu=mysqli_query($link,$var_consulta);
 $query="DELETE FROM imagen WHERE idpropiedad='$Propiedad'";

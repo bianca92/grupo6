@@ -67,7 +67,7 @@
 <nav class="navbar navbar">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#"><img src="imgs/HSH-Complete.svg" class="img-thumbnail" width="110" height="100" margin-bottom: -60px></a>
+      <a class="navbar-brand" href="index.php"><img src="imgs/HSH-Complete.svg" class="img-thumbnail" width="110" height="100" margin-bottom: -60px></a>
     </div>
 
     <?php // Mostra solo si esta logueado PROPIEDADES Y SUBASTAS

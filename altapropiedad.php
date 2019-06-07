@@ -6,13 +6,16 @@ session_start();
 
     $t=$_POST['titulo'];
     $des=$_POST['descripcion'];
-    $c=$_POST['ubicacion'];
+    $pais=$_POST['pais'];
+     $provincia=$_POST['provincia'];
+      $localidad=$_POST['localidad'];
+       $direccion=$_POST['direccion'];
     
         $con=conectar();
 
         
     //Insertar informacion de texto  
-  $query="INSERT INTO propiedad (titulo,descripcion,ciudad)values('$t','$des','$c')";
+  $query="INSERT INTO propiedad (titulo,descripcion,pais,provincia,localidad,direccion)values('$t','$des','$pais','$provincia','$localidad','$direccion')";
   $resu=mysqli_query($con,$query);
 
  $ultimo_id=mysqli_insert_id($con);

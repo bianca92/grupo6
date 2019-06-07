@@ -20,7 +20,7 @@ catch(Exception $e){
 }
 
 
-$query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
+$query = "SELECT * FROM propiedad";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
 
@@ -40,10 +40,11 @@ $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
     <table class="table table-hover">
     <thead>
       <tr>
-
         <th>Propiedad</th>
-        <th></th>
-        <th>Ciudad</th>
+        <th>Titulo</th>
+        <th>Pais</th>
+        <th>Provincia</th>
+        <th>Localidad</th>
       </tr>
     </thead>
     <tbody>
@@ -55,7 +56,9 @@ $query = "SELECT idPropiedad,titulo,ciudad,imagen,tipoimagen FROM propiedad";
       <tr>
             <td><?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:20% />';?></td>
             <td><h4><?php echo "$row[titulo]" ?></h4> </td>
-            <td><h4><?php echo" $row[ciudad] ";?></h4></td>
+             <td><h4><?php echo" $row[pais] ";?></h4></td>
+              <td><h4><?php echo" $row[provincia] ";?></h4></td>
+            <td><h4><?php echo" $row[localidad] ";?></h4></td>
             <td><?php echo "<a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>MODIFICAR</button> </a>" ;?></td>
             <td><?php echo "<a href='alta_subasta.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>SUBASTAR</button> </a>" ;?></td>
          </tr>  

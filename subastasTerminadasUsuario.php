@@ -8,7 +8,7 @@ include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
 include("actualizarSegunFecha.php");
-include("busqueda.php");
+
 $con=conectar();
 
 
@@ -48,7 +48,7 @@ if($mes=="01" && $numeroS=="52"){
 
 
 
-$query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
+$query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
 su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year,su.idSemana
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
             $result = mysqli_query($con, $query);
@@ -176,7 +176,7 @@ else{
       <h4><?php $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
                                            $fi= $week_start->format('d/m/Y');
                 echo "Para la semana del $fi.";?></h4>
-            <h4><?php echo "$row[titulo] en la ciudad de $row[ciudad] ";?></h4>
+            <h4><?php echo "$row[titulo] en la localidad de $row[localidad] ";?></h4>
            
             
             <?php 

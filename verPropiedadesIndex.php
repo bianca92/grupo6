@@ -7,6 +7,7 @@
 include("clases.php");  
   include("mostrarImagen.php");
 include("conexion.php");
+
 $con=conectar();
 
   if(isset($_GET['msj'])){
@@ -18,7 +19,7 @@ $con=conectar();
     }
 
 
-$query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
+$query = "SELECT idPropiedad,titulo,localidad FROM propiedad";
             $result = mysqli_query($con, $query);
                    $num=mysqli_num_rows($result); 
      ?>
@@ -58,7 +59,7 @@ $query = "SELECT idPropiedad,titulo,ciudad FROM propiedad";
          
 
           <div class="caption">
-            <h4><?php echo "$row[titulo] en la ciudad de: $row[ciudad] ";?></h4>
+            <h4><?php echo "$row[titulo] en la localidad de: $row[localidad] ";?></h4>
            
           </div>
        </div>

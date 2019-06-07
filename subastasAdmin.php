@@ -21,7 +21,7 @@ catch(Exception $e){
 }
 
 
-$query = "SELECT p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, 
+$query = "SELECT p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, 
                  su.idSubasta,su.activa,su.fechaFinInscripcion, su.year, su.idSemana
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
             $result = mysqli_query($con, $query);
@@ -42,7 +42,7 @@ else{
       <tr>
         <th>Subastas</th>
         <th>Titulo</th>
-        <th>Ciudad</th>
+        <th>Localidad</th>
         <th>Semana</th>
         <th>Año</th>
         <th>Precio Inicial</th>
@@ -75,7 +75,7 @@ else{
         <tr>
           <td> <?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:30% />';?></td>
            <td><h4><?php echo "$row[titulo]" ?></h4> </td>
-            <td><h4><?php echo" $row[ciudad] ";?></h4></td>
+            <td><h4><?php echo" $row[localidad] ";?></h4></td>
             <td><h4><?php $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
                                            $fi= $week_start->format('d/m');echo "$fi" ;?></h4></td>
             <td><h4><?php  $fi= $week_start->format('Y');echo "$fi" ;?></h4></td>

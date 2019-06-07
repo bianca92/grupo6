@@ -21,7 +21,7 @@ catch(Exception $e){
 $con=conectar();
 
 
-$query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.ciudad ,su.precioMinimo, su.fechaInicioSubasta, 
+$query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, 
 su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.idSemana, su.year
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
             $result = mysqli_query($con, $query);
@@ -38,12 +38,13 @@ else{
      ?>
      <link  href="css/bootstrap1.min.css">
 <div class="container">
-
+<!---
+  DESPUES LO ARREGLO:
 <form method="GET" action="subastasUsuario.php" >
  <p></i><input type="date" name="inicio" min='<?php echo $nuevafecha; ?>' required="required" />
  </i><input type="date" name="fin" min='<?php echo $nuevafecha; ?>' required="required"/>
  <input type="submit" value="Buscar"/> 
-</form>
+</form> --->
    
 <?php 
  //BUSQUEDA
@@ -189,7 +190,7 @@ if ($fin>$nuevafecha){
       <h4><?php $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
                                            $fi= $week_start->format('d/m/Y');
                 echo "Para la semana del $fi.";?></h4>
-            <h4><?php echo "$row[titulo] en la ciudad de $row[ciudad] ";?></h4>
+            <h4><?php echo "$row[titulo] en la localidad de $row[localidad] ";?></h4>
            
              <h4><?php echo "Precio Minimo: $ $row[precioMinimo].";?></h4>
             <?php 

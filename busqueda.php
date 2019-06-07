@@ -1,22 +1,16 @@
-<!---<form action="formulario.php" method="post">
- <p>Su nombre: <input type="text" name="nombre" /></p>
- <p>Su edad: <input type="text" name="edad" /></p>
- <p><input type="submit" /></p>
-</form>
---->
-<form method="GET" action="subastasTerminadasUsuario.php" >
- <p><i class="fas fa-search"></i><input type="date" name="inicio" />
- 	<input type="date" name="fin" />
- <input type="submit" value="Buscar"/> 
-</form>
 <?php
-//if (!empty($_POST)){
-//$nombre=$_POST['nombre'];
-//$edad=$_POST['edad'];echo "$nombre - $edad";}
-//else {echo "hola";}
 
 
+$fecha_actual = date('Y-m-d');
+$nuevafecha = strtotime ( '+6 month' , strtotime ( $fecha_actual ) ) ;
+$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 
           
  
 ?>
+<form method="GET" action="listarPropiedades.php" >
+ <p></i><input type="text" name="lugar" required="required" placeholder="Ingrese lugar" />
+ </i><input type="date" name="inicio" min='<?php echo $nuevafecha; ?>' required="required" />
+ </i><input type="date" name="fin" min='<?php echo $nuevafecha; ?>' required="required"/>
+ <input type="submit" value="Buscar"/> 
+</form>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2019 a las 02:05:40
+-- Tiempo de generación: 14-06-2019 a las 14:31:34
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.4
 
@@ -31,7 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `comprah` (
   `IdCompraH` int(11) NOT NULL,
   `idPersona` int(11) NOT NULL,
-  `idHotsale` int(11) NOT NULL
+  `idHotsale` int(11) NOT NULL,
+  `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -43,8 +44,8 @@ CREATE TABLE `comprah` (
 CREATE TABLE `comprap` (
   `idCompraP` int(11) NOT NULL,
   `idPersona` int(11) NOT NULL,
-  `IdSemana` int(11) NOT NULL,
-  `precio` decimal(10,0) NOT NULL
+  `IdSubasta` int(11) NOT NULL,
+  `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -94,7 +95,7 @@ CREATE TABLE `ganador` (
 
 CREATE TABLE `hotsale` (
   `idHotsale` int(11) NOT NULL,
-  `idSemana` int(11) NOT NULL,
+  `idSubasta` int(11) NOT NULL,
   `precio` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -145,8 +146,17 @@ INSERT INTO `imagen` (`idImagen`, `contenidoImagen`, `tipoImagen`, `idPropiedad`
 CREATE TABLE `inscripto` (
   `idInscripto` int(11) NOT NULL,
   `idPersona` int(11) NOT NULL,
-  `idSubasta` int(11) NOT NULL
+  `idSubasta` int(11) NOT NULL,
+  `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `inscripto`
+--
+
+INSERT INTO `inscripto` (`idInscripto`, `idPersona`, `idSubasta`, `fecha`) VALUES
+(1, 5, 7, '2019-06-03 00:00:00'),
+(10, 5, 7, '2019-06-03 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -198,17 +208,25 @@ CREATE TABLE `persona` (
   `tipoU` varchar(11) DEFAULT NULL,
   `rol` int(3) DEFAULT NULL,
   `credito` int(2) DEFAULT NULL,
-  `ciudad` varchar(45) NOT NULL
+  `ciudad` varchar(45) NOT NULL,
+  `fechaNacimiento` date NOT NULL,
+  `idTarjeta` int(11) NOT NULL,
+  `fechaRegistro` date NOT NULL,
+  `fechaModificacion` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `persona` (`IdPersona`, `dni`, `nombre`, `apellido`, `telefono`, `email`, `clave`, `tipoU`, `rol`, `credito`, `ciudad`) VALUES
-(2, 33333333, 'osvaldo', 'perez', 222412345, 'osvaldo@gmail.com', '123456', 'administra', 1, NULL, 'la plata'),
-(5, 94534089, 'Pablo', 'Perez', 221, 'pablo@hotmail.com', '1234567', 'clasico', 0, 2, 'La Plata'),
-(7, 94534089, 'Maria', 'Cabrera', 2147483647, 'lucy@gmail.com', '1234567', 'clasico', 0, 2, 'La Plata');
+INSERT INTO `persona` (`IdPersona`, `dni`, `nombre`, `apellido`, `telefono`, `email`, `clave`, `tipoU`, `rol`, `credito`, `ciudad`, `fechaNacimiento`, `idTarjeta`, `fechaRegistro`, `fechaModificacion`) VALUES
+(2, 33333333, 'osvaldo', 'perez', 222412345, 'osvaldo@gmail.com', '123456', 'administra', 1, NULL, 'la plata', '0000-00-00', 0, '0000-00-00', '0000-00-00'),
+(5, 94534089, 'Pablo', 'Perez', 221, 'pablo@hotmail.com', '', 'clasico', 0, 2, 'toloda', '2000-10-04', 3, '2019-06-04', '2019-06-04'),
+(7, 94534089, 'Maria', 'Cabrera', 2147483647, 'lucy@gmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '0000-00-00', 0, '0000-00-00', '0000-00-00'),
+(8, 45345678, 'susana', 'ana', 0, 'susana@hotmail.com', 'susana', 'clasico', 0, 2, 'la plata', '2019-05-08', 0, '0000-00-00', '0000-00-00'),
+(9, 45345678, 'susana', 'ana', 0, 'susana@hotmail.com', 'susana', 'clasico', 0, 2, 'la plata', '2019-05-08', 0, '0000-00-00', '0000-00-00'),
+(10, 12345678, 'gloria', 'gloria', 0, 'gloria@hotmail.com', 'gloriosa', 'clasico', 0, 2, 'la plata', '1999-02-09', 0, '0000-00-00', '0000-00-00'),
+(11, 12345678, 'gloria', 'gloria', 0, 'gloria@hotmail.com', 'gloriosa', 'clasico', 0, 2, 'la plata', '1999-02-09', 0, '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -376,6 +394,30 @@ INSERT INTO `subasta` (`idSubasta`, `precioMinimo`, `idSemana`, `fechaInicioInsc
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tarjeta`
+--
+
+CREATE TABLE `tarjeta` (
+  `idTarjeta` int(11) NOT NULL,
+  `idPersona` int(11) NOT NULL,
+  `numero` text NOT NULL,
+  `marca` text NOT NULL,
+  `vencimiento` text NOT NULL,
+  `codigo` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tarjeta`
+--
+
+INSERT INTO `tarjeta` (`idTarjeta`, `idPersona`, `numero`, `marca`, `vencimiento`, `codigo`) VALUES
+(1, 8, '2147483647', 'visa', '0000-00-00 00:00:00', 345),
+(2, 10, '2147483647', 'visa', '0000-00-00 00:00:00', 234),
+(3, 5, '0', 'visa', '06/22', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `ubicacion`
 --
 
@@ -395,7 +437,9 @@ CREATE TABLE `valoracion` (
   `idValoracion` int(11) NOT NULL,
   `comentario` text,
   `puntuacion` int(11) UNSIGNED DEFAULT NULL,
-  `idPropiedad` int(11) NOT NULL
+  `idPropiedad` int(11) NOT NULL,
+  `idPersona` int(11) NOT NULL,
+  `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -493,6 +537,12 @@ ALTER TABLE `subasta`
   ADD PRIMARY KEY (`idSubasta`);
 
 --
+-- Indices de la tabla `tarjeta`
+--
+ALTER TABLE `tarjeta`
+  ADD PRIMARY KEY (`idTarjeta`);
+
+--
 -- Indices de la tabla `ubicacion`
 --
 ALTER TABLE `ubicacion`
@@ -554,7 +604,7 @@ ALTER TABLE `imagen`
 -- AUTO_INCREMENT de la tabla `inscripto`
 --
 ALTER TABLE `inscripto`
-  MODIFY `idInscripto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idInscripto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `mensaje`
@@ -566,7 +616,7 @@ ALTER TABLE `mensaje`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `IdPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `IdPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `propiedad`
@@ -597,6 +647,12 @@ ALTER TABLE `semanatienepropiedad`
 --
 ALTER TABLE `subasta`
   MODIFY `idSubasta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `tarjeta`
+--
+ALTER TABLE `tarjeta`
+  MODIFY `idTarjeta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `ubicacion`

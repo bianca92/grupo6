@@ -6,7 +6,9 @@ $Subasta=$_GET['idS'];
 
 $Persona=$_GET['idU'];
 
-$var_consulta= "INSERT INTO inscripto (idPersona,idSubasta)values('$Persona','$Subasta')";
+$fechaActual = date('Y-m-d-H:i');
+
+$var_consulta= "INSERT INTO inscripto (idPersona,idSubasta,fecha)values('$Persona','$Subasta','$fechaActual')";
    $result = mysqli_query($link, $var_consulta) ;
 
 

@@ -129,10 +129,11 @@
         if ($_SESSION['rol']!="1"){//config del usuario?>     
             <li><a href=# ><i class="fas fa-cogs"></i>AJUSTES</a>
                 <ul class="submenu"> 
-                     <li><a href=misDatos.php><i class="fas fa-user-alt"></i>-MIS DATOS</a></li>
-                     <li><a href=<?php ?>><i class="far fa-credit-card"></i>-CONFIG. DE PAGO</a></li>
+                     <li><a href=misDatos.php><i class="fas fa-user-alt"></i>  MIS DATOS</a></li>
+                     <li><a href=actividadUsuario.php><i class="fas fa-mouse-pointer"></i>  MI ACTIVIDAD</a></li>
                </ul>
             </li>
+
         <?php
         }  else{ //menu del administrador?>        
                     <li><a href=# > <i class="fas fa-bars"></i>     <i class="fas fa-bars"></i></a>

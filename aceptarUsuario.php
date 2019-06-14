@@ -7,8 +7,14 @@ $persona = $_GET['idU'];
 
 $link=conectar();
 
+$fechaActual = date('Y-m-d-H:i');
+
 
 $consulta="UPDATE persona SET tipoU='premium' WHERE idPersona='$persona' ";
+
+$resu = $link->query($consulta); 
+
+$consulta="UPDATE persona SET fechaPremium='$fechaActual' WHERE idPersona='$persona' ";
 
 $resu = $link->query($consulta); 
 

@@ -81,11 +81,8 @@ $row = mysqli_fetch_array($var_resultado);
 					<label for="clave2" >Confirme Contraseña Nueva: </br></label>
 					<input type="password" name="clave2" minlength="6" size="20" maxlength="20" class="input password" >	
 
-					
-
-<?php 	// MODIFICAR---------------------------------- 
-			//		<label for="ubicacion">Fecha de Nacimiento: </br></label>
-		//			<input type="text" name="nacimiento" class="input username" value='<?php echo date('d-m-Y',$row[fechaNacimiento]) (agregar el cierre de php, una comilla simple y el simbolo >?>
+					<label for="fechaNacimiento">Fecha de Nacimiento: </br></label>
+					<input id="datepicker" type="date" name="nacimiento" class="input username" size="8" autocomplete="off" max='<?php echo $fechaMayorEdad; ?>'  title="Debes ser mayor de edad para poder registrarte" id="valNacimiento" required="required">
 
 					<label for="ubicacion">Datos de la Tarjeta: </br></label>
 

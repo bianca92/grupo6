@@ -1,52 +1,5 @@
 <html>
- <head>
-   <style type="text/css">
-    .botoncito{
-      
-      padding: 6px;
-      font-weight: 350;
-      font-size: 12px;
-      color: #ffffff;
-      background-color: #1883ba;
-      border-radius: 6px;
-      
-  }
-  .botoncito:hover{
-    color: #1883ba;
-    background-color: #ffffff;
-  }
-</style>
-<style type="text/css">
-    .elBoton{
-      
-      padding: 6px;
-      font-weight: 350;
-      font-size: 12px;
-      color: #ffffff;
-      background-color: #F0AD4E;
-      border-radius: 6px;
-      
-  }
-  .elBoton:hover{
-    color: #F79D1D;
-    background-color: #CBE9F8;
-  }
-</style>
-</style>
-<style type="text/css">
-    .texto{
-      
-      padding: 20px;
-      font-weight: 350;
-      font-size: 14px;
-      color: #000000;
-      background-color: #CBE9F8;
-      
-      
-  }
-</style>
 
- </head>
 <body>
 
 <?php
@@ -82,61 +35,72 @@ $query = "SELECT * FROM persona p INNER JOIN  tarjeta t ON p.IdPersona = t.idPer
   
 
  <h2 align="center">  MIS DATOS</h2>
+
 <br/>
  
- <div class="texto">
- <ul style="list-style-type:none;">
-      <b><li>  Nombre:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "    $datosUsuario[nombre]";?> </li>
-      </ul>
+ <form name="formulario" class="login-form" style="width:600px; background-color:#fff;">
+ 	
+ 	<li style="text-align: center"> <?php echo "  Ultima modificacion de datos: ".date('d/m/Y-H:i', strtotime($datosUsuario['fechaModificacion']))."";?>
+   <a style="font-size:25px; " href="modificarDatosUsuario.php">Editar</a></li>
+
+
+
+
+ <ul style="list-style-type:none;font-size:20px">
+
+
+
+      <b><li>  Nombre:</b>
+      
+         <?php echo "    $datosUsuario[nombre]";?> </li>
+
         <br/>
-      <b><li>  Apellido:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "    $datosUsuario[apellido]";?> </li>
-      </ul>
+      <b><li>  Apellido:</b>
+      
+         <?php echo "    $datosUsuario[apellido]";?> </li>
+     
         <br/>
-      <b><li>  DNI:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "    $datosUsuario[dni]";?> </li>
-      </ul>
+      <b><li>  DNI:</b>
+      
+         <?php echo "    $datosUsuario[dni]";?> </li>
+   
         <br/>
-      <b><li>  Fecha de Nacimiento:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "".date('d/m/Y', strtotime($datosUsuario['fechaNacimiento']))."";?> </li>
-      </ul>
+      <b><li>  Fecha de Nacimiento:</b>
+     
+         <?php echo "".date('d/m/Y', strtotime($datosUsuario['fechaNacimiento']))."";?> </li>
+   
         <br/>
-      <b><li>  Email:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "    $datosUsuario[email]";?> </li>
-      </ul>
+      <b><li>  Email:</b>
+      
+         <?php echo "    $datosUsuario[email]";?> </li>
+      
         <br/>
-      <b><li>  Clave:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "    *********";?> </li>
-      </ul>
+      <b><li>  Clave:</b>
+     
+         <?php echo "    *********";?> </li>
+      
         <br/>
-      <b><li>  Telefono:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "    $datosUsuario[telefono]";?> </li>
-      </ul>
+      <b><li>  Telefono:</b>
+     
+         <?php echo "    $datosUsuario[telefono]";?> </li>
+      
         <br/>
-      <b><li>  Ciudad:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "    $datosUsuario[ciudad]";?> </li>
-      </ul>
+      <b><li>  Ciudad:</b>
+      
+         <?php echo "    $datosUsuario[ciudad]";?> </li>
+      
         <br/>
-      <b><li>  Tarjeta:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "    Marca: $datosUsuario[marca]";?> </li>
+      <b><li>  Tarjeta:</b>
+     
+         <?php echo "    Marca: $datosUsuario[marca]";?> </li>
 
         <?php  $ult4 = substr($datosUsuario['numero'],12); ?>
         <li> <?php echo "    Numero: **** **** **** $ult4";?> </li>
-      </ul>
+      
         <br/>
-      <b><li>  Creditos:</li></b>
-      <ul style="list-style-type:none;">
-        <li> <?php echo "    Disponibles: $datosUsuario[credito]" ?> </li>
+      <b><li>  Creditos:</b>
+     
+         <?php echo "    Disponibles: $datosUsuario[credito]" ?> </li>
               <?php
 
               // SI TIENE CREDITOS QUE MUESTRE CUANDO SE VENCEN (FORMATO MES/ANIO) 
@@ -148,7 +112,7 @@ $query = "SELECT * FROM persona p INNER JOIN  tarjeta t ON p.IdPersona = t.idPer
                      echo "Vencimiento: 1/$nueva"; ?> </li>
                      <?php 
                     } ?>
-                  </ul>
+                
                     <br/>
                     <?php
           //SI NO ES PREMIUM QUE LE MUESTRE EL BOTON PARA HACERSE
@@ -163,11 +127,10 @@ $query = "SELECT * FROM persona p INNER JOIN  tarjeta t ON p.IdPersona = t.idPer
        ?> 
 
  </ul>
-   </div>
-   <?php echo "  Ultima modificacion de datos: ".date('d/m/Y', strtotime($datosUsuario['fechaModificacion']))."";?><br/>
-   <a href="modificarDatosUsuario.php">Editar</a>
+  
+  
  
- 
+  </form>
 
  <?php
  

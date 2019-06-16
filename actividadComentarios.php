@@ -22,23 +22,36 @@ catch(Exception $e){
 
 $id=($_SESSION['id']);
 
-
-?>
-
-
-<?PHP
 include("cabeceraActividad.php");
+?>
+<body>
+	<form name="formulario" class="login-form" style="width:900px; background-color:#fff;">
+<table>
+<?PHP
+
+
 try{
 	$arreglo=actividadComentariosYPuntuacionesUsuario($id);
-	foreach($arreglo as $dato) ?>
-		<ul style="list-style-type:disc;">
-			<li><?php echo "$dato[1]<br/>";?></li>
-		</ul>
-	<?php
+	foreach($arreglo as $dato) {?>
+		
+   <tr> 
+   	<td><br><?php echo "$dato[1]<br/>"; ?> </td>
+                                
+    </tr>
+
+		
+
+
+<?php
+	}
+		
+
 }
 catch(Exception $e){
 	echo $e->getMessage();
 }
 ?>
-
+</table>
+</form>
+</body>
 </html>

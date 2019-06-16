@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-06-2019 a las 14:31:34
+-- Tiempo de generación: 16-06-2019 a las 20:10:43
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.4
 
@@ -87,6 +87,13 @@ CREATE TABLE `ganador` (
   `idPuja` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `ganador`
+--
+
+INSERT INTO `ganador` (`idGanador`, `idPersona`, `idSubasta`, `idPuja`) VALUES
+(3, 13, 5, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -155,8 +162,8 @@ CREATE TABLE `inscripto` (
 --
 
 INSERT INTO `inscripto` (`idInscripto`, `idPersona`, `idSubasta`, `fecha`) VALUES
-(1, 5, 7, '2019-06-03 00:00:00'),
-(10, 5, 7, '2019-06-03 00:00:00');
+(5, 13, 5, '2019-06-14 12:50:00'),
+(6, 13, 6, '2019-06-14 12:51:00');
 
 -- --------------------------------------------------------
 
@@ -189,7 +196,11 @@ INSERT INTO `mensaje` (`idMensaje`, `idSubasta`, `contenido`, `leido`, `fecha`, 
 (68, 91, 'La subasta se ha activado', NULL, '2019-06-06 09:22:00', 2, 7, 1),
 (69, 91, 'La subasta se ha activado', 1, '2019-06-06 09:22:00', 2, 5, 1),
 (70, 1, 'La subasta se ha activado', 1, '2019-06-07 00:36:00', 2, 5, 1),
-(71, 1, 'Has perdido la subasta', 1, '2019-06-07 01:21:00', 2, 5, 2);
+(71, 1, 'Has perdido la subasta', 1, '2019-06-07 01:21:00', 2, 5, 2),
+(72, 5, 'La subasta se ha activado', 1, '2019-06-14 13:24:00', 2, 13, 1),
+(73, 5, 'Has perdido la subasta', 1, '2019-06-14 15:13:00', 2, 13, 2),
+(74, 5, 'Felicidades has ganado la subasta', 1, '2019-06-14 15:14:00', 2, 13, 2),
+(75, 5, 'Felicidades has ganado la subasta', 1, '2019-06-14 15:18:00', 2, 13, 2);
 
 -- --------------------------------------------------------
 
@@ -209,10 +220,10 @@ CREATE TABLE `persona` (
   `rol` int(3) DEFAULT NULL,
   `credito` int(2) DEFAULT NULL,
   `ciudad` varchar(45) NOT NULL,
-  `fechaNacimiento` date NOT NULL,
+  `fechaNacimiento` datetime NOT NULL,
   `idTarjeta` int(11) NOT NULL,
-  `fechaRegistro` date NOT NULL,
-  `fechaModificacion` date NOT NULL
+  `fechaRegistro` datetime NOT NULL,
+  `fechaModificacion` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -220,13 +231,8 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`IdPersona`, `dni`, `nombre`, `apellido`, `telefono`, `email`, `clave`, `tipoU`, `rol`, `credito`, `ciudad`, `fechaNacimiento`, `idTarjeta`, `fechaRegistro`, `fechaModificacion`) VALUES
-(2, 33333333, 'osvaldo', 'perez', 222412345, 'osvaldo@gmail.com', '123456', 'administra', 1, NULL, 'la plata', '0000-00-00', 0, '0000-00-00', '0000-00-00'),
-(5, 94534089, 'Pablo', 'Perez', 221, 'pablo@hotmail.com', '', 'clasico', 0, 2, 'toloda', '2000-10-04', 3, '2019-06-04', '2019-06-04'),
-(7, 94534089, 'Maria', 'Cabrera', 2147483647, 'lucy@gmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '0000-00-00', 0, '0000-00-00', '0000-00-00'),
-(8, 45345678, 'susana', 'ana', 0, 'susana@hotmail.com', 'susana', 'clasico', 0, 2, 'la plata', '2019-05-08', 0, '0000-00-00', '0000-00-00'),
-(9, 45345678, 'susana', 'ana', 0, 'susana@hotmail.com', 'susana', 'clasico', 0, 2, 'la plata', '2019-05-08', 0, '0000-00-00', '0000-00-00'),
-(10, 12345678, 'gloria', 'gloria', 0, 'gloria@hotmail.com', 'gloriosa', 'clasico', 0, 2, 'la plata', '1999-02-09', 0, '0000-00-00', '0000-00-00'),
-(11, 12345678, 'gloria', 'gloria', 0, 'gloria@hotmail.com', 'gloriosa', 'clasico', 0, 2, 'la plata', '1999-02-09', 0, '0000-00-00', '0000-00-00');
+(2, 33333333, 'osvaldo', 'perez', 222412345, 'osvaldo@gmail.com', '123456', 'administra', 1, NULL, 'la plata', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 94534089, 'Pablo', 'Perez', 2147483647, 'pablo@hotmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '2001-05-28 00:00:00', 7, '2019-06-13 07:57:00', '2019-06-13 07:57:00');
 
 -- --------------------------------------------------------
 
@@ -266,6 +272,14 @@ CREATE TABLE `puja` (
   `cantidad` decimal(10,0) UNSIGNED NOT NULL,
   `fecha` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `puja`
+--
+
+INSERT INTO `puja` (`idPuja`, `idPersona`, `idSubasta`, `cantidad`, `fecha`) VALUES
+(1, 13, 5, '5000', '2019-06-14 13:24:00'),
+(2, 13, 5, '5300', '2019-06-14 13:47:00');
 
 -- --------------------------------------------------------
 
@@ -372,10 +386,10 @@ CREATE TABLE `subasta` (
   `idSubasta` int(11) NOT NULL,
   `precioMinimo` decimal(10,0) NOT NULL,
   `idSemana` int(11) NOT NULL,
-  `fechaInicioInscripcion` date NOT NULL,
-  `fechaFinInscripcion` date NOT NULL,
-  `fechaInicioSubasta` date NOT NULL,
-  `fechaFinSubasta` date NOT NULL,
+  `fechaInicioInscripcion` datetime NOT NULL,
+  `fechaFinInscripcion` datetime NOT NULL,
+  `fechaInicioSubasta` datetime NOT NULL,
+  `fechaFinSubasta` datetime NOT NULL,
   `idPropiedad` int(11) NOT NULL,
   `activa` int(11) NOT NULL,
   `cerrada` int(11) DEFAULT NULL,
@@ -387,9 +401,9 @@ CREATE TABLE `subasta` (
 --
 
 INSERT INTO `subasta` (`idSubasta`, `precioMinimo`, `idSemana`, `fechaInicioInscripcion`, `fechaFinInscripcion`, `fechaInicioSubasta`, `fechaFinSubasta`, `idPropiedad`, `activa`, `cerrada`, `year`) VALUES
-(5, '5000', 52, '2019-06-23', '2019-06-30', '2019-07-23', '2019-07-30', 27, 0, NULL, 2019),
-(6, '7000', 52, '2019-06-23', '2019-06-30', '2019-07-23', '2019-07-30', 28, 0, NULL, 2019),
-(7, '6500', 2, '2019-07-06', '2019-07-13', '2019-08-06', '2019-08-13', 28, 0, NULL, 2020);
+(5, '5000', 52, '2019-06-13 00:00:00', '2019-06-14 00:00:00', '2019-06-14 00:00:00', '2019-06-14 15:18:00', 27, 1, 1, 2019),
+(6, '7000', 52, '2019-06-13 00:00:00', '2019-06-20 00:00:00', '2019-07-23 00:00:00', '2019-07-30 00:00:00', 28, 0, NULL, 2019),
+(7, '6500', 2, '2019-07-06 00:00:00', '2019-07-13 00:00:00', '2019-08-06 00:00:00', '2019-08-13 00:00:00', 28, 0, NULL, 2020);
 
 -- --------------------------------------------------------
 
@@ -400,7 +414,7 @@ INSERT INTO `subasta` (`idSubasta`, `precioMinimo`, `idSemana`, `fechaInicioInsc
 CREATE TABLE `tarjeta` (
   `idTarjeta` int(11) NOT NULL,
   `idPersona` int(11) NOT NULL,
-  `numero` text NOT NULL,
+  `numero` bigint(16) NOT NULL,
   `marca` text NOT NULL,
   `vencimiento` text NOT NULL,
   `codigo` int(3) NOT NULL
@@ -411,9 +425,9 @@ CREATE TABLE `tarjeta` (
 --
 
 INSERT INTO `tarjeta` (`idTarjeta`, `idPersona`, `numero`, `marca`, `vencimiento`, `codigo`) VALUES
-(1, 8, '2147483647', 'visa', '0000-00-00 00:00:00', 345),
-(2, 10, '2147483647', 'visa', '0000-00-00 00:00:00', 234),
-(3, 5, '0', 'visa', '06/22', 0);
+(5, 0, 987654897634256, 'visa', '2023-01-05', 789),
+(6, 12, 1234567890123456, 'visa', '2025-01-12', 567),
+(7, 13, 1234567890123456, 'visa', '2025-01-12', 567);
 
 -- --------------------------------------------------------
 
@@ -586,7 +600,7 @@ ALTER TABLE `enesperapremium`
 -- AUTO_INCREMENT de la tabla `ganador`
 --
 ALTER TABLE `ganador`
-  MODIFY `idGanador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idGanador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `hotsale`
@@ -604,19 +618,19 @@ ALTER TABLE `imagen`
 -- AUTO_INCREMENT de la tabla `inscripto`
 --
 ALTER TABLE `inscripto`
-  MODIFY `idInscripto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idInscripto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `IdPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `IdPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `propiedad`
@@ -628,7 +642,7 @@ ALTER TABLE `propiedad`
 -- AUTO_INCREMENT de la tabla `puja`
 --
 ALTER TABLE `puja`
-  MODIFY `idPuja` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPuja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `semana`
@@ -652,7 +666,7 @@ ALTER TABLE `subasta`
 -- AUTO_INCREMENT de la tabla `tarjeta`
 --
 ALTER TABLE `tarjeta`
-  MODIFY `idTarjeta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTarjeta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `ubicacion`

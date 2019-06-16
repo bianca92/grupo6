@@ -24,7 +24,19 @@ if ($row['cerrada']!=1 && $fecha_actual>=$row['fechaFinSubasta'] ){
 
  $consulta="UPDATE subasta SET cerrada=1 WHERE idSubasta=$idS ";
         $resu = mysqli_query($link,$consulta); 
-        //envio mensaje a los suscriptos de que se termino la subasta
+
+
+//establece el ganador
+$consultaGanador= "SELECT * FROM puja WHERE idSubasta=$idS ORDER BY cantidad DESC";
+$resu2 = $link->query($consultaGanador); 
+ $num=mysqli_num_rows($resu2); 
+if ($num!=0) {
+$row = mysqli_fetch_array($resu2);
+$var_consulta= "INSERT INTO ganador (idPersona,idSubasta,idPuja)values('$row[idPersona]','$row[idSubasta]','$row[idPuja]') ";
+ $var_resultado = $link->query($var_consulta);
+}
+
+  //envio mensaje a los suscriptos de que se termino la subasta
         $envio=mensajetermino($idS);
 
 }

@@ -82,7 +82,7 @@ $row = mysqli_fetch_array($var_resultado);
 					<input type="password" name="clave2" minlength="6" size="20" maxlength="20" class="input password" >	
 
 					<label for="fechaNacimiento">Fecha de Nacimiento: </br></label>
-					<input id="datepicker" type="date" name="nacimiento" class="input username" size="8" autocomplete="off" max='<?php echo $fechaMayorEdad; ?>'  title="Debes ser mayor de edad para poder registrarte" id="valNacimiento" required="required">
+					<input id="datepicker" type="date" name="nacimiento" class="input username" size="8" autocomplete="off" max='<?php echo $fechaMayorEdad; ?>' value='<?php echo "$row[fechaNacimiento]" ?>' title="Debes ser mayor de edad para poder registrarte" id="valNacimiento">
 
 					<label for="ubicacion">Datos de la Tarjeta: </br></label>
 

@@ -58,10 +58,9 @@ while ($row = mysqli_fetch_array($result)){
 				<div class="content">
                   
                     <?php
-                     //PREGUNTO SI YA HAY UNA OFERTA PARA ESTA SUBASTA PARA CREAR LA TABLA GANADOR.
-                      $ganador="0";
+                     
                      if ($minimo==$minaux && $alguienOfertoMinimo==false){
-                         $ganador="1";
+                       
                      }
                       else {
                         //echo "La puja mayor actual es $ $minimo.";
@@ -93,7 +92,7 @@ while ($row = mysqli_fetch_array($result)){
                     <?php //ESTOS DATOS LOS NECESITO PARA EL INSERT DE ESTA MANERA LOS PASO AL PUJAR2.PHP ?>
 					<input type="hidden" name="usuario" value='<?php echo "$usuario" ?>' />
 					<input type="hidden" name="subasta" value='<?php echo "$subasta" ?>' />
-					<input type="hidden" name="ganador" value='<?php echo "$ganador" ?>' />
+				
 					<input type="hidden" name="fecha" value='<?php echo "$fecha" ?>' />
 				
 

@@ -19,10 +19,10 @@ $con=conectar();
 	}
 	else{
 
-		while ($row=mysql_fetch_array($result)){
+		while ($row=mysqli_fetch_array($result)){
 
-			$arregloP [$p][0]= $row[fecha];
-			$str= "".date('d/m/Y', strtotime($row['fecha']))." - Realizaste una puja de $ $row[cantidad] por la propiedad \"$row[titulo]\".";
+			$arregloP [$p][0]= $row['fecha'];
+			$str= "".date('d/m/Y-H:i', strtotime($row['fecha']))." - Realizaste una puja de $ $row[cantidad] por la propiedad \"$row[titulo]\".";
 			$arregloP [$p][1]= $str;
 			$p= $p+1;
 		}
@@ -50,7 +50,7 @@ $con=conectar();
 		while ($row=mysqli_fetch_array($result)){
 			
 			$arregloI [$i][0]= $row['fecha'];
-			$arregloI [$i][1]= "".date('d/m/Y', strtotime($row['fecha']))." - Te inscribiste a una subasta por una semana en la propiedad \"$row[titulo]\".";
+			$arregloI [$i][1]= "".date('d/m/Y-H:i', strtotime($row['fecha']))." - Te inscribiste a una subasta por una semana en la propiedad \"$row[titulo]\".";
 			$i= $i+1;
 		}
 		return ordenar($arregloI);
@@ -75,10 +75,10 @@ $con=conectar();
 	}
 	else{
 
-		while ($row=mysql_fetch_array($result)){
+		while ($row=mysqli_fetch_array($result)){
 			
 			$arregloP [$p][0]= $row[fecha];
-			$arregloP [$p][1]= "".date('d/m/Y', strtotime($row['fecha']))." - Compraste en Hot Sale a $ $row[precio] una semana en la propiedad \"$row[titulo]\".";
+			$arregloP [$p][1]= "".date('d/m/Y-H:i', strtotime($row['fecha']))." - Compraste en Hot Sale a $ $row[precio] una semana en la propiedad \"$row[titulo]\".";
 			$p= $p+1;
 		}
 		return ordenar($arregloP);
@@ -102,10 +102,10 @@ $con=conectar();
 	}
 	else{
 
-		while ($row=mysql_fetch_array($result)){
+		while ($row=mysqli_fetch_array($result)){
 			
 			$arregloP [$i][0]= $row[fecha];
-			$arregloP [$i][1]= "".date('d/m/Y', strtotime($row['fecha']))." - Compraste una semana con tu beneficio premium a $ $row[precioMinimo] en la propiedad \"$row[titulo]\".";
+			$arregloP [$i][1]= "".date('d/m/Y-H:i', strtotime($row['fecha']))." - Compraste una semana con tu beneficio premium a $ $row[precioMinimo] en la propiedad \"$row[titulo]\".";
 			$i= $i+1;
 		}
 		return ordenar($arregloP);
@@ -129,10 +129,10 @@ $con=conectar();
 	}
 	else{
 
-		while ($row=mysql_fetch_array($result)){
+		while ($row=mysqli_fetch_array($result)){
 			
-			$arregloP [$i][0]= $row[fechaFinSubasta];
-			$arregloP [$i][1]= "".date('d/m/Y', strtotime($row['fechaFinSubasta']))." - Ganaste la subasta por una semana en la propiedad \"$row[titulo]\" con una puja de $ $row[cantidad].";
+			$arregloP [$i][0]= $row['fechaFinSubasta'];
+			$arregloP [$i][1]= "".date('d/m/Y-H:i', strtotime($row['fechaFinSubasta']))." - Ganaste la subasta por una semana en la propiedad \"$row[titulo]\" con una puja de $ $row[cantidad].";
 			$i= $i+1;
 		}
 		return ordenar($arregloP);
@@ -156,10 +156,10 @@ $con=conectar();
 	}
 	else{
 
-		while ($row=mysql_fetch_array($result)){
+		while ($row=mysqli_fetch_array($result)){
 			
 			$arregloP [$i][0]= $row[fechaFinSubasta];
-			$arregloP [$i][1]= "".date('d/m/Y', strtotime($row['fechaFinSubasta']))." - Perdiste la subasta por una semana en la propiedad \"$row[titulo]\".";
+			$arregloP [$i][1]= "".date('d/m/Y-H:i', strtotime($row['fechaFinSubasta']))." - Perdiste la subasta por una semana en la propiedad \"$row[titulo]\".";
 			$i= $i+1;
 		}
 		return ordenar($arregloP);
@@ -316,10 +316,10 @@ $con=conectar();
 	}
 	else{
 
-		while ($row=mysql_fetch_array($result)){
+		while ($row=mysqli_fetch_array($result)){
 		
 			$arregloP [$i][0]= $row[fecha];
-			$arregloP [$i][1]= "".date('d/m/Y', strtotime($row['fecha']))."- Realizaste una valoracion para la propiedad \"$row[titulo]\".";
+			$arregloP [$i][1]= "".date('d/m/Y-H:i', strtotime($row['fecha']))."- Realizaste una valoracion para la propiedad \"$row[titulo]\".";
 			$i= $i+1;
 		}
 		return ordenar($arregloP);
@@ -486,7 +486,7 @@ $con=conectar();
 //ORDENAR-----------------------------------------------------------------------------------------------------------------------
 function compararFechas ( $a, $b ) {
 
-    return strtotime($a[0]) - strtotime($b[0]);
+    return strtotime($b[0]) - strtotime($a[0]);
 }
  
 function ordenar ($arreglo){

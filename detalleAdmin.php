@@ -64,9 +64,9 @@ $query = "SELECT * FROM propiedad WHERE idPropiedad=$propiedad";
       <div class="panel-heading">PUNTUACION</div>
       <div class="panel-body">
 
-<?php for ($i=1; $i <=puntuacion($propiedad) ; $i++) { 
-  echo"<h1><span class='glyphicon glyphicon-star'></span></h1>";
-}?>
+<h1><?php for ($i=1; $i <=puntuacion($propiedad) ; $i++) { 
+  echo"<span class='glyphicon glyphicon-star'></span>";
+}?></h1>
 </div></div>
 <div class="panel panel-info">
       <div class="panel-heading">UBICACION</div>

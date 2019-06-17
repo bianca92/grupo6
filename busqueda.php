@@ -8,9 +8,9 @@ $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
           
  
 ?>
-<form method="GET" action= <?php $pagina.".php" ?>>
- <p></i><input type="text" name="lugar" required="required" placeholder="Ingrese lugar" />
- </i><input type="date" name="inicio" min='<?php echo $nuevafecha; ?>' required="required" />
- </i><input type="date" name="fin" min='<?php echo $nuevafecha; ?>' required="required"/>
- <input type="submit" value="Buscar"/> 
+<form class="form-inline" method="GET" action= <?php $pagina.".php" ?>>
+ <p></i><input type="text" class="form-control" name="lugar" required="required" placeholder="Ingrese lugar" />
+ </i><input type="date" class="form-control" name="inicio" min='<?php echo $nuevafecha; ?>' required="required" />
+ </i><input type="date" class="form-control" name="fin" min='<?php echo $nuevafecha; ?>'  required="required"/>
+ <input type="submit" class="btn btn-default" value="Buscar"/> 
 </form>

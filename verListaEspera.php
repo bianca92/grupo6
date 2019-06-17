@@ -71,7 +71,7 @@ else{
                          <tr>
                              <td> <br><?php echo "$i - $row2[1] $row2[0]" ; ?> </td>
                               <td> <br><?php echo "$row2[2]"; ?> </td>
-                              <td><br><?php echo "<a href='estadisticasUsuario.php?idU=".$row['idPersona']."'> <button type='button' class='btn btn-succes'>ESTADISTICAS DE USUARIO</button> </a></br>" ;?>  
+                             
                            <td><br><?php echo "<a href='aceptarUsuario.php?idU=".$row['idPersona']."'> <button type='button' class='btn btn-succes'>ACEPTAR</button> </a></br>" ;?>  
                           <td><br><?php echo "<a href='rechazarUsuario.php?idU=".$row['idPersona']."'> <button type='button' class='btn btn-succes'>RECHAZAR</button> </a></br>" ;?>  
                           </tr>

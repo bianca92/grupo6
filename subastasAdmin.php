@@ -34,9 +34,10 @@ else{
      ?>
 
   <div class="container">
-<?php
-?>
+
+
   <div>
+    <h4>SUBASTAS NO COMENZADAS:</h4>
     <table class="table table-hover">
     <thead>
       <tr>
@@ -104,8 +105,10 @@ else{
                       }
 
                     }
+             
+             ?>  
 
-             ?>
+               <td><?php echo "<a href='eliminar_subasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Eliminar subasta</button> </a></br>" ;?>
          </tr>  
          <?php } }?>      
       

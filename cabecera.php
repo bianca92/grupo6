@@ -76,9 +76,9 @@
     <ul class="menu" style="float:left">
       
       <li><a href=<?php echo $archivop; ?>></i>PROPIEDADES</a></li>
-      <li><a href=<?php echo "$archivosu"; ?>><i class="fas fa-gavel"></i>SUBASTAS</a>
+      <li><a href=#><i class="fas fa-gavel"></i>SUBASTAS</a>
        <ul class="submenu">
-            
+             <li><a href=<?php echo "$archivosu"; ?>>SUBASTAS NO COMENZADAS</a></li>
              <li><a href=<?php echo $archivoActUsu; ?>>SUBASTAS ACTIVAS</a></li>
       <li><a href=<?php echo $archivoTerminadas; ?>>SUBASTAS TERMINADAS</a></li>
           </ul>
@@ -106,6 +106,10 @@
                 <li><a href=#>SOLICITUD ENVIADA</a></li>
       <?php  }
     }
+    if($verOpcionesLogeado==true and $_SESSION['tipoU']=="premium"){?>
+         <li><a href=dejarPremium.php>DEJAR DE SER PREMIUM</a></li>
+           
+           <?php } 
 
      ?>
      <?php // Mostra solo si esta logueado la casilla de mensajes
@@ -135,13 +139,17 @@
             </li>
 
         <?php
-        }  else{ //menu del administrador?>        
-                    <li><a href=# > <i class="fas fa-bars"></i>     <i class="fas fa-bars"></i></a>
+        }  else{ //menu del administrador?>     
+                 
+               <li><a href=# > <i class="fas fa-cogs"></i>     <i class="fas fa-bars"></i></a>
                 <ul class="submenu"> 
-                     <li><a href=verListaEspera.php><i class="fas fa-ellipsis-v"></i>-VER LISTA EN ESPERA</a></li>
-                    
+                    <li><a href=configuracionCuotaMensual.php>-CONFIG.CUOTA MENSUAL</a></li>
+                     
+                     <li><a href=ListarTodosLosUsuarios.php>-LISTA DE USUARIOS</a></li>
                </ul>
-            </li>
+               </li>
+         
+
             <?php
              }  
         ?>

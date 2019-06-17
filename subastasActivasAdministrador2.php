@@ -36,6 +36,7 @@ else{
 ?>
   <div>
     <table class="table table-hover">
+      <h4>SUBASTAS ACTIVAS:</h4>
     <thead>
       <tr>
         <th>Subastas</th>
@@ -91,6 +92,8 @@ else{
             <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;?>  
             <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
            <td><?php echo "<a href='cerrar_subastaActiva.php?pugano=".$pujaMaximaPuja."&sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Cerrar subasta</button> </a></br>" ;
+            ?>
+             <td><?php echo "<a href='eliminar_subasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Eliminar subasta</button> </a></br>" ;
             ?>
          </tr>  
          <?php } } ?>      

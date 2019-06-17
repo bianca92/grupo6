@@ -1,5 +1,5 @@
 <?php
-// mensaje de que se ativo la subasta. NUMERO 1
+// mensaje de que se activo la subasta. NUMERO 1
 function mensajeActiva($idS){
 	$link=conectar();
 
@@ -110,15 +110,13 @@ $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
 
 
 //le envio mensaje que fue aceptado como premium
-$query = "SELECT * FROM persona WHERE idPersona='$idP' ";
-            $result = mysqli_query($link, $query);
-            $row = mysqli_fetch_array($result);
+
 
 
    $contenido="¡FELICITACIONES!Ahora eres usuario PREMIUM." ;
    $fecha=date('Y-m-j-H:i');
   $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
-                                    values('$contenido','$fecha','$idA[0]','$row[0]','4')";
+                                    values('$contenido','$fecha','$idA[0]','$idP','4')";
               
    $var_resultado = $link->query($var_consulta);
   
@@ -135,22 +133,78 @@ $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
 
 
 //le envio mensaje que fue rechazado como premium
-$query = "SELECT * FROM persona WHERE idPersona='$idP' ";
-            $result = mysqli_query($link, $query);
-            $row = mysqli_fetch_array($result);
+
 
 
    $contenido="Lamentamos informarle que ha sido rechazado para ser PREMIUM." ;
    $fecha=date('Y-m-j-H:i');
   $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
-                                    values('$contenido','$fecha','$idA[0]','$row[0]','5')";
+                                    values('$contenido','$fecha','$idA[0]','$idP','5')";
               
    $var_resultado = $link->query($var_consulta);
   
 }
 
 
+//mensaje que se ya no es mas premium   NUMERO 6
+function mensajeEliminoPremium($idP){
+  $link=conectar();
 
+//selecciono el id del admin.
+$query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
+            $result = mysqli_query($link, $query);
+          $idA = mysqli_fetch_array($result);
+
+
+//le envio mensaje que fue rechazado como premium
+
+
+
+   $contenido="Lamentamos informarle que ya no eres usuario PREMIUM." ;
+   $fecha=date('Y-m-j-H:i');
+  $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
+                                    values('$contenido','$fecha','$idA[0]','$idP','6')";
+              
+   $var_resultado = $link->query($var_consulta);
+  
+}
+
+//mensaje que cambio el monto de la cuota NUMERO 7
+function mensajeCambioDeCuota($idTipoUsuario,$monto){
+  $link=conectar();
+  if ($idTipoUsuario==1){$tipo="clasico";}
+  else{$tipo="premium";}
+  //selecciono el id de los inscriptos
+
+$query = "SELECT idPersona FROM persona WHERE tipoU='$tipo' ";
+            $resultI = mysqli_query($link, $query);
+            $num=mysqli_num_rows($resultI); 
+
+ if($num==0) {}          
+//selecciono el id del admin.
+else {
+  $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
+            $result = mysqli_query($link, $query);
+          $idA = mysqli_fetch_array($result);
+
+
+
+     
+ $contenido="El monto de la cuota mensual ha sido modificada, el nuevo monto es $ $monto.";
+   $fecha=date('Y-m-j-H:i');
+   //mando los mensajes
+    while($row = mysqli_fetch_array($resultI)){
+     
+         $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
+                                    values('$contenido','$fecha','$idA[0]','$row[0]','7')";
+              
+          $var_resultado = $link->query($var_consulta);
+  
+
+    }
+}
+
+}
 
 
 

@@ -55,7 +55,7 @@ $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 
 if ($fin>$nuevafecha){
   echo '<script> alert("El rango debe ser inferior a 2 meses");</script>';
-  echo "<script> window.location ='subastasUsuario.php' ;</script>";}
+  echo "<script> window.location ='index.php' ;</script>";}
 
 
 
@@ -105,8 +105,6 @@ if ($fin>$nuevafecha){
                     }
           $i=$i + 1;
       }
-      
-
       }
 
  else {//si no se recibio nada por GET que me muestre todo

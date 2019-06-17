@@ -20,16 +20,40 @@ catch(Exception $e){
 }
 
 
-$query = "SELECT * FROM propiedad";
+$query = "SELECT * FROM propiedad ORDER BY titulo";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
 
-         
-     ?>
+
+$fecha_actual = date('Y-m-d');
+
+
+ 
+?>          
+
+
 
   <div class="container">
 
     <a href="propiedades.php" class="btn btn-warning" float="left">NUEVO</a>
+
+
+    <!-- EL FORM DE LA BUSQUEDA -->
+    <form method="GET" action="propiedadesAdmin.php" >
+ <p></i><input type="text" name="lugar" required="required" placeholder="Ingrese titulo o lugar" />
+ <input type="submit" value="Buscar"/> 
+</form>
+
+<?php
+
+
+if (!empty($_GET)){
+$filtro=$_GET['lugar'];
+
+
+}
+         
+     ?>
    
  <?php
    
@@ -38,6 +62,7 @@ $query = "SELECT * FROM propiedad";
   <div>
 
     <table class="table table-hover">
+
     <thead>
       <tr>
         <th>Propiedad</th>
@@ -51,7 +76,43 @@ $query = "SELECT * FROM propiedad";
       <?php  if ($num==0) {
                   echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>"; } ?>
  
-    <?php while ($row = mysqli_fetch_array($result))  { 
+    <?php 
+   $auxiliar=false;
+
+    while ($row = mysqli_fetch_array($result))  { 
+
+       if (!empty($_GET)){
+            
+           //si se recibio GET pero no hay propiedad
+            $muestra=false;
+          
+        
+    
+           // busco si el lugar o titulo ingresado se encuentra entre la info de la propiedad  
+            $ubicacion1 = stripos($row['pais'], $filtro);
+             $ubicacion2 = stripos($row['provincia'], $filtro);
+              $ubicacion3 = stripos($row['localidad'], $filtro);
+             $titulo = stripos($row['titulo'], $filtro);
+          
+                
+          
+         if($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false or $titulo!==false){
+          
+          $muestra=true;
+         
+                    }
+       
+      
+      }
+
+     else {//si no se recibio nada por GET que me muestre todo
+ 
+             $muestra=true;
+      }
+
+      if($muestra==true){
+     $auxiliar=true;
+
       $imgs=ObtenerImgs($row['idPropiedad']); ?>
       <tr>
             <td><?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:20% />';?></td>
@@ -62,7 +123,10 @@ $query = "SELECT * FROM propiedad";
             <td><?php echo "<a href='modificar_propiedad.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>MODIFICAR</button> </a>" ;?></td>
             <td><?php echo "<a href='alta_subasta.php?no=".$row[0]."'> <button type='button' class='btn btn-succes'>SUBASTAR</button> </a>" ;?></td>
          </tr>  
-         <?php } ?>  
+         <?php } 
+
+       } if($auxiliar==false){echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>"; 
+}?>  
            
       
       </tbody>

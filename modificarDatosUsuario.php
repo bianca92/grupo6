@@ -28,7 +28,9 @@ $var_consulta = "SELECT * FROM persona p INNER JOIN  tarjeta t ON p.IdPersona = 
 $var_resultado = mysqli_query($link, $var_consulta);
 $row = mysqli_fetch_array($var_resultado);
 
-
+$fechaActual=  date('Y-m-d-H:i'); 
+					$d=strtotime("-18 Years");
+					$fechaMayorEdad= date("Y-m-d", $d);
 
 
 ?>
@@ -71,9 +73,11 @@ $row = mysqli_fetch_array($var_resultado);
 					<input type="text" name="email" class="input username" value='<?php echo "$row[email]" ?>'>
 
 <?php   //  HACER VERIFICAR SI LA CLAVE ANTERIOR ES LA CORRECTA Y SI LA NUEVA Y LA CONFIRMACION COINCIDEN ?>
-
-					<label for="clave0">Contraseña Anterior: </br></label>
-					<input type="password" name="clave0" size=20 minlength="6" maxlength="20" class="input password" value='<?php echo "*******"?>' >
+          
+					<input type="password" name="claveAhora" class=hidden value='<?php echo "$row[clave]" ?>' >
+				
+					<label for="clave0">Contraseña Actual: </br></label>
+					<input type="password" name="clave0" size=20 minlength="6" maxlength="20" class="input password"  title="Debe ingresar su contraseña para guardar los cambios" id="valPass" required="required">
 
 					<label for="clave">Contraseña Nueva: </br></label>
 					<input type="password" name="clave" size=20 minlength="6" maxlength="20" class="input password" >
@@ -81,6 +85,8 @@ $row = mysqli_fetch_array($var_resultado);
 					<label for="clave2" >Confirme Contraseña Nueva: </br></label>
 					<input type="password" name="clave2" minlength="6" size="20" maxlength="20" class="input password" >	
 
+                   <input type="text" name="nacimientoActual" class="hidden" value='<?php echo "$row[fechaNacimiento]" ?>'>	
+                   
 					<label for="fechaNacimiento">Fecha de Nacimiento: </br></label>
 					<input id="datepicker" type="date" name="nacimiento" class="input username" size="8" autocomplete="off" max='<?php echo $fechaMayorEdad; ?>' value='<?php echo "$row[fechaNacimiento]" ?>' title="Debes ser mayor de edad para poder registrarte" id="valNacimiento">
 
@@ -91,13 +97,15 @@ $row = mysqli_fetch_array($var_resultado);
 
 					<label for="numero">Numero: </br></label>
 					<?php  $ult4 = substr($row['numero'],12); ?>
-					<input type="text" name="numero" class="input username" value='<?php echo "**** **** **** $ult4" ?>'>
+					<input type="text" name="numero" class="input username" pattern="[0-9]{16}" title="Ingrese los 16 digitos de su tarjeta de credito" id="valNumero" placeholder='<?php echo "**** **** **** $ult4" ?>'>
+                    
+					
 
 					<label for="codigo">Codigo de Seguridad: </br></label>
-					<input type="text" name="codigo" class="input username" value='<?php echo "***" ?>'>
+					<input type="text" name="codigo" class="input username" pattern="[0-9]{3}" title="Ingrese los 3 digitos del dorso de su tarjeta de credito" id="valCodigo" placeholder='<?php echo "***" ?>'>
 
 					<label for="vencimiento">Fecha de Vencimiento: </br></label>
-					<input type="text" name="vencimiento" class="input username" value='<?php echo "$row[vencimiento]" ?>'>           
+					<input type="text" name="vencimiento" class="input username" pattern="[0-9*/]{7}" title="Ingrese la fecha de vencimiento con el formato mm/aaaa" id="valVencimiento" value='<?php echo "$row[vencimiento]" ?>'>           
 					
 					
 			</div>

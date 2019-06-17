@@ -11,6 +11,7 @@ session_start();
     $e=$_POST['email'];
     $t=$_POST['telefono'];
     $p=$_POST['password1'];
+     $p2=$_POST['password2'];
     $c=$_POST['ciudad'];
     $nac=$_POST['nacimiento'];
     $num=$_POST['numero'];
@@ -22,7 +23,13 @@ session_start();
 
         
         $resul=mysqli_query($con,"SELECT email FROM persona  WHERE email='$e' ");//verificamos si hay un mail igual
-
+       
+        if($p!=$p2){
+   
+             echo '<script> alert("LAS CONTRASEÑAS NO COINCIDEN, INTENTE NUEVAMENTE");</script>';     
+          echo '<script> window.location ="registrar.php";</script>';
+        }
+else{
         if(mysqli_num_rows($resul)==1){//si existe un usuario con el mismo mail
             echo '<script> alert("INGRESE OTRO MAIL");</script>';
             echo '<script> window.location ="registrar.php";</script>';
@@ -60,14 +67,14 @@ session_start();
            // $resul2=mysqli_query($con,$query2);
             
 
-        }
+        }}
 
 if($resul5){  //SE INGRESO CORRECTAMENTE
      try{
      $login = new Login();
     $fila=$login->autentificar($con,$p,$e);
     
-    header("Location:index.php");
+    //header("Location:index.php");
       }
     catch(Exception $e){
     echo $e->getMessage();}

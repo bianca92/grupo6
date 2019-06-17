@@ -24,7 +24,7 @@ $id=($_SESSION['id']);
 
 
 //OBTENGO LOS DATOS DEL USUARIO ACTUAL
-$var_consulta = "SELECT * FROM persona p INNER JOIN  tarjeta t ON p.IdPersona = t.idPersona WHERE p.IdPersona = '$id' ";
+$var_consulta = "SELECT * FROM persona WHERE IdPersona = '$id' ";
 $var_resultado = mysqli_query($link, $var_consulta);
 $row = mysqli_fetch_array($var_resultado);
 
@@ -90,22 +90,6 @@ $fechaActual=  date('Y-m-d-H:i');
 					<label for="fechaNacimiento">Fecha de Nacimiento: </br></label>
 					<input id="datepicker" type="date" name="nacimiento" class="input username" size="8" autocomplete="off" max='<?php echo $fechaMayorEdad; ?>' value='<?php echo "$row[fechaNacimiento]" ?>' title="Debes ser mayor de edad para poder registrarte" id="valNacimiento">
 
-					<label for="ubicacion">Datos de la Tarjeta: </br></label>
-
-					<label for="marca">Marca: </br></label>
-					<input type="text" name="marca" class="input username" value='<?php echo "$row[marca]" ?>'>
-
-					<label for="numero">Numero: </br></label>
-					<?php  $ult4 = substr($row['numero'],12); ?>
-					<input type="text" name="numero" class="input username" pattern="[0-9]{16}" title="Ingrese los 16 digitos de su tarjeta de credito" id="valNumero" placeholder='<?php echo "**** **** **** $ult4" ?>'>
-                    
-					
-
-					<label for="codigo">Codigo de Seguridad: </br></label>
-					<input type="text" name="codigo" class="input username" pattern="[0-9]{3}" title="Ingrese los 3 digitos del dorso de su tarjeta de credito" id="valCodigo" placeholder='<?php echo "***" ?>'>
-
-					<label for="vencimiento">Fecha de Vencimiento: </br></label>
-					<input type="text" name="vencimiento" class="input username" pattern="[0-9*/]{7}" title="Ingrese la fecha de vencimiento con el formato mm/aaaa" id="valVencimiento" value='<?php echo "$row[vencimiento]" ?>'>           
 					
 					
 			</div>

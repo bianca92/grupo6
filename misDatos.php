@@ -23,10 +23,20 @@ catch(Exception $e){
 $id=($_SESSION['id']);
 
 //OBTENGO LOS DATOS DEL USUARIO ACTUAL
-$query = "SELECT * FROM persona p INNER JOIN  tarjeta t ON p.IdPersona = t.idPersona WHERE p.IdPersona = '$id' ";
+$query = "SELECT * FROM persona WHERE IdPersona = '$id' ";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
             $datosUsuario = mysqli_fetch_array($result);
+
+//OBTENGO LOS DATOS DE LA TARJETA DEL USUARIO ACTUAL
+$query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
+            $result = mysqli_query($con, $query);
+            $num=mysqli_num_rows($result); 
+            $datosTarjeta = mysqli_fetch_array($result);
+
+
+
+
 
          
      ?>
@@ -37,8 +47,9 @@ $query = "SELECT * FROM persona p INNER JOIN  tarjeta t ON p.IdPersona = t.idPer
  
 
 <br/>
+
  
- <form name="formulario" class="login-form" style="width:600px; background-color:#fff;float:left;margin-left: 50px;"><h2 align="center">  MIS DATOS</h2> <h4 align="center">
+ <form name="formulario" class="login-form" style="width:600px; background-color:#fff;float:left;margin-left: 30px;"><h2 align="center">  MIS DATOS</h2> <h4 align="center">
  	<?php
           //SI NO ES PREMIUM QUE LE MUESTRE EL BOTON PARA HACERSE
       if($datosUsuario['tipoU']!="premium"){ 
@@ -50,8 +61,7 @@ $query = "SELECT * FROM persona p INNER JOIN  tarjeta t ON p.IdPersona = t.idPer
       else{ echo "YA SOS PREMIUM !!";}
       
        ?> </h4>
- 	<li style="text-align: center"> <?php echo "  Ultima modificacion de datos: ".date('d/m/Y-H:i', strtotime($datosUsuario['fechaModificacion']))."";?>
-   <a style="font-size:25px; " href="modificarDatosUsuario.php">Editar</a></li>
+ 	
 
 
 
@@ -117,31 +127,37 @@ $query = "SELECT * FROM persona p INNER JOIN  tarjeta t ON p.IdPersona = t.idPer
                 
                     <br/>
 </ul>
+<li style="text-align: center; font-size: 10px"> <?php echo "  Ultima modificacion de datos: ".date('d/m/Y-H:i', strtotime($datosUsuario['fechaModificacion']))."";?>
+   <a style="font-size:15px; color: #2AA6CF " href="modificarDatosUsuario.php">Editar</a></li>
  </form>
+
 
 
  
  
 
        
-  <form name="formulario" class="login-form" style="width:600px; background-color:#fff;float:right;margin-right: 50px;"> <h2 align="center">  FORMA DE PAGO</h2>
-    <h3 align="center"><?php echo "<a   href='modificarFormaDePago.php?idT=".$datosUsuario['idTarjeta']."'>Editar </a>";?></h3>
+  <form name="formulario" class="login-form" style="width:600px; background-color:#fff;float:right;margin-right: 25px;"> <h2 align="center">  FORMA DE PAGO</h2>
+    
     <ul style="list-style-type:none;font-size:20px">
       <b><li>  Tarjeta:</b></br>
      
-         <?php echo "    Marca: $datosUsuario[marca]";?> </li>
+         <?php echo "    Marca: $datosTarjeta[marca]";?> </li>
 
-        <?php  $ult4 = substr($datosUsuario['numero'],12); ?>
+        <?php  $ult4 = substr($datosTarjeta['numero'],12); ?>
         <li> <?php echo "    Numero: **** **** **** $ult4";?> </li>
       
-         <li><?php echo "    Vencimiento: $datosUsuario[vencimiento]";?> </li>
+         <li><?php echo "    Vencimiento: $datosTarjeta[vencimiento]";?> </li>
                     
 
  
   </ul>
   
+  <h3 align="center" style="font-size: 15px; color: #2AA6CF"><?php echo "<a style='color: #2AA6CF'  href='modificarFormaDePago.php?idT=".$datosUsuario['idTarjeta']."'>Editar </a>";?></h3>
+  
  
   </form>
+
 
  <?php
  

@@ -63,6 +63,7 @@ else{
      <link  href="css/bootstrap1.min.css">
 <div class="container">
    
+   <a href='subastasGanadasUsuario.php' class='btn btn-warning' float='right'>FUI GANADOR</a> </br></br>
  
  <?php
    
@@ -199,53 +200,41 @@ else{
             $rowPuja = mysqli_fetch_array($resultPuja);
             $pujaMaxima= $rowPuja['cantidad'];
             $winnerPersona=$rowWinner['idPersona'];
-          
-                 if($winnerPersona==$id){
-                    $winnerMsj="¡¡GANASTE LA SUBASTA!!";
-                }
-                else{$winnerMsj="Perdiste la subasta";} 
-           }
-          
-           
-           
-        
+            $winnerAccion=0;
+                 if($winnerPersona==$id){ 
 
-    
-              ?>
+                   $winnerMsj="¡¡GANASTE LA SUBASTA!!"; }
+                else{
+                  $winnerMsj="Perdiste la subasta";} 
+           } ?>
 
+
+             <h4><p class= 'text-danger'><?php echo $winnerMsj ?></p><h4> 
              <h4><?php echo "Puja ganadora: $ $pujaMaxima.";?></h4>
              <h6><?php
               echo "<p class=bg-primary >La subasta cerró el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."<p>";
              ?></h6>
-
-             <h6><?php
-             echo "<h4><p class= text-danger> $winnerMsj </p></h4";
-              // echo "<a href='Pujar.php?idS=".$row[0]."&idU=".$id."&min=".$row['precioMinimo']."'> <button type='button' class='btn btn-succes'>Pujar</button> </a>" ;
-               ?></h6>
-
-
-
-          
+         
          </div>
-      </div>
-     <?php 
+      </div> <?php // fin div thumbnail
 $nombre= $nombre + 1;
 
-   } 
+   }
  }?>
     
     </div>
 
-<?php //} ?>
+<?php //} }?>
  </div>
-
-
+ ?>
   <script src="jquery-3.2.1.min.js"></script>
   <script src="js/bootstrap1.min.js"></script>
    <?php if ($auxiliar==true){
     echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
-   } } 
-
-   ?>
+   } 
+ } //fin del else 
+ ?>
+</div>
+   
    </body>
    </html>

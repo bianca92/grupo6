@@ -38,24 +38,24 @@ $query = "SELECT * FROM propiedad";
     
 
     <?php 
-
+$pagina="listarPropiedades";
 include("busqueda.php");
 $fecha_actual = date('Y-m-d');
-
-
+$busqueda=0; $x=0;
+$semanasD[$x]="";
  //BUSQUEDA
 if (!empty($_GET)){
 $inicio=$_GET['inicio'];
 $fin=$_GET['fin'];
 $lugar=$_GET['lugar'];
 
-
+$busqueda=1;
 $nuevafecha = strtotime ( '+2 month' , strtotime ( $inicio ) ) ;
 $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 
 if ($fin>$nuevafecha){
   echo '<script> alert("El rango debe ser inferior a 2 meses");</script>';
-  echo "<script> window.location ='index.php' ;</script>";}
+  echo "<script> window.location ='subastasUsuario.php' ;</script>";}
 
 
 
@@ -75,8 +75,8 @@ if ($fin>$nuevafecha){
       
       $query2 = "SELECT * FROM subasta WHERE idPropiedad=$row[idPropiedad]";
             $result2 = mysqli_query($con, $query2);
-            $num2=mysqli_num_rows($result); 
-
+            $num2=mysqli_num_rows($result2); 
+            
           if (!empty($_GET)){
             
            //si se recibio GET pero no hay subasta
@@ -96,8 +96,8 @@ if ($fin>$nuevafecha){
               $ubicacion3 = stripos($row['localidad'], $lugar);
           
                 
-          
-         if($week_start>=$inicio && $week_end<=$fin && $fecha_actual<$row2['fechaFinInscripcion']&& ($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false )){
+          //GUARDA EN UN ARREGLO LAS SMANAS DISPONIBLES DE LA PROPIEDAD BUSqUEDA
+         if($week_start>=$inicio && $week_end<=$fin && $fecha_actual<$row2['fechaFinInscripcion']&&($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false )){
            $week_start= date('d-m-Y', strtotime($week_start));
           $semanasDisponibles[$i]=$week_start;
           $muestra=true;
@@ -105,6 +105,8 @@ if ($fin>$nuevafecha){
                     }
           $i=$i + 1;
       }
+      
+
       }
 
  else {//si no se recibio nada por GET que me muestre todo
@@ -127,11 +129,18 @@ if ($fin>$nuevafecha){
            
            ?>
           <div class="caption">
-            <h4><?php echo "$row[titulo] en la ciudad de: $row[localidad] ";?></h4>   
-            <h4><?php if (!empty($_GET)){ echo "Semanas disponibles: ";
-                       foreach ($semanasDisponibles as &$valor) {
-                            echo "$valor.  ";
+           
+            <h4><?php // si se realizo una busqueda accedo al detalle con las fechas
+            
+            if (!empty($_GET)){ 
+              echo "<a href='detalle.php?prop=$row[idPropiedad]&busqueda=$busqueda&semanas=".serialize($semanasDisponibles)."'><h4>$row[titulo] en la ciudad de: $row[localidad]</h4></a>  ";
+              echo "Semanas disponibles: ";
+              foreach ($semanasDisponibles as &$valor) {
+                      echo "$valor.  ";
                                }}
+            else{
+              echo "<a href='detalle.php?prop=$row[idPropiedad]&busqueda=$busqueda&semanas=".serialize($semanasD)."'><h4>$row[titulo] en la ciudad de: $row[localidad]</h4></a>  ";}        
+                             
 
 
             ?></h4>     

@@ -16,12 +16,13 @@ $marca=$_POST['marca'];
 $numero=$_POST['numero'];
 $codigo=$_POST['codigo'];
 $vencimiento=$_POST['vencimiento']; 
+$titular=$_POST['titular'];
 
 
             
 //CREA UNA NUEVA TARJETA
 
-     $query="INSERT INTO tarjeta (idPersona, numero, marca, vencimiento, codigo)values('$usuario','$numero','$marca','$vencimiento','$codigo')";
+     $query="INSERT INTO tarjeta (idPersona, numero, marca, vencimiento, codigo, titular)values('$usuario','$numero','$marca','$vencimiento','$codigo', '$titular')";
      $resul5=mysqli_query($link,$query);
      $tarjeta=mysqli_insert_id($link);
 

@@ -22,8 +22,8 @@ $con=conectar();
 
 
 $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, 
-su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.idSemana, su.year
-          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
+su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.idSemana, su.year, su.cancelada
+          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
             
@@ -118,7 +118,7 @@ if ($fin>$nuevafecha){
                              // echo "$row2[idSubasta] y $row[idSubasta]";
                      }}
       
-      if(($row['activa']!=1)&&($row['cerrada']!=1)&&$muestra==true){
+      if(($row['activa']!=1)&&($row['cerrada']!=1)&&($muestra==true)){
         
         //si entra aca quiere decir que va a visualizar al menos 1 resultado.
        if($inscripto==false && $fecha_actual>=$row['fechaFinInscripcion'] ){}

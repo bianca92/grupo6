@@ -61,7 +61,9 @@ $row = mysqli_fetch_array($var_resultado);
 
 					<label for="ubicacion">Datos de la Tarjeta: </label><br/>
 
-
+					<label for="titular">Titular: </br></label>
+					<input type="text" name="titular" class="input username" value='<?php echo "$row[titular]" ?>' required="required">
+					
 					<label for="marca">Marca: </br></label>
 					<input type="text" name="marca" class="input username" value='<?php echo "$row[marca]" ?>' required="required">
 

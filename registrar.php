@@ -70,6 +70,9 @@
 					<label for="marca">Marca de la Tarjeta: </br></label>
 					<input type="text" name="marca" class="input username" required="required">
 
+					<label for="titular">Titular: </br></label>
+					<input type="text" name="titular" class="input username" required="required">
+
 					<label for="numero">Numero de Tarjeta: </br></label>
 					<input type="text" name="numero" class="input username" required="required" pattern="[0-9]{16}" title="Ingrese los 16 digitos de su tarjeta de credito" id="valNumero" >
 

@@ -18,6 +18,7 @@ session_start();
     $marca=$_POST['marca'];
     $venc=$_POST['vencimiento'];
     $cod=$_POST['codigo'];
+    $titular=$_POST['titular'];
 
         $con=conectar();
 
@@ -49,7 +50,7 @@ else{
             $id=mysqli_insert_id($con);
 
             //CARGAR DATOS DE LA TARJETA
-            $queryT="INSERT INTO tarjeta (idPersona, numero, marca, vencimiento, codigo)values('$id','$num','$marca','$nueva','$cod')";
+            $queryT="INSERT INTO tarjeta (idPersona, numero, marca, vencimiento, codigo, titular)values('$id','$num','$marca','$nueva','$cod', '$titular')";
             $resulT=mysqli_query($con,$queryT);
 
             $idT=mysqli_insert_id($con);

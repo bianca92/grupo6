@@ -146,6 +146,7 @@ $query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
 
         <?php  $ult4 = substr($datosTarjeta['numero'],12); ?>
         <li> <?php echo "    Numero: **** **** **** $ult4";?> </li>
+        <li> <?php echo "    Titular: $datosTarjeta[titular]";?> </li>
       
          <li><?php echo "    Vencimiento: $datosTarjeta[vencimiento]";?> </li>
                     

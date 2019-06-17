@@ -20,8 +20,8 @@ catch(Exception $e){
    header("Location:index.php");
 }
 
-$query = "SELECT  p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta, su.activa, su.idSubasta, su.cerrada, su.year, su.idSemana
-          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
+$query = "SELECT  p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta, su.activa, su.idSubasta, su.cerrada, su.year, su.idSemana, su.cancelada
+          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
   if ($num==0) {

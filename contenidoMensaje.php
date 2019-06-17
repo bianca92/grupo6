@@ -205,6 +205,34 @@ else {
 }
 
 }
+// mensaje de que se cancelo/elimino la subasta. NUMERO 8
+function mensajeEliminarSubasta($idS){
+  
+  $link=conectar();
+
+  //selecciono el id de los inscriptos
+  $query = "SELECT idPersona FROM inscripto WHERE idSubasta='$idS' ";
+  $resultI = mysqli_query($link, $query);
+  $num=mysqli_num_rows($resultI); 
+
+  if($num==0){//si no hay inscriptos
+           }
+  else {
+    //selecciono el id del admin.
+
+    $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
+    $result = mysqli_query($link, $query);
+    $idA = mysqli_fetch_array($result);
+
+    $contenido="Se ha eliminado una subasta a la que te inscribiste";
+    $fecha=date('Y-m-j-H:i');
+    while($row = mysqli_fetch_array($resultI)){  //mensaje para inscriptos
+       $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero) values('$idS','$contenido','$fecha','$idA[0]','$row[0]','8')";
+       $var_resultado = $link->query($var_consulta);
+    }
+  }
+}
+
 
 
 

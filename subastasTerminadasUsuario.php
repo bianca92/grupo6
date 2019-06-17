@@ -49,8 +49,8 @@ if($mes=="01" && $numeroS=="52"){
 
 
 $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
-su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year,su.idSemana
-          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
+su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year,su.idSemana, su.cancelada
+          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
       

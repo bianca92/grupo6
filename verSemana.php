@@ -41,7 +41,7 @@ $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMin
 ?>
 <link  href="css/bootstrap1.min.css">
 <div class="container">
- 
+    
            <?php 
            $imgs=ObtenerImgs($row['idPropiedad']);
             $i=0; 
@@ -165,7 +165,7 @@ $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMin
 </script>
 <?php
 function comprobar($fechaSubasta,$credito,&$ok){
-$fecha_actual = date('Y-m-d');
+$fecha_actual = date('Y-m-d'); $accion="";
 if(($credito==0)||($fecha_actual>=$fechaSubasta)){
  $accion="disabled"; 
   if($credito==0){$ok="No tenes creditos disponibles";}

@@ -318,7 +318,7 @@ $con=conectar();
 
 		while ($row=mysqli_fetch_array($result)){
 		
-			$arregloP [$i][0]= $row[fecha];
+			$arregloP [$i][0]= $row['fecha'];
 			$arregloP [$i][1]= "".date('d/m/Y-H:i', strtotime($row['fecha']))."- Realizaste una valoracion para la propiedad \"$row[titulo]\".";
 			$i= $i+1;
 		}

@@ -74,7 +74,7 @@ else{     ?>
                   <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo "$fs"; ?></h4></td>  
                   <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;?>  
                   <td> <?php 
-                     $fecha_actual = date('Y-m-d');
+                     $fecha_actual = date('Y-m-d-H:i');
                      //SI TODAVIA NO LLEGO LA FECHA DE INSCRIPCION QUE PUEDA ABRIR LA INSCRIPCION AHORA
                      if($fecha_actual<$row['fechaInicioInscripcion']){
                          echo "<a href='abrirInscripcion.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Abrir inscripcion</button> </a></br>" ;

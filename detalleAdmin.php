@@ -8,8 +8,7 @@ include("conexion.php");
 include("mostrarImagen.php");
 
 $propiedad=$_GET['prop'];
-$semanas=unserialize($_GET['semanas']);
-$busqueda=$_GET['busqueda'];
+
 
 $con=conectar();
 include("funciones.php");
@@ -89,13 +88,6 @@ $query = "SELECT * FROM propiedad WHERE idPropiedad=$propiedad";
       <div class="panel-heading">SEMANAS DISPONIBLES</div>
       <div class="panel-body">
       <?php
-      if($busqueda==1){
-
-             foreach ($semanas as &$valor) {
-                  if($valor!=""){ 
-                     echo "FECHA: $valor </a>". estadoDeSubasta($valor,$propiedad)."</br>";
-                           }  } }
-      if ($busqueda==0) {
             $query2 = "SELECT * FROM subasta WHERE idPropiedad=$propiedad";
             $result2 = mysqli_query($con, $query2);
             if (mysqli_num_rows($result2)==0) {
@@ -110,9 +102,7 @@ $query = "SELECT * FROM propiedad WHERE idPropiedad=$propiedad";
            $week_start= date('d-m-Y', strtotime($week_start));
            if($row2['cerrada']==0){
            echo "FECHA: $week_start </a>".estadoDeSubasta($week_start,$propiedad)."</br>";} 
-           }}
-      
-      }
+           }}      
 ?> 
     </div>
     </div>

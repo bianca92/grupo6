@@ -14,8 +14,8 @@ $consulta="UPDATE subasta SET fechaInicioInscripcion='$fecha_actual', fechaFinIn
 $resu = $link->query($consulta); 
 
 
-//echo '<script> alert("SE HA ABIERTO LA INSCRIPCION");</script>';
-//echo "<script> window.location ='subastasAdmin.php' ;</script>";
+echo '<script> alert("SE HA ABIERTO LA INSCRIPCION");</script>';
+echo "<script> window.location ='subastasAdmin.php' ;</script>";
 
 
 mysqli_close($link);

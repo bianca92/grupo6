@@ -22,7 +22,7 @@ catch(Exception $e){
 
 
 
-$query = "SELECT * FROM propiedad";
+$query = "SELECT * FROM propiedad WHERE eliminada != 1";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
             

@@ -15,7 +15,7 @@ session_start();
 
         
     //Insertar informacion de texto  
-  $query="INSERT INTO propiedad (titulo,descripcion,pais,provincia,localidad,direccion)values('$t','$des','$pais','$provincia','$localidad','$direccion')";
+  $query="INSERT INTO propiedad (titulo,descripcion,pais,provincia,localidad,direccion,eliminada)values('$t','$des','$pais','$provincia','$localidad','$direccion',0)";
   $resu=mysqli_query($con,$query);
 
  $ultimo_id=mysqli_insert_id($con);

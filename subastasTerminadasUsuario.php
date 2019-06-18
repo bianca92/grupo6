@@ -226,7 +226,7 @@ $nombre= $nombre + 1;
 
 <?php //} }?>
  </div>
- ?>
+ 
   <script src="jquery-3.2.1.min.js"></script>
   <script src="js/bootstrap1.min.js"></script>
    <?php if ($auxiliar==true){

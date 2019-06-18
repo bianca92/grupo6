@@ -19,7 +19,7 @@ $con=conectar();
     }
 
 
-$query = "SELECT idPropiedad,titulo,localidad FROM propiedad";
+$query = "SELECT idPropiedad,titulo,localidad, eliminada FROM propiedad WHERE eliminada != 1";
             $result = mysqli_query($con, $query);
                    $num=mysqli_num_rows($result); 
      ?>

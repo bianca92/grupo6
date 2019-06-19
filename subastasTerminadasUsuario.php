@@ -1,5 +1,5 @@
 <html>
-
+<head>
 
 <?php
 
@@ -45,23 +45,26 @@ if($mes=="01" && $numeroS=="52"){
 }
 
 }
+?>
+</head>
+<body>
 
-
-
+<div class="container"> 
+<?php
 $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
-su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year,su.idSemana, su.cancelada
+su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year,su.idSemana, su.cancelada, p.eliminada
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
       
 
-    if ($num==0) {
+if ($num==0) {
   echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
  }
-else{
+ else{
      ?>
      <link  href="css/bootstrap1.min.css">
-<div class="container">
+
    
    <a href='subastasGanadasUsuario.php' class='btn btn-warning' float='right'>FUI GANADOR</a> </br></br>
  
@@ -180,10 +183,11 @@ else{
             <h4><?php echo "$row[titulo] en la localidad de $row[localidad] ";?></h4>
            
             
-            <?php 
-          
-        
-
+            <?php  // PROPIEDAD ELIMINADA
+          if($row['eliminada']==1){
+            echo"LA SUBASTA SE HA CANCELADO - LA PROPIEDAD YA NO ESTA DISPONIBLE";
+          }
+          else{ // TODOS LOS DEMAS PROPIEDADES
  
            $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
             $resultWinner = mysqli_query($con, $consulWinner);
@@ -206,35 +210,33 @@ else{
                    $winnerMsj="¡¡GANASTE LA SUBASTA!!"; }
                 else{
                   $winnerMsj="Perdiste la subasta";} 
-           } ?>
+            } ?>
 
 
              <h4><p class= 'text-danger'><?php echo $winnerMsj ?></p><h4> 
              <h4><?php echo "Puja ganadora: $ $pujaMaxima.";?></h4>
-             <h6><?php
-              echo "<p class=bg-primary >La subasta cerró el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."<p>";
-             ?></h6>
-         
-         </div>
-      </div> <?php // fin div thumbnail
+             
+             <h6><?php echo "<p class=bg-primary >La subasta cerró el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."<p>";?></h6>
+         <?php  }?>
+         </div> 
+      </div> <?php 
+      }// fin div col4
 $nombre= $nombre + 1;
-
-   }
- }?>
+ 
+   
+ } ?>
     
-    </div>
 
-<?php //} }?>
- </div>
  
   <script src="jquery-3.2.1.min.js"></script>
   <script src="js/bootstrap1.min.js"></script>
    <?php if ($auxiliar==true){
     echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
-   } 
- } //fin del else 
- ?>
-</div>
-   
+   } ?>
+
+</div><?php // fin de row ?>
+<?php  }  //fin del else 
+ ?> 
+</div>   
    </body>
    </html>

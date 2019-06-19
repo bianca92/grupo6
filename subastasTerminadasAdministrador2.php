@@ -103,13 +103,14 @@ else{
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo"$fi" ?></h4></td>
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaFinSubasta'])); echo "$fs"; ?></h4></td>  
             <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
-            <td><h4><?php echo "$mailPer" ?></h4></td>
+           
 
        <?php     //SI LA PROPIEDAD DE LA SEMANA ESTA ELIMINADA
        if ($row['eliminada']==1) {
         echo"<td></td><td>ELIMINADA</td><td></td>";
        }
        else{ ?>
+            <td><h4><?php echo "$mailPer" ?></h4></td>
             <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
             <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;?>  
             <td><?php echo "<a href='eliminar_subasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Eliminar subasta</button> </a></br>" ;

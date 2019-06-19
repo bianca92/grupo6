@@ -106,13 +106,13 @@ $filtro=$_GET['lugar'];
 
       $imgs=ObtenerImgs($row['idPropiedad']); ?>
       <tr>
-  <?php if ($row['eliminada']==1) {
+  <?php /*if ($row['eliminada']==1) {
         echo'<td><img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:20% /></td>';} 
-        else{ ?>
+        else{ */?>
             <td><?php echo
             "<a href='detalleAdmin.php?prop=$row[idPropiedad]'>". 
             '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:20% /></a>';?></td>
-   <?php  } ?>
+   <?php // } ?>
             <td><h4><?php echo "$row[titulo]" ?></h4> </td>
             <td><h4><?php echo" $row[pais] ";?></h4></td>
             <td><h4><?php echo" $row[provincia] ";?></h4></td>

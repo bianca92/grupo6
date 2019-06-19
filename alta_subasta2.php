@@ -54,8 +54,8 @@ $ofDesde = date ( 'Y-m-j' , $ofDesde);
 $ofHasta=strtotime ( '+7 day' , strtotime ( $ofDesde ) ) ;
 $ofHasta = date ( 'Y-m-j' , $ofHasta);
 
-$var_consulta="INSERT INTO subasta (idPropiedad,precioMinimo, idSemana, fechaInicioInscripcion, fechaFinInscripcion,fechaInicioSubasta, fechaFinSubasta,year)
-                     values('$propiedad','$precioInicial','$numero','$insDesde','$insHasta','$ofDesde','$ofHasta', '$year')";
+$var_consulta="INSERT INTO subasta (idPropiedad,precioMinimo, idSemana, fechaInicioInscripcion, fechaFinInscripcion,fechaInicioSubasta, fechaFinSubasta,activa,cerrada,year,cancelada)
+                     values('$propiedad','$precioInicial','$numero','$insDesde','$insHasta','$ofDesde','$ofHasta',0,0, '$year',0)";
             	
 $var_resultado = $link->query($var_consulta);
 

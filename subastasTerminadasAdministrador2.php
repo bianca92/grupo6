@@ -18,7 +18,8 @@ $con=conectar();
        echo"<script> alert ('DEBE ESTAR REGISTRADO PARA ACCEDER')</script>"; 
     }
 
-$query = "SELECT  p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta, su.activa, su.idSubasta, su.cerrada, su.year, su.idSemana, su.cancelada
+$query = "SELECT  p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta, su.activa,
+                  su.idSubasta, su.cerrada, su.year, su.idSemana, su.cancelada,p.eliminada
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -60,9 +61,9 @@ else{
       $row['cerrada']=$actualizar[1];
     //<img src=mostrarImagen.php?idPropiedad=".$row['idPropiedad']." style=width:60%"
     if(($row['activa']==1)&&($row['cerrada']==1)){
-       $auxiliar=false;
+       $auxiliar=false; 
+       
       //OBTENGO PUJA GANADORA 
-
        $pujaMaxima= $row['precioMinimo'];
        $pujaMaximaPersona="";
        $mailPer="NO HUBO GANADOR";
@@ -103,10 +104,16 @@ else{
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaFinSubasta'])); echo "$fs"; ?></h4></td>  
             <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
             <td><h4><?php echo "$mailPer" ?></h4></td>
+
+       <?php     //SI LA PROPIEDAD DE LA SEMANA ESTA ELIMINADA
+       if ($row['eliminada']==1) {
+        echo"<td></td><td>ELIMINADA</td><td></td>";
+       }
+       else{ ?>
             <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
             <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;?>  
             <td><?php echo "<a href='eliminar_subasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Eliminar subasta</button> </a></br>" ;
-            ?>
+          }?>
            
          </tr>  
          <?php } } ?>      

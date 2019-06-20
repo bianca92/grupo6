@@ -77,16 +77,16 @@ else{
 
                              switch ($row['numero']) {
                                   case 1:
-                                           echo "<a href='verSubasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
+                                           echo "<a href='verSemana.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
                                             break;
                                   case 2:
-                                            echo "<a href='verSubasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
+                                            echo "<a href='verSemana.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
                                            break;
                                  case 3:
                                              echo "<a href='verListaEspera.php'> <button type='button' class='btn btn-succes'>Ver lista de espera</button> </a></br>";
                                             break;
                                  case 8:
-                                             echo "<a href='verSubasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
+                                             echo "<a href='verSemana.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
                                             break;
                                  
 }

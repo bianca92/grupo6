@@ -20,14 +20,17 @@ $row2=  mysqli_fetch_array($var_resultado2);
    $estado="<p class= bg-success>LA INSCRIPCION COMIENZA ".date('d/m/Y', strtotime($row2['fechaInicioInscripcion']))."</p>"; 
  }
  else{
-  if($row2['activa']==1){
-  $estado="<p class= bg-danger>EN SUBASTA</p>";
-}  
-else{
-  
-   $estado="<p class= bg-info>EN INSCRIPCION</p>";
+       if(($row2['activa']==1)&&($row2['cerrada']!=1)){
+            $estado="<p class= bg-danger>EN SUBASTA</p>";
+            }
+       else{      
+           if(($fecha_actual>=$row2['fechaInicioInscripcion'])&&($fecha_actual<=$row2['fechaFinInscripcion'])){
+             $estado="<p class= bg-info>EN INSCRIPCION</p>";
+           }
+       $estado="<p class= bg-success>LA SUBASTA COMIENZA ".date('d/m/Y', strtotime($row2['fechaInicioSubasta']))."</p>";
+      
+      }
 }
- }
 
 
 //---------

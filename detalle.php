@@ -162,10 +162,15 @@ $query = "SELECT * FROM propiedad WHERE idPropiedad=$propiedad";
       <div class="panel-body">
       <?php
       if($busqueda==1){
-
-             foreach ($semanas as &$valor) {
-                  if($valor!=""){ 
-                     echo "<a href='verSemana.php?fecha=$valor&prop=$propiedad'>FECHA: $valor </a>". estadoDeSubasta($valor,$propiedad)."</br>";
+            foreach ($semanas as &$fecha) {
+               if($fecha!=""){
+                  //tengo el idsemana de la fecha disponible para recuperar datos de subasta
+                  $fecha2 = new DateTime($fecha);
+                  $semana = $fecha2->format('W');
+                    $query3 = "SELECT * FROM subasta WHERE idPropiedad=$propiedad and idSemana=$semana";
+                    $result3 = mysqli_query($con, $query3);
+                    $row3 = mysqli_fetch_array($result3);
+                    echo "<a href='verSemana.php?sub=$row3[idSubasta]'>FECHA: $fecha </a>". estadoDeSubasta($fecha,$propiedad)."</br>";
                            }  } }
       if ($busqueda==0) {
             $query2 = "SELECT * FROM subasta WHERE idPropiedad=$propiedad";

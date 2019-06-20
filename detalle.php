@@ -176,12 +176,15 @@ $query = "SELECT * FROM propiedad WHERE idPropiedad=$propiedad";
             }
             else{
             while($row2 = mysqli_fetch_array($result2)){
+
+
           
            $week_start = new DateTime(); $week_start->setISODate((int)$row2['year'],(int)$row2['idSemana']);
            $week_start= $week_start->format('Y-m-d');
            $week_start= date('d-m-Y', strtotime($week_start));
            if($row2['cerrada']==0){
-           echo "<a href='verSemana.php?fecha=$week_start&prop=$propiedad'>FECHA: $week_start </a>".estadoDeSubasta($week_start,$propiedad)."</br>";} 
+            //echo "<a href='verSemana.php?fecha=$week_start&prop=$propiedad'>FECHA: $week_start </a>".estadoDeSubasta($week_start,$propiedad)."</br>"; 
+           echo "<a href='verSemana.php?sub=$row2[idSubasta]'>FECHA: $week_start </a>".estadoDeSubasta($week_start,$propiedad)."</br>";} 
            }}
       
       }

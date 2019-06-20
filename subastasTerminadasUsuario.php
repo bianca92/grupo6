@@ -10,6 +10,15 @@ include("mostrarImagen.php");
 include("actualizarSegunFecha.php");
 
 $con=conectar();
+ //para que no se pueda acceder a esta pagina si no esta logeado
+try{
+$login= new Login();
+$login->autorizar();
+}
+catch(Exception $e){
+   echo $e->getMessage();
+   header("Location:index.php");
+}
 
 
   if(isset($_GET['msj'])){

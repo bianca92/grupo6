@@ -36,7 +36,7 @@ for($i = 0; $i < count($_FILES['imagen']['name']); $i++){
 
 
             
-            header("Location:index.php");
+            echo "<script> window.history.go(-2);</script>";
     
            // $query2="INSERT INTO credito (monto,idUsuario)values('1','$id')";
            // $resul2=mysqli_query($con,$query2);

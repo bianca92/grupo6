@@ -60,7 +60,7 @@ for($i = 0; $i < count($_FILES['imagen']['name']); $i++){
 
 
 
-header("Location:propiedadesAdmin.php");
+echo "<script> window.history.go(-2);</script>";
 
  
 ?>

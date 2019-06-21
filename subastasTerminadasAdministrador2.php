@@ -20,7 +20,7 @@ $con=conectar();
 
 $query = "SELECT  p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta, su.activa,
                   su.idSubasta, su.cerrada, su.year, su.idSemana, su.cancelada,p.eliminada
-          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
+          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
 
@@ -106,7 +106,7 @@ else{
            
 
        <?php     //SI LA PROPIEDAD DE LA SEMANA ESTA ELIMINADA
-       if ($row['eliminada']==1) {
+       if ($row['cancelada']==1 or $row['eliminada']==1 && $mailPer=="NO HUBO GANADOR" ) {
         echo"<td></td><td>ELIMINADA</td><td></td>";
        }
        else{ ?>

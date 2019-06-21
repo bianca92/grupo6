@@ -72,7 +72,7 @@ $var_resultado = $link->query($var_consulta);
 
 
 
-header("Location:subastasAdmin.php");
+echo "<script> window.history.go(-2);</script>";
 
  
 

@@ -62,7 +62,7 @@ if($mes=="01" && $numeroS=="52"){
 <?php
 $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
 su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year,su.idSemana, su.cancelada, p.eliminada
-          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
+          FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
       
@@ -192,15 +192,20 @@ if ($num==0) {
             <h4><?php echo "$row[titulo] en la localidad de $row[localidad] ";?></h4>
            
             
-            <?php  // PROPIEDAD ELIMINADA
-          if($row['eliminada']==1){
+            <?php 
+
+
+$consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
+            $resultWinner = mysqli_query($con, $consulWinner);
+            $num = mysqli_num_rows($resultWinner);
+
+             // PROPIEDAD ELIMINADA
+          if($row['cancelada']==1 or $row['eliminada']==1 && $num==0){
             echo"LA SUBASTA SE HA CANCELADO - LA PROPIEDAD YA NO ESTA DISPONIBLE";
           }
           else{ // TODOS LOS DEMAS PROPIEDADES
  
-           $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
-            $resultWinner = mysqli_query($con, $consulWinner);
-            $num = mysqli_num_rows($resultWinner);
+           
            $ganador=0;
            if ($num==0){
             $winnerMsj="NADIE HA GANADO";

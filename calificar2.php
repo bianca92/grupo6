@@ -31,7 +31,7 @@ $var_resultado = $link->query($var_consulta);
 
 
 
-header("Location:subastasGanadasUsuario.php");
+echo "<script> window.history.go(-2);</script>";
 
  
 

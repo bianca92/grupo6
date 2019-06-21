@@ -33,7 +33,7 @@ $fecha2 = new DateTime($fecha);
 $semana = $fecha2->format('W'); */
 
 $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
-          su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year, su.idSemana,p.eliminada
+          su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada,su.cancelada, su.year, su.idSemana,p.eliminada
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad and su.idSubasta=$subasta";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -65,8 +65,26 @@ $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMin
           
       if(($row['activa']==1)&&($row['cerrada']==1)){
             // PROPIEDAD ELIMINADA
-          if($row['eliminada']==1){
+          if($row['eliminada']==1 or $row['cancelada']){
+            
+             $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
+      $fi= $week_start->format('d/m/Y'); ?>
+      <h4><?php echo "Para la semana del $fi.";?></h4>
+      <h4><?php echo "$row[titulo] en la localidad de $row[localidad] ";?></h4>
+
+
+<?php
+
+
+
+
             echo"LA SUBASTA SE HA CANCELADO - LA PROPIEDAD YA NO ESTA DISPONIBLE";
+
+           
+
+
+
+
           }
           else{ // TODOS LOS DEMAS PROPIEDADES
            $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";

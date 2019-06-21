@@ -11,7 +11,7 @@ $result = mysqli_query($link, $sql);
 //$row = mysqli_fetch_array($result);
 if (mysqli_affected_rows($link) > 0) { 
 echo '<script> alert("SE HA ELIMINADO LA SUSCRIPCION");</script>';
-echo "<script> window.location ='subastasUsuario.php' ;</script>";
+echo "<script> window.history.go(-1);</script>";
 
 
 

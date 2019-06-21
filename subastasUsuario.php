@@ -219,19 +219,18 @@ if ($fin>$nuevafecha){
 
                       }
                         
-             
-                  
+             $consultaPremium= "SELECT * FROM persona WHERE idPersona='$id'";
+             $resuPremium = mysqli_query($con,  $consultaPremium);
+             $rowPre= mysqli_fetch_array($resuPremium);
+             if ($rowPre['tipoU']=="premium"&& $rowPre['credito']>0 ){
+                  echo "<a  href=#> <button type='button' class='btn btn-succes'>COMPRAR</button> </a>";}
                  
-                    
-            
+                    echo "<a  href='detalle.php?prop=$row[idPropiedad]&busqueda=0&semanas=".serialize(0)."'> <button type='button' class='btn btn-succes'>Detalle propiedad</button> </a>";
+                 
                
-                ?><button class="btn btn-info " onclick="myFunction()" >Comprar</button>
+                ?>
 
-<script>
-function myFunction() {
-  alert("DEBE SER USUARIO PREMIUM!");
-}
-</script>
+
             
 
          </div>

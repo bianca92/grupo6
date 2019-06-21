@@ -40,7 +40,7 @@ $fecha=$_POST['fecha'];
 
 
 
-header("Location:subastasActivasUsuario4.php");
+echo "<script> window.history.go(-2);</script>";
 
  
 ?>

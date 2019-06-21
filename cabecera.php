@@ -271,7 +271,7 @@
       <?php  }
     }
     if($verOpcionesLogeado==true and $_SESSION['tipoU']=="premium"){?>
-         <li><a href=dejarPremium.php>DEJAR DE SER PREMIUM</a></li>
+         <li><a href=#>ERES PREMIUM</a></li>
            
            <?php } 
 

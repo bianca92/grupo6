@@ -178,6 +178,8 @@ else{
              <?php
              echo "<p class=bg-primary >La subasta cierra el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."<p>";
                echo "<a href='Pujar.php?idS=".$row[0]."&idU=".$id."&min=".$row['precioMinimo']."'> <button type='button' class='btn btn-succes'>Pujar</button> </a>" ;
+
+               echo "<a style='float:right;'  href='detalle.php?prop=$row[idPropiedad]&busqueda=0&semanas=".serialize(0)."'> <button type='button' class='btn btn-succes'>Detalles de propiedad</button> </a></br>";
                ?>
 
 

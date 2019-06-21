@@ -46,14 +46,14 @@ $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMin
            <?php //IMAGENES
            $imgs=ObtenerImgs($row['idPropiedad']);
             $i=0; 
-            while($i < count($imgs)) { ?>
+           // while($i < count($imgs)) { ?>
              
         <div class="col-sm-4">
         <div class="thumbnail" >
               <?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[$i]).'" style="width:822px;height:300px;" />'; $i=$i+1;?>
           </div></div>
               
-        <?php   }
+        <?php  // }
 
            ?>
 <div class="col-sm-8">
@@ -182,8 +182,13 @@ $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMin
                          echo "<p class= bg-danger>La inscripcion comienza el ".date('d/m/Y', strtotime($row['fechaInicioInscripcion']))."</p>"; 
                           }
                           else{
-                        echo "<p class=bg-primary >La inscripcion cierra el ".date('d/m/Y', strtotime($row['fechaFinInscripcion']))."<p>";
-                        echo "<a href='inscribirseSubasta.php?idS=".$row[0]."&idU=".$id."'> <button  type='button' class='btn btn-success'>Inscribirse</button> </a>" ; }
+                            if($fecha_actual<$row['fechaFinInscripcion']){                       
+                        echo "<p class=bg-primary >La inscripcion cierral el ".date('d/m/Y', strtotime($row['fechaFinInscripcion']))."<p>";
+                        echo "<a href='inscribirseSubasta.php?idS=".$row[0]."&idU=".$id."'> <button  type='button' class='btn btn-success'>Inscribirse</button> </a>" ;} 
+                       if ($fecha_actual>=$row['fechaInicioSubasta'] && $fecha_actual<$row['fechaFinSubasta']) {echo "<p class=bg-danger >En subasta.<p>";}
+                       if ($fecha_actual>=$row['fechaFinInscripcion'] && $fecha_actual<$row['fechaInicioSubasta']){echo "<p class=bg-danger >Ya cerró la inscripción.<p>";}
+
+                      }
                         }
 
                       }

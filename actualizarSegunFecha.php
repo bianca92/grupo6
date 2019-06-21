@@ -1,5 +1,6 @@
 <?php
 // se recibe el valor que identifica la imagen en la tabla
+
 include("contenidoMensaje.php");
 function actualizar($idS){
 	$link=conectar();

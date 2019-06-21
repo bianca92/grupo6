@@ -11,7 +11,7 @@ include("mostrarImagen.php");
 
 
 $propiedad=$_GET['prop'];
-// QUE LO LEA DESPUES PARA QUE NO SALTE ERROR SI VIENE DESDE ACTIVIDAD   $semanas=unserialize($_GET['semanas']);
+$semanas=unserialize($_GET['semanas']);
 $busqueda=$_GET['busqueda'];
 
 $con=conectar();
@@ -28,8 +28,7 @@ catch(Exception $e){
 }
 ?>
 <link  href="css/bootstrap1.min.css">
-<?php//nombre de los botones de la galeria
-    $nombre=1; ?>
+<?php ?>
 </head>
 <body>
   <div class="container">
@@ -41,7 +40,8 @@ $query = "SELECT * FROM propiedad WHERE idPropiedad=$propiedad";
             $num=mysqli_num_rows($result);
             $row = mysqli_fetch_array($result);
 
-
+//nombre de los botones de la galeria
+    $nombre=1;
 //MOSTRAR DATOS
 
 //MOSTRAR IMAGENES
@@ -162,7 +162,6 @@ $query = "SELECT * FROM propiedad WHERE idPropiedad=$propiedad";
       <div class="panel-body">
       <?php
       if($busqueda==1){
-        $semanas=unserialize($_GET['semanas']);
             foreach ($semanas as &$fecha) {
                if($fecha!=""){
                   //tengo el idsemana de la fecha disponible para recuperar datos de subasta

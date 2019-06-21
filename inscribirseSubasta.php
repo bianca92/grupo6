@@ -13,7 +13,7 @@ $var_consulta= "INSERT INTO inscripto (idPersona,idSubasta,fecha)values('$Person
 
 
 
-header("Location:subastasUsuario.php");
+echo "<script> window.history.go(-1);</script>";
 
 
 ?>

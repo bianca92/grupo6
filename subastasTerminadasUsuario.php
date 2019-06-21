@@ -228,18 +228,14 @@ $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
             } ?>
 
 
-             <h4><p class= 'text-danger'><?php echo $winnerMsj ?></p><h4> 
+             <h4><p class= 'text-danger'><?php echo $winnerMsj ?></p><h4>
              <h4><?php echo "Puja ganadora: $ $pujaMaxima.";?></h4>
              
              <h6><?php echo "<p class=bg-primary >La subasta cerró el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."<p>";?></h6>
          <?php  
        }
 echo "<a href='detalle.php?prop=$row[idPropiedad]&busqueda=0&semanas=".serialize(0)."'> <button type='button' class='btn btn-succes'>Detalles de propiedad</button> </a>";
- $valoracionC = "SELECT * FROM valoracion WHERE idSubasta=$rowWinner[idSubasta]";
-                    $resultV = mysqli_query($con, $valoracionC);
-                    
-if($ganador==1 && mysqli_num_rows($resultV)==0){
-echo "<a href='calificar.php?sub=".$row['idSubasta']."&prop=".$row['idPropiedad']."'> <button type='button' class='btn btn-succes'>CALIFICAR</button> </a></br></td>" ;}
+
        ?>
          </div> 
       </div> <?php   

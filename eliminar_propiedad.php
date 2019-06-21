@@ -43,7 +43,7 @@ if($row['cerrada']==0){
 
 echo '<script> alert("SE HA ELIMINADO LA PROPIEDAD");</script>';
 
-echo "<script> window.history.back();</script>";
+//echo "<script> window.history.back();</script>";
  mysqli_free_result($result);
             mysqli_close($con);
 

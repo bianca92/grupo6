@@ -193,8 +193,8 @@ if ($num==0) {
            
             
             <?php 
-
-
+ $ganador=0;
+$val="";
 $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
             $resultWinner = mysqli_query($con, $consulWinner);
             $num = mysqli_num_rows($resultWinner);
@@ -206,7 +206,7 @@ $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
           else{ // TODOS LOS DEMAS PROPIEDADES
  
            
-           $ganador=0;
+          
            if ($num==0){
             $winnerMsj="NADIE HA GANADO";
             $pujaMaxima="No hubo pujas";
@@ -222,20 +222,26 @@ $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
                  if($winnerPersona==$id){ 
 
                    $winnerMsj="¡¡GANASTE LA SUBASTA!!"; 
-                   $ganador=1;}
+                   $ganador=1;
+   $val=$rowWinner['idSubasta'];
+                 }
                 else{
                   $winnerMsj="Perdiste la subasta";} 
             } ?>
 
 
-             <h4><p class= 'text-danger'><?php echo $winnerMsj ?></p><h4>
+             <h4><p class= 'text-danger'><?php echo $winnerMsj ?></p><h4> 
              <h4><?php echo "Puja ganadora: $ $pujaMaxima.";?></h4>
              
              <h6><?php echo "<p class=bg-primary >La subasta cerró el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."<p>";?></h6>
          <?php  
        }
 echo "<a href='detalle.php?prop=$row[idPropiedad]&busqueda=0&semanas=".serialize(0)."'> <button type='button' class='btn btn-succes'>Detalles de propiedad</button> </a>";
-
+ $valoracionC = "SELECT * FROM valoracion WHERE idSubasta=$val";
+                    $resultV = mysqli_query($con, $valoracionC);
+                    
+if($ganador==1 && mysqli_num_rows($resultV)==0){
+echo "<a href='calificar.php?sub=".$row['idSubasta']."&prop=".$row['idPropiedad']."'> <button type='button' class='btn btn-succes'>CALIFICAR</button> </a></br></td>" ;}
        ?>
          </div> 
       </div> <?php   

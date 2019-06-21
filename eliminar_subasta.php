@@ -20,7 +20,7 @@ $envio=mensajeEliminarSubasta($idS);
 
 }
 // marcar como cancelada ---> cancelada = 1
-$consulta="UPDATE subasta SET cancelada=1,cerrada=1,activa=1, fechaFinSubasta='$fecha_actual' WHERE idSubasta='$idS' ";
+$consulta="UPDATE subasta SET cancelada=1,cerrada=1,activa=1,fechaInicioInscripcion='$fecha_actual', fechaFinInscripcion='$fecha_actual',fechaInicioSubasta='$fecha_actual',fechaFinSubasta='$fecha_actual' WHERE idSubasta='$idS' ";
 $resu = $link->query($consulta); 
 
 echo '<script> alert("SE HA ELIMINADO LA SUBASTA");</script>';

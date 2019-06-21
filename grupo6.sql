@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2019 a las 07:42:42
+-- Tiempo de generación: 21-06-2019 a las 09:56:09
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.4
 
@@ -111,7 +111,8 @@ CREATE TABLE `ganador` (
 --
 
 INSERT INTO `ganador` (`idGanador`, `idPersona`, `idSubasta`, `idPuja`) VALUES
-(5, 14, 23, 19);
+(7, 13, 38, 25),
+(8, 14, 43, 27);
 
 -- --------------------------------------------------------
 
@@ -181,8 +182,14 @@ CREATE TABLE `inscripto` (
 --
 
 INSERT INTO `inscripto` (`idInscripto`, `idPersona`, `idSubasta`, `fecha`) VALUES
-(72, 13, 23, '2019-06-21 06:39:00'),
-(74, 14, 23, '2019-06-21 06:43:00');
+(81, 14, 36, '2019-06-21 09:48:00'),
+(82, 13, 36, '2019-06-21 09:48:00'),
+(83, 14, 38, '2019-06-21 09:49:00'),
+(84, 13, 38, '2019-06-21 09:49:00'),
+(85, 13, 43, '2019-06-21 09:52:00'),
+(86, 14, 42, '2019-06-21 09:53:00'),
+(87, 14, 43, '2019-06-21 09:53:00'),
+(88, 13, 42, '2019-06-21 09:53:00');
 
 -- --------------------------------------------------------
 
@@ -206,10 +213,18 @@ CREATE TABLE `mensaje` (
 --
 
 INSERT INTO `mensaje` (`idMensaje`, `idSubasta`, `contenido`, `leido`, `fecha`, `idDe`, `idPara`, `numero`) VALUES
-(112, 23, 'La subasta se ha activado', 1, '2019-06-21 06:44:00', 2, 13, 1),
-(113, 23, 'La subasta se ha activado', 1, '2019-06-21 06:44:00', 2, 14, 1),
-(116, 23, 'Has perdido la subasta', NULL, '2019-06-21 07:33:00', 2, 13, 2),
-(117, 23, 'Felicidades has ganado la subasta', NULL, '2019-06-21 07:33:00', 2, 14, 2);
+(136, 36, 'La subasta se ha activado', NULL, '2019-06-21 09:48:00', 2, 14, 1),
+(137, 36, 'La subasta se ha activado', NULL, '2019-06-21 09:48:00', 2, 13, 1),
+(138, 38, 'La subasta se ha activado', NULL, '2019-06-21 09:50:00', 2, 14, 1),
+(139, 38, 'La subasta se ha activado', NULL, '2019-06-21 09:50:00', 2, 13, 1),
+(140, 38, 'Has perdido la subasta', NULL, '2019-06-21 09:50:00', 2, 14, 2),
+(141, 38, 'Felicidades has ganado la subasta', NULL, '2019-06-21 09:50:00', 2, 13, 2),
+(142, 43, 'La subasta se ha activado', NULL, '2019-06-21 09:53:00', 2, 13, 1),
+(143, 43, 'La subasta se ha activado', NULL, '2019-06-21 09:53:00', 2, 14, 1),
+(144, 42, 'La subasta se ha activado', NULL, '2019-06-21 09:54:00', 2, 14, 1),
+(145, 42, 'La subasta se ha activado', NULL, '2019-06-21 09:54:00', 2, 13, 1),
+(146, 43, 'Has perdido la subasta', NULL, '2019-06-21 09:54:00', 2, 13, 2),
+(147, 43, 'Felicidades has ganado la subasta', NULL, '2019-06-21 09:54:00', 2, 14, 2);
 
 -- --------------------------------------------------------
 
@@ -241,8 +256,8 @@ CREATE TABLE `persona` (
 
 INSERT INTO `persona` (`IdPersona`, `dni`, `nombre`, `apellido`, `telefono`, `email`, `clave`, `tipoU`, `rol`, `credito`, `ciudad`, `fechaNacimiento`, `idTarjeta`, `fechaRegistro`, `fechaModificacion`) VALUES
 (2, 33333333, 'osvaldo', 'perez', 222412345, 'osvaldo@gmail.com', '123456', 'administra', 1, NULL, 'la plata', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(13, 9876656, 'Pablo', 'Perez', 2147483647, 'pablo@hotmail.com', '1234567', 'premium', 0, 2, 'La Plata', '2001-06-06 00:00:00', 18, '2019-06-13 07:57:00', '2019-06-20 10:42:00'),
-(14, 94534089, 'Maria', 'Cabrera', 221, 'lucy@gmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '2001-01-01 00:00:00', 8, '2019-06-16 21:46:00', '2019-06-20 12:54:00');
+(13, 9876656, 'Pablo', 'Perez', 2147483647, 'pablo@hotmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '2001-06-06 00:00:00', 18, '2019-06-13 07:57:00', '2019-06-20 10:42:00'),
+(14, 94534089, 'Maria', 'Cabrera', 221, 'lucy@gmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '2001-01-01 00:00:00', 19, '2019-06-16 21:46:00', '2019-06-20 12:54:00');
 
 -- --------------------------------------------------------
 
@@ -289,10 +304,11 @@ CREATE TABLE `puja` (
 --
 
 INSERT INTO `puja` (`idPuja`, `idPersona`, `idSubasta`, `cantidad`, `fecha`) VALUES
-(16, 13, 23, '950', '2019-06-21 06:58:00'),
-(17, 14, 23, '1000', '2019-06-21 07:00:00'),
-(18, 13, 23, '1080', '2019-06-21 07:03:00'),
-(19, 14, 23, '2000', '2019-06-21 07:33:00');
+(23, 13, 36, '1200', '2019-06-21 09:48:00'),
+(24, 14, 36, '1300', '2019-06-21 09:48:00'),
+(25, 13, 38, '1700', '2019-06-21 09:50:00'),
+(26, 13, 43, '1000', '2019-06-21 09:54:00'),
+(27, 14, 43, '5000', '2019-06-21 09:54:00');
 
 -- --------------------------------------------------------
 
@@ -381,13 +397,18 @@ CREATE TABLE `semanatienepropiedad` (
 --
 
 INSERT INTO `semanatienepropiedad` (`idSemanaTienePropiedad`, `idSemana`, `idPropiedad`, `year`) VALUES
-(19, 52, 28, 2019),
-(20, 2, 28, 2020),
-(21, 4, 28, 2020),
-(22, 6, 28, 2020),
-(23, 52, 27, 2019),
-(24, 2, 27, 2020),
-(25, 4, 27, 2020);
+(32, 52, 27, 2019),
+(33, 2, 27, 2020),
+(34, 4, 27, 2020),
+(35, 7, 27, 2020),
+(36, 2, 28, 2020),
+(37, 4, 28, 2020),
+(38, 8, 28, 2020),
+(39, 9, 28, 2020),
+(40, 6, 29, 2020),
+(41, 7, 29, 2020),
+(42, 3, 29, 2020),
+(43, 8, 29, 2020);
 
 -- --------------------------------------------------------
 
@@ -415,13 +436,18 @@ CREATE TABLE `subasta` (
 --
 
 INSERT INTO `subasta` (`idSubasta`, `precioMinimo`, `idSemana`, `fechaInicioInscripcion`, `fechaFinInscripcion`, `fechaInicioSubasta`, `fechaFinSubasta`, `idPropiedad`, `activa`, `cerrada`, `year`, `cancelada`) VALUES
-(19, '500', 52, '2019-06-01', '2019-06-04', '2019-06-19', '2019-06-28 00:00:00', 28, 1, 0, 2019, 0),
-(20, '600', 2, '2019-06-10', '2019-06-17', '2019-08-05', '2019-08-13 00:00:00', 28, 0, 0, 2020, 0),
-(21, '700', 4, '2019-06-20', '2019-06-27', '2019-08-20', '2019-08-27 00:00:00', 28, 0, 0, 2020, 0),
-(22, '800', 6, '2019-08-03', '2019-08-10', '2019-09-03', '2019-09-10 00:00:00', 28, 0, 0, 2020, 0),
-(23, '900', 52, '2019-06-19', '2019-06-21', '2019-06-21', '2019-06-21 07:33:00', 27, 1, 1, 2019, 0),
-(24, '1000', 2, '2019-07-06', '2019-07-13', '2019-08-06', '2019-08-13 00:00:00', 27, 0, 0, 2020, 0),
-(25, '1100', 4, '2019-07-20', '2019-07-27', '2019-08-20', '2019-08-27 00:00:00', 27, 0, 0, 2020, 0);
+(32, '1000', 52, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 27, 1, 0, 2019, 0),
+(33, '1100', 2, '2019-06-21', '2019-06-21', '2019-08-06', '2019-08-13 00:00:00', 27, 0, 0, 2020, 0),
+(34, '1200', 4, '2019-06-21', '2019-06-28', '2019-08-20', '2019-08-27 00:00:00', 27, 0, 0, 2020, 0),
+(35, '1300', 7, '2019-08-10', '2019-08-17', '2019-09-10', '2019-09-17 00:00:00', 27, 0, 0, 2020, 0),
+(36, '1000', 2, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 28, 1, 0, 2020, 0),
+(37, '1400', 4, '2019-06-21', '2019-06-21', '2019-08-20', '2019-08-27 00:00:00', 28, 0, 0, 2020, 0),
+(38, '1600', 8, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-21 09:50:00', 28, 1, 1, 2020, 0),
+(39, '2000', 9, '2019-08-24', '2019-08-31', '2019-09-24', '2019-10-01 00:00:00', 28, 0, 0, 2020, 0),
+(40, '1000', 6, '2019-08-03', '2019-08-10', '2019-09-03', '2019-09-10 00:00:00', 29, 0, 0, 2020, 0),
+(41, '2000', 7, '2019-08-10', '2019-08-17', '2019-09-10', '2019-09-17 00:00:00', 29, 0, 0, 2020, 0),
+(42, '3000', 3, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 29, 1, 0, 2020, 0),
+(43, '1000', 8, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-21 09:54:00', 29, 1, 1, 2020, 0);
 
 -- --------------------------------------------------------
 
@@ -448,7 +474,8 @@ INSERT INTO `tarjeta` (`idTarjeta`, `idPersona`, `numero`, `marca`, `vencimiento
 (8, 14, 6789056432345678, 'visa', '12/2030', 456, ''),
 (16, 13, 1234123412341234, 'american', '08/2028', 456, ''),
 (17, 13, 4321432143214321, 'master', '08/2020', 123, 'pablo'),
-(18, 13, 3434343434343434, 'master', '08/2021', 343, 'pablo ss');
+(18, 13, 3434343434343434, 'master', '08/2021', 343, 'pablo ss'),
+(19, 14, 1234567891012345, 'visa', '12/2031', 789, 'Pablo Perez');
 
 -- --------------------------------------------------------
 
@@ -628,13 +655,13 @@ ALTER TABLE `cuota`
 -- AUTO_INCREMENT de la tabla `enesperapremium`
 --
 ALTER TABLE `enesperapremium`
-  MODIFY `idEspera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idEspera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `ganador`
 --
 ALTER TABLE `ganador`
-  MODIFY `idGanador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idGanador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `hotsale`
@@ -652,13 +679,13 @@ ALTER TABLE `imagen`
 -- AUTO_INCREMENT de la tabla `inscripto`
 --
 ALTER TABLE `inscripto`
-  MODIFY `idInscripto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `idInscripto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
@@ -676,7 +703,7 @@ ALTER TABLE `propiedad`
 -- AUTO_INCREMENT de la tabla `puja`
 --
 ALTER TABLE `puja`
-  MODIFY `idPuja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idPuja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `semana`
@@ -688,19 +715,19 @@ ALTER TABLE `semana`
 -- AUTO_INCREMENT de la tabla `semanatienepropiedad`
 --
 ALTER TABLE `semanatienepropiedad`
-  MODIFY `idSemanaTienePropiedad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idSemanaTienePropiedad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `subasta`
 --
 ALTER TABLE `subasta`
-  MODIFY `idSubasta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idSubasta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `tarjeta`
 --
 ALTER TABLE `tarjeta`
-  MODIFY `idTarjeta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idTarjeta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `ubicacion`
@@ -712,7 +739,7 @@ ALTER TABLE `ubicacion`
 -- AUTO_INCREMENT de la tabla `valoracion`
 --
 ALTER TABLE `valoracion`
-  MODIFY `idValoracion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idValoracion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

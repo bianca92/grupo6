@@ -235,8 +235,10 @@ $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
          <?php  
        }
 echo "<a href='detalle.php?prop=$row[idPropiedad]&busqueda=0&semanas=".serialize(0)."'> <button type='button' class='btn btn-succes'>Detalles de propiedad</button> </a>";
-
-if($ganador==1){
+ $valoracionC = "SELECT * FROM valoracion WHERE idSubasta=$rowWinner[idSubasta]";
+                    $resultV = mysqli_query($con, $valoracionC);
+                    
+if($ganador==1 && mysqli_num_rows($resultV)==0){
 echo "<a href='calificar.php?sub=".$row['idSubasta']."&prop=".$row['idPropiedad']."'> <button type='button' class='btn btn-succes'>CALIFICAR</button> </a></br></td>" ;}
        ?>
          </div> 

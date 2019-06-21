@@ -33,10 +33,10 @@ $envio=mensajeEliminarSubasta($row['idSubasta']);
 // si es distinta de cerrada de 1, pongo en uno
 if($row['cerrada']==0){
     if ($row['activa']==0) {
-      $consulta3="UPDATE subasta SET activa=1, fechaFinSubasta='$fecha_actual' WHERE idSubasta='$row[idSubasta]' ";
+      $consulta3="UPDATE subasta SET activa=1,fechaInicioInscripcion='$fecha_actual', fechaFinInscripcion='$fecha_actual',fechaInicioSubasta='$fecha_actual', fechaFinSubasta='$fecha_actual' WHERE idSubasta='$row[idSubasta]' ";
       $resul3 = $link->query($consulta3); 
 	}
-   $consulta2="UPDATE subasta SET cerrada=1, fechaFinSubasta='$fecha_actual' WHERE idSubasta='$row[idSubasta]' ";
+   $consulta2="UPDATE subasta SET cerrada=1,fechaInicioInscripcion='$fecha_actual', fechaFinInscripcion='$fecha_actual',fechaInicioSubasta='$fecha_actual', fechaFinSubasta='$fecha_actual' WHERE idSubasta='$row[idSubasta]' ";
    $resul2 = $link->query($consulta2); 
 }
  } 

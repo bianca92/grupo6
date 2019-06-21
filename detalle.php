@@ -11,7 +11,7 @@ include("mostrarImagen.php");
 
 
 $propiedad=$_GET['prop'];
-$semanas=unserialize($_GET['semanas']);
+// QUE LO LEA DESPUES PARA QUE NO SALTE ERROR SI VIENE DESDE ACTIVIDAD   $semanas=unserialize($_GET['semanas']);
 $busqueda=$_GET['busqueda'];
 
 $con=conectar();
@@ -162,6 +162,7 @@ $query = "SELECT * FROM propiedad WHERE idPropiedad=$propiedad";
       <div class="panel-body">
       <?php
       if($busqueda==1){
+        $semanas=unserialize($_GET['semanas']);
             foreach ($semanas as &$fecha) {
                if($fecha!=""){
                   //tengo el idsemana de la fecha disponible para recuperar datos de subasta

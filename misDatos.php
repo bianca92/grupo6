@@ -1,4 +1,73 @@
 <html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Popup container - can be anything you want */
+.popup2 {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup2 .popuptext2 {
+  visibility: hidden;
+  width: 1000px;
+  height: 170px;
+  background-color: #A8E0FE;
+  color: #000000;
+  text-align: justify;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  top: 50px;
+  bottom: 125%;
+  left: 100%;
+  margin-left: -800px;
+}
+
+/* Popup arrow */
+.popup2 .popuptext2::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup2 .show2 {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+.popup2:hover {
+  color: #FFFFFF;
+}
+
+
+</style>
+</head>
 
 <body>
 
@@ -51,12 +120,38 @@ $query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
  
  <form name="formulario" class="login-form" style="width:600px; background-color:#fff;float:left;margin-left: 30px;"><h2 align="center">  MIS DATOS</h2> <h4 align="center">
  	<?php
-          //SI NO ES PREMIUM QUE LE MUESTRE EL BOTON PARA HACERSE
+          
       if($datosUsuario['tipoU']!="premium"){ 
-         $pp="solicitarPremium.php";   ?>
-       <a class="elBoton" href=<?php echo "  ".$pp; ?>>¡QUIERO SER PREMIUM!</a><br/>
-        <?php
 
+        //BUSCA SI MANDO SOLICITUD PARA SR PREMIUM
+
+        $queryInscripto = "SELECT * FROM enesperapremium  WHERE idPersona ='$id' ";
+        $resultInscripto = mysqli_query($con, $queryInscripto);
+        $numInscripto=mysqli_num_rows($resultInscripto); 
+
+        if($numInscripto!=1){ //no mando solicitud  
+        ?>
+          <div class="popup2" onclick="myFunction2()" onmouseover="this.style.cssText='color:#0A88C0'" onmouseout="this.style.cssText='color:#000000'"> ¡QUIERO SER PREMIUM!
+              <span class="popuptext2" id="myPopup2"><ul  style="list-style-type:disc;" >
+                <h6><li>Como usuario premium podra comprar de forma directa semanas que se vayan a subastar sin la necesidad de pujar.</li>
+                    <li>Los usuarios premium cuentan con dos creditos anuales, como el usuario clasico. Estos creditos representan una semana al año cada uno, por lo que se descontara un credito</li> al ganar una subasta y un credito al realizar una compra directa.<br/>
+                    <li>Como usuario premium los creditos se pueden usar de cualquiera de las siguientes combinaciones:</li>
+                    <ul style="list-style-type: disc;">
+                        <li>Los dos en dos subastas.</li>
+                        <li>Los dos en compras directas.</li>
+                        <li>Uno en compra directa y otro en subasta.</li>
+                    </ul>
+                    <li>Los usuarios premium podran dar de baja este beneficio y volver a ser usuarios clasicos en cualquier momento.</li>
+                    <li>El costo de ser usuario premium es de $ <?php echo "$montoPremium[monto]" ?> por mes.</li>
+                    </br>
+              <?php echo"<a href=solicitarPremium.php > ¡SER PREMIUM!</a>";?>
+
+                </h6>  
+              </ul></span>
+          </div>   <?php     
+        }
+        else{echo "SOLICITUD ENVIADA";} //MANDO SOLICITUD
+        
       } 
       else{ echo "YA SOS PREMIUM !!";}
       
@@ -166,5 +261,12 @@ $query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
             mysqli_close($con);
 
 ?> 
+ <script>
+      // When the user clicks on div, open the popup
+      function myFunction2() {
+          var popup2 = document.getElementById("myPopup2");
+          popup2.classList.toggle("show2");
+      }
+    </script>
    </body>
    </html>

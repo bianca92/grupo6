@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2019 a las 04:00:42
+-- Tiempo de generación: 01-07-2019 a las 21:14:39
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.4
 
@@ -66,6 +66,18 @@ CREATE TABLE `config_cuota` (
 INSERT INTO `config_cuota` (`idTipoUsuario`, `monto`) VALUES
 (1, 650),
 (2, 700);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `config_hotsale`
+--
+
+CREATE TABLE `config_hotsale` (
+  `idConfigHotsale` int(11) NOT NULL,
+  `fechainicio` date NOT NULL,
+  `fechafin` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -209,7 +221,9 @@ INSERT INTO `inscripto` (`idInscripto`, `idPersona`, `idSubasta`, `fecha`) VALUE
 (85, 13, 43, '2019-06-21 09:52:00'),
 (86, 14, 42, '2019-06-21 09:53:00'),
 (87, 14, 43, '2019-06-21 09:53:00'),
-(88, 13, 42, '2019-06-21 09:53:00');
+(88, 13, 42, '2019-06-21 09:53:00'),
+(90, 13, 35, '2019-07-01 04:59:00'),
+(91, 13, 39, '2019-07-01 05:15:00');
 
 -- --------------------------------------------------------
 
@@ -274,7 +288,14 @@ INSERT INTO `mensaje` (`idMensaje`, `idSubasta`, `contenido`, `leido`, `fecha`, 
 (174, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', 1, '2019-07-01 01:11:00', 13, 2, 9),
 (175, NULL, 'Lamentamos informarle que ha sido rechazado para ser CLASICO.', 1, '2019-07-01 01:11:00', 2, 13, 11),
 (176, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', NULL, '2019-07-01 03:20:00', 2, 14, 12),
-(177, NULL, 'Lamentamos informarle que ya no eres usuario PREMIUM.', NULL, '2019-07-01 03:20:00', 2, 14, 6);
+(177, NULL, 'Lamentamos informarle que ya no eres usuario PREMIUM.', NULL, '2019-07-01 03:20:00', 2, 14, 6),
+(178, 35, 'La subasta se ha activado', NULL, '2019-07-01 04:59:00', 2, 13, 1),
+(179, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', NULL, '2019-07-01 05:14:00', 13, 2, 9),
+(180, NULL, 'Â¡FELICITACIONES!Ahora eres usuario CLASICO.', NULL, '2019-07-01 05:15:00', 2, 13, 10),
+(181, NULL, 'Pablo Perez: Quiero ser PREMIUM.', NULL, '2019-07-01 05:22:00', 13, 2, 3),
+(182, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', NULL, '2019-07-01 05:22:00', 2, 13, 4),
+(183, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', NULL, '2019-07-01 05:25:00', 13, 2, 9),
+(184, NULL, 'Â¡FELICITACIONES!Ahora eres usuario CLASICO.', NULL, '2019-07-01 05:26:00', 2, 13, 10);
 
 -- --------------------------------------------------------
 
@@ -306,7 +327,7 @@ CREATE TABLE `persona` (
 
 INSERT INTO `persona` (`IdPersona`, `dni`, `nombre`, `apellido`, `telefono`, `email`, `clave`, `tipoU`, `rol`, `credito`, `ciudad`, `fechaNacimiento`, `idTarjeta`, `fechaRegistro`, `fechaModificacion`) VALUES
 (2, 33333333, 'osvaldo', 'perez', 222412345, 'osvaldo@gmail.com', '123456', 'administra', 1, NULL, 'la plata', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(13, 9876656, 'Pablo', 'Perez', 2147483647, 'pablo@hotmail.com', '1234567', 'premium', 0, 2, 'La Plata', '2001-06-06 00:00:00', 18, '2019-06-13 07:57:00', '2019-06-20 10:42:00'),
+(13, 9876656, 'Pablo', 'Perez', 2147483647, 'pablo@hotmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '2001-06-06 00:00:00', 18, '2019-06-13 07:57:00', '2019-06-20 10:42:00'),
 (14, 94534089, 'Maria', 'Cabrera', 221, 'lucy@gmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '2001-01-01 00:00:00', 19, '2019-06-16 21:46:00', '2019-06-20 12:54:00');
 
 -- --------------------------------------------------------
@@ -489,11 +510,11 @@ INSERT INTO `subasta` (`idSubasta`, `precioMinimo`, `idSemana`, `fechaInicioInsc
 (32, '1000', 52, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 27, 1, 1, 2019, 0),
 (33, '1100', 2, '2019-06-21', '2019-06-21', '2019-08-06', '2019-08-13 00:00:00', 27, 0, 0, 2020, 0),
 (34, '1200', 4, '2019-06-21', '2019-06-28', '2019-08-20', '2019-08-27 00:00:00', 27, 0, 0, 2020, 0),
-(35, '1300', 7, '2019-08-10', '2019-08-17', '2019-09-10', '2019-09-17 00:00:00', 27, 0, 0, 2020, 0),
+(35, '1300', 7, '2019-07-01', '2019-07-01', '2019-07-01', '2019-07-08 00:00:00', 27, 1, 0, 2020, 0),
 (36, '1000', 2, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 28, 1, 1, 2020, 0),
 (37, '1400', 4, '2019-06-21', '2019-06-21', '2019-08-20', '2019-08-27 00:00:00', 28, 0, 0, 2020, 0),
 (38, '1600', 8, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-21 09:50:00', 28, 1, 1, 2020, 0),
-(39, '2000', 9, '2019-08-24', '2019-08-31', '2019-09-24', '2019-10-01 00:00:00', 28, 0, 0, 2020, 0),
+(39, '2000', 9, '2019-07-01', '2019-07-08', '2019-09-24', '2019-10-01 00:00:00', 28, 0, 0, 2020, 0),
 (40, '1000', 6, '2019-08-03', '2019-08-10', '2019-09-03', '2019-09-10 00:00:00', 29, 0, 0, 2020, 0),
 (41, '2000', 7, '2019-08-10', '2019-08-17', '2019-09-10', '2019-09-17 00:00:00', 29, 0, 0, 2020, 0),
 (42, '3000', 3, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 29, 1, 1, 2020, 0),
@@ -576,6 +597,12 @@ ALTER TABLE `comprap`
 --
 ALTER TABLE `config_cuota`
   ADD PRIMARY KEY (`idTipoUsuario`);
+
+--
+-- Indices de la tabla `config_hotsale`
+--
+ALTER TABLE `config_hotsale`
+  ADD PRIMARY KEY (`idConfigHotsale`);
 
 --
 -- Indices de la tabla `cuota`
@@ -702,6 +729,12 @@ ALTER TABLE `config_cuota`
   MODIFY `idTipoUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de la tabla `config_hotsale`
+--
+ALTER TABLE `config_hotsale`
+  MODIFY `idConfigHotsale` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `cuota`
 --
 ALTER TABLE `cuota`
@@ -711,13 +744,13 @@ ALTER TABLE `cuota`
 -- AUTO_INCREMENT de la tabla `enesperapremium`
 --
 ALTER TABLE `enesperapremium`
-  MODIFY `idEspera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idEspera` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `esperaclasico`
 --
 ALTER TABLE `esperaclasico`
-  MODIFY `idEsperaC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idEsperaC` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ganador`
@@ -741,13 +774,13 @@ ALTER TABLE `imagen`
 -- AUTO_INCREMENT de la tabla `inscripto`
 --
 ALTER TABLE `inscripto`
-  MODIFY `idInscripto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `idInscripto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
+  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`

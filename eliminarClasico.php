@@ -19,15 +19,15 @@ $resu = $link->query($consulta);
 
 //----PASAR A PREMIUM----------------------------
 
-$consulta="UPDATE persona SET tipoU='clasico' WHERE idPersona='$persona' ";
+$consulta="UPDATE persona SET tipoU='premium' WHERE idPersona='$persona' ";
 
 $resu = $link->query($consulta); 
 
 //le envio mensaje que fue rehazado como premium
-$envio=mensajeEliminoPremium($persona);
+$envio=mensajeEliminoClasico($persona);
 
 
-echo '<script> alert("SE HA CAMBIADO A USUARIO CLASICO");</script>';
+echo '<script> alert("SE HA CAMBIADO A USUARIO PREMIUM");</script>';
 
 echo "<script> window.history.back();</script>";
 

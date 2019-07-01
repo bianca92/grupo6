@@ -483,6 +483,35 @@ $con=conectar();
 
 }
 
+//PAGOS-----------------------------------------------------------------------------------------------------------------------
+
+function actividadPagosUsuario($idS){
+$con=conectar();
+	$p=0;
+	$arregloP= array();
+
+	$query = "SELECT * FROM cuota c INNER JOIN tarjeta t ON c.idTarjeta = t.idTarjeta  WHERE c.idPersona = '$idS' ";
+	$result = mysqli_query($con, $query);
+    $num=mysqli_num_rows($result); 
+    
+	if($num == 0){ 
+
+		throw new Exception("Aun no hay pagos registrados");
+	}
+	else{
+
+		while ($row=mysqli_fetch_array($result)){
+			
+			$arregloP [$p][0]= $row['idCuota'];
+			$str= "1/$row[mes]/$row[ano] - Se registro un pago de $ $row[valor] por el servicio $row[tipo] con la tarjeta numero **** **** **** ".substr($row['numero'],12).".";
+			$arregloP [$p][1]= $str;
+			$p= $p+1;
+		}
+		return ordenarPagos($arregloP);
+		
+	}
+
+}
 //ORDENAR-----------------------------------------------------------------------------------------------------------------------
 function compararFechas ( $a, $b ) {
 
@@ -493,6 +522,19 @@ function ordenar ($arreglo){
 
 	$arreglo1=$arreglo;
 	usort($arreglo1, 'compararFechas');
+	return $arreglo1;
+}
+
+//ORDENAR LOS PAGOS-------------------------------------------------------------------------------------------------------------------
+function compararPagos ( $a, $b ) {
+
+    return $b[0] - $a[0];
+}
+ 
+function ordenarPagos ($arreglo){
+
+	$arreglo1=$arreglo;
+	usort($arreglo1, 'compararPagos');
 	return $arreglo1;
 }
 

@@ -83,10 +83,13 @@ else{
                                             echo "<a href='verSemana.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
                                            break;
                                  case 3:
-                                             echo "<a href='verListaEspera.php'> <button type='button' class='btn btn-succes'>Ver lista de espera</button> </a></br>";
+                                             echo "<a href='verListaEspera.php'> <button type='button' class='btn btn-succes'>Ver listado para PREMIUM</button> </a></br>";
                                             break;
                                  case 8:
                                              echo "<a href='verSemana.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
+                                            break;
+                                 case 9:
+                                              echo "<a href='verListaEsperaClasico.php'> <button type='button' class='btn btn-succes'>Ver listado para CLASICO</button> </a></br>";
                                             break;
                                  
 }

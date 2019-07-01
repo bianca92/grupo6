@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2019 a las 09:56:09
+-- Tiempo de generación: 01-07-2019 a las 04:00:42
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.4
 
@@ -79,8 +79,16 @@ CREATE TABLE `cuota` (
   `tipo` varchar(10) NOT NULL,
   `valor` int(11) NOT NULL,
   `mes` int(11) NOT NULL,
-  `año` int(11) NOT NULL
+  `ano` int(11) NOT NULL,
+  `idTarjeta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `cuota`
+--
+
+INSERT INTO `cuota` (`idCuota`, `idPersona`, `tipo`, `valor`, `mes`, `ano`, `idTarjeta`) VALUES
+(3, 13, 'clasico', 670, 3, 2019, 18);
 
 -- --------------------------------------------------------
 
@@ -90,6 +98,17 @@ CREATE TABLE `cuota` (
 
 CREATE TABLE `enesperapremium` (
   `idEspera` int(11) NOT NULL,
+  `idPersona` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `esperaclasico`
+--
+
+CREATE TABLE `esperaclasico` (
+  `idEsperaC` int(11) NOT NULL,
   `idPersona` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -112,7 +131,8 @@ CREATE TABLE `ganador` (
 
 INSERT INTO `ganador` (`idGanador`, `idPersona`, `idSubasta`, `idPuja`) VALUES
 (7, 13, 38, 25),
-(8, 14, 43, 27);
+(8, 14, 43, 27),
+(9, 14, 36, 24);
 
 -- --------------------------------------------------------
 
@@ -214,17 +234,47 @@ CREATE TABLE `mensaje` (
 
 INSERT INTO `mensaje` (`idMensaje`, `idSubasta`, `contenido`, `leido`, `fecha`, `idDe`, `idPara`, `numero`) VALUES
 (136, 36, 'La subasta se ha activado', NULL, '2019-06-21 09:48:00', 2, 14, 1),
-(137, 36, 'La subasta se ha activado', NULL, '2019-06-21 09:48:00', 2, 13, 1),
+(137, 36, 'La subasta se ha activado', 1, '2019-06-21 09:48:00', 2, 13, 1),
 (138, 38, 'La subasta se ha activado', NULL, '2019-06-21 09:50:00', 2, 14, 1),
-(139, 38, 'La subasta se ha activado', NULL, '2019-06-21 09:50:00', 2, 13, 1),
+(139, 38, 'La subasta se ha activado', 1, '2019-06-21 09:50:00', 2, 13, 1),
 (140, 38, 'Has perdido la subasta', NULL, '2019-06-21 09:50:00', 2, 14, 2),
-(141, 38, 'Felicidades has ganado la subasta', NULL, '2019-06-21 09:50:00', 2, 13, 2),
-(142, 43, 'La subasta se ha activado', NULL, '2019-06-21 09:53:00', 2, 13, 1),
+(141, 38, 'Felicidades has ganado la subasta', 1, '2019-06-21 09:50:00', 2, 13, 2),
+(142, 43, 'La subasta se ha activado', 1, '2019-06-21 09:53:00', 2, 13, 1),
 (143, 43, 'La subasta se ha activado', NULL, '2019-06-21 09:53:00', 2, 14, 1),
 (144, 42, 'La subasta se ha activado', NULL, '2019-06-21 09:54:00', 2, 14, 1),
-(145, 42, 'La subasta se ha activado', NULL, '2019-06-21 09:54:00', 2, 13, 1),
-(146, 43, 'Has perdido la subasta', NULL, '2019-06-21 09:54:00', 2, 13, 2),
-(147, 43, 'Felicidades has ganado la subasta', NULL, '2019-06-21 09:54:00', 2, 14, 2);
+(145, 42, 'La subasta se ha activado', 1, '2019-06-21 09:54:00', 2, 13, 1),
+(146, 43, 'Has perdido la subasta', 1, '2019-06-21 09:54:00', 2, 13, 2),
+(147, 43, 'Felicidades has ganado la subasta', NULL, '2019-06-21 09:54:00', 2, 14, 2),
+(148, NULL, 'Pablo Perez: Quiero ser premium.', 1, '2019-06-30 22:51:00', 13, 2, 3),
+(149, NULL, 'Lamentamos informarle que ha sido rechazado para ser PREMIUM.', 1, '2019-06-30 23:06:00', 2, 13, 5),
+(150, NULL, 'Pablo Perez: Quiero ser PREMIUM.', 1, '2019-07-01 00:17:00', 13, 2, 3),
+(151, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', 1, '2019-07-01 00:17:00', 2, 13, 4),
+(152, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', 1, '2019-07-01 00:24:00', 13, 2, 9),
+(153, NULL, 'Â¡FELICITACIONES!Ahora eres usuario CLASICO.', 1, '2019-07-01 00:25:00', 2, 13, 10),
+(154, NULL, 'Pablo Perez: Quiero ser PREMIUM.', 1, '2019-07-01 00:36:00', 13, 2, 3),
+(155, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', 1, '2019-07-01 00:36:00', 2, 13, 4),
+(156, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', 1, '2019-07-01 00:37:00', 13, 2, 9),
+(157, NULL, 'Lamentamos informarle que ha sido rechazado para ser CLASICO.', 1, '2019-07-01 00:43:00', 2, 13, 11),
+(158, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', 1, '2019-07-01 00:44:00', 13, 2, 9),
+(159, NULL, 'Â¡FELICITACIONES!Ahora eres usuario CLASICO.', 1, '2019-07-01 00:44:00', 2, 13, 10),
+(160, NULL, 'Pablo Perez: Quiero ser PREMIUM.', 1, '2019-07-01 00:44:00', 13, 2, 3),
+(161, NULL, 'Lamentamos informarle que ha sido rechazado para ser PREMIUM.', 1, '2019-07-01 00:46:00', 2, 13, 5),
+(162, 36, 'Felicidades has ganado la subasta', NULL, '2019-07-01 00:46:00', 2, 14, 2),
+(163, 36, 'Has perdido la subasta', 1, '2019-07-01 00:46:00', 2, 13, 2),
+(164, 42, 'Has perdido la subasta', NULL, '2019-07-01 00:46:00', 2, 14, 2),
+(165, 42, 'Has perdido la subasta', 1, '2019-07-01 00:46:00', 2, 13, 2),
+(166, NULL, 'Pablo Perez: Quiero ser PREMIUM.', 1, '2019-07-01 00:46:00', 13, 2, 3),
+(167, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', 1, '2019-07-01 00:46:00', 2, 13, 4),
+(168, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', 1, '2019-07-01 00:47:00', 13, 2, 9),
+(169, NULL, 'Â¡FELICITACIONES!Ahora eres usuario CLASICO.', 1, '2019-07-01 00:47:00', 2, 13, 10),
+(170, NULL, 'Pablo Perez: Quiero ser PREMIUM.', 1, '2019-07-01 00:48:00', 13, 2, 3),
+(171, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', 1, '2019-07-01 00:48:00', 2, 13, 4),
+(172, NULL, 'Pablo Perez: Quiero ser PREMIUM.', 1, '2019-07-01 00:59:00', 13, 2, 3),
+(173, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', 1, '2019-07-01 00:59:00', 2, 13, 4),
+(174, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', 1, '2019-07-01 01:11:00', 13, 2, 9),
+(175, NULL, 'Lamentamos informarle que ha sido rechazado para ser CLASICO.', 1, '2019-07-01 01:11:00', 2, 13, 11),
+(176, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', NULL, '2019-07-01 03:20:00', 2, 14, 12),
+(177, NULL, 'Lamentamos informarle que ya no eres usuario PREMIUM.', NULL, '2019-07-01 03:20:00', 2, 14, 6);
 
 -- --------------------------------------------------------
 
@@ -256,7 +306,7 @@ CREATE TABLE `persona` (
 
 INSERT INTO `persona` (`IdPersona`, `dni`, `nombre`, `apellido`, `telefono`, `email`, `clave`, `tipoU`, `rol`, `credito`, `ciudad`, `fechaNacimiento`, `idTarjeta`, `fechaRegistro`, `fechaModificacion`) VALUES
 (2, 33333333, 'osvaldo', 'perez', 222412345, 'osvaldo@gmail.com', '123456', 'administra', 1, NULL, 'la plata', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(13, 9876656, 'Pablo', 'Perez', 2147483647, 'pablo@hotmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '2001-06-06 00:00:00', 18, '2019-06-13 07:57:00', '2019-06-20 10:42:00'),
+(13, 9876656, 'Pablo', 'Perez', 2147483647, 'pablo@hotmail.com', '1234567', 'premium', 0, 2, 'La Plata', '2001-06-06 00:00:00', 18, '2019-06-13 07:57:00', '2019-06-20 10:42:00'),
 (14, 94534089, 'Maria', 'Cabrera', 221, 'lucy@gmail.com', '1234567', 'clasico', 0, 2, 'La Plata', '2001-01-01 00:00:00', 19, '2019-06-16 21:46:00', '2019-06-20 12:54:00');
 
 -- --------------------------------------------------------
@@ -436,17 +486,17 @@ CREATE TABLE `subasta` (
 --
 
 INSERT INTO `subasta` (`idSubasta`, `precioMinimo`, `idSemana`, `fechaInicioInscripcion`, `fechaFinInscripcion`, `fechaInicioSubasta`, `fechaFinSubasta`, `idPropiedad`, `activa`, `cerrada`, `year`, `cancelada`) VALUES
-(32, '1000', 52, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 27, 1, 0, 2019, 0),
+(32, '1000', 52, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 27, 1, 1, 2019, 0),
 (33, '1100', 2, '2019-06-21', '2019-06-21', '2019-08-06', '2019-08-13 00:00:00', 27, 0, 0, 2020, 0),
 (34, '1200', 4, '2019-06-21', '2019-06-28', '2019-08-20', '2019-08-27 00:00:00', 27, 0, 0, 2020, 0),
 (35, '1300', 7, '2019-08-10', '2019-08-17', '2019-09-10', '2019-09-17 00:00:00', 27, 0, 0, 2020, 0),
-(36, '1000', 2, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 28, 1, 0, 2020, 0),
+(36, '1000', 2, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 28, 1, 1, 2020, 0),
 (37, '1400', 4, '2019-06-21', '2019-06-21', '2019-08-20', '2019-08-27 00:00:00', 28, 0, 0, 2020, 0),
 (38, '1600', 8, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-21 09:50:00', 28, 1, 1, 2020, 0),
 (39, '2000', 9, '2019-08-24', '2019-08-31', '2019-09-24', '2019-10-01 00:00:00', 28, 0, 0, 2020, 0),
 (40, '1000', 6, '2019-08-03', '2019-08-10', '2019-09-03', '2019-09-10 00:00:00', 29, 0, 0, 2020, 0),
 (41, '2000', 7, '2019-08-10', '2019-08-17', '2019-09-10', '2019-09-17 00:00:00', 29, 0, 0, 2020, 0),
-(42, '3000', 3, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 29, 1, 0, 2020, 0),
+(42, '3000', 3, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 29, 1, 1, 2020, 0),
 (43, '1000', 8, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-21 09:54:00', 29, 1, 1, 2020, 0);
 
 -- --------------------------------------------------------
@@ -538,6 +588,12 @@ ALTER TABLE `cuota`
 --
 ALTER TABLE `enesperapremium`
   ADD PRIMARY KEY (`idEspera`);
+
+--
+-- Indices de la tabla `esperaclasico`
+--
+ALTER TABLE `esperaclasico`
+  ADD PRIMARY KEY (`idEsperaC`);
 
 --
 -- Indices de la tabla `ganador`
@@ -649,19 +705,25 @@ ALTER TABLE `config_cuota`
 -- AUTO_INCREMENT de la tabla `cuota`
 --
 ALTER TABLE `cuota`
-  MODIFY `idCuota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCuota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `enesperapremium`
 --
 ALTER TABLE `enesperapremium`
-  MODIFY `idEspera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEspera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `esperaclasico`
+--
+ALTER TABLE `esperaclasico`
+  MODIFY `idEsperaC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `ganador`
 --
 ALTER TABLE `ganador`
-  MODIFY `idGanador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idGanador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `hotsale`
@@ -685,7 +747,7 @@ ALTER TABLE `inscripto`
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
@@ -739,7 +801,7 @@ ALTER TABLE `ubicacion`
 -- AUTO_INCREMENT de la tabla `valoracion`
 --
 ALTER TABLE `valoracion`
-  MODIFY `idValoracion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idValoracion` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -4,7 +4,7 @@
 
 	session_start();
 
-
+ 
 ?>
 
 <html lang="es">
@@ -193,11 +193,10 @@
                       }
 		            }
 	            }
-			    else{ 
+			    else{ // NO LOGUEADO
+
 			    	//echo"<h3><a href=index.php><span class= 'glyphicon glyphicon-home'</span></a> | <a href=ingresar.php><span class='glyphicon glyphicon-log-in'></span> INGRESAR</a> |<a href=registrar.php><span class='glyphicon glyphicon-user'></span> REGISTRARSE</a></h3>";}
                         $opcion1="<a href=ingresar.php><span class='glyphicon glyphicon-log-in'></span> INGRESAR</a>"; 
-
-//------------------------------------------------------------------------------------------------------------------------------------------
 
                         $opcion2="<a href=registrar.php><span class='glyphicon glyphicon-user'></span> REGISTRARSE</a>"; 
                     }
@@ -232,6 +231,8 @@
      ?>
      <ul class="menu" style="float:right">
       <?php // Mostra solo si es usurio clasico
+
+//----------------------------------------------------------------------------------------  ES CLASICO  ---------------------------------
     if($verOpcionesLogeado==true and $_SESSION['tipoU']=="clasico"){                                   ?>
        
        <?php  //me fijo si el usuario no tiene una solicitud pendiente
@@ -239,41 +240,53 @@
                      WHERE idPersona='".$_SESSION['id']."'";
            $var_resultado = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$var_consulta);
            $num=mysqli_num_rows($var_resultado);  
-           if ($num==0){
+           if ($num==0){  //----------------------------------------------------------------------------  NO MANDO SOLICITUD PARA PREMIUM ----
 
-            $sql = "SELECT * FROM config_cuota WHERE idTipoUsuario='2'";
-  $res = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$sql);
-  $montoPremium = mysqli_fetch_array($res);
-//-------------------------------------------------------------------------------------------------------------------------------------------?>
-              <div class="popup2" onclick="myFunction2()"> ¡QUIERO SER PREMIUM!
-              <span class="popuptext2" id="myPopup2"><ul  style="list-style-type:disc;" >
-      <h6><li>Como usuario premium podra comprar de forma directa semanas que se vayan a subastar sin la necesidad de pujar.</li>
-        <li>Los usuarios premium cuentan con dos creditos anuales, como el usuario clasico. Estos creditos representan una semana al año cada uno, por lo que se descontara un credito</li> al ganar una subasta y un credito al realizar una compra directa.<br/>
-        <li>Como usuario premium los creditos se pueden usar de cualquiera de las siguientes combinaciones:</li>
-          <ul style="list-style-type: disc;">
-            <li>Los dos en dos subastas.</li>
-            <li>Los dos en compras directas.</li>
-            <li>Uno en compra directa y otro en subasta.</li>
-          </ul>
-        <li>Los usuarios premium podran dar de baja este beneficio y volver a ser usuarios clasicos en cualquier momento.</li>
-        <li>El costo de ser usuario premium es de $ <?php echo "$montoPremium[monto]" ?> por mes.</li>
-      </br>
-      <?php echo"<a href=solicitarPremium.php> ¡SER PREMIUM!</a>";?>
+           		 $sql = "SELECT * FROM config_cuota WHERE idTipoUsuario='2'";
+ 				 $res = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$sql);
+ 				 $montoPremium = mysqli_fetch_array($res);
 
-      </h6>  
-      </ul></span>
-</div>
-
-                
+				 // BOTON QUIERO SER PREMIUM CON POPUP-----------?>
+              	<div class="popup2" onclick="myFunction2()"> ¡QUIERO SER PREMIUM!
+              	<span class="popuptext2" id="myPopup2"><ul  style="list-style-type:disc;" >
+      			<h6><li>Como usuario premium podra comprar de forma directa semanas que se vayan a subastar sin la necesidad de pujar.</li>
+        		<li>Los usuarios premium cuentan con dos creditos anuales, como el usuario clasico. Estos creditos representan una semana al año cada uno, por lo que se descontara un credito</li> al ganar una subasta y un credito al realizar una compra directa.<br/>
+        		<li>Como usuario premium los creditos se pueden usar de cualquiera de las siguientes combinaciones:</li>
+          		<ul style="list-style-type: disc;">
+            		<li>Los dos en dos subastas.</li>
+            		<li>Los dos en compras directas.</li>
+            		<li>Uno en compra directa y otro en subasta.</li>
+          		</ul>
+        		<li>Los usuarios premium podran dar de baja este beneficio y volver a ser usuarios clasicos en cualquier momento.</li>
+        		<li>El costo de ser usuario premium es de $ <?php echo "$montoPremium[monto]" ?> por mes.</li>
+      			</br>
+     			 <?php echo"<a href=solicitarPremium.php> ¡SER PREMIUM!</a>";?>
+      			</h6>  
+      			</ul></span>
+				</div>                
            <?php } 
-           else{ ?>
+           else{ //------------------------------------------------------------------------------------ MANDO SOLICITUD PARA PREMIUM ----?>
                 <li><a href=#>SOLICITUD ENVIADA</a></li>
-      <?php  }
+     		<?php  }
     }
-    if($verOpcionesLogeado==true and $_SESSION['tipoU']=="premium"){?>
-         <li><a href=#>ERES PREMIUM</a></li>
-           
-           <?php } 
+    if($verOpcionesLogeado==true and $_SESSION['tipoU']=="premium"){ //------------------------------------- USUARIO PREMIUM -------
+ 			//me fijo si el usuario no tiene una solicitud pendiente
+           $var_consulta="SELECT idPersona FROM esperaclasico
+                    	 WHERE idPersona='".$_SESSION['id']."'";
+           $var_resultado = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$var_consulta);
+           $num=mysqli_num_rows($var_resultado);  
+           if ($num==0){ //---------------------------------------------------------------------------- NO MANDO SOLICITUD PARA CLASICO------?>
+          
+          	 <li><a href=# > </i>ERES PREMIUM </a>
+             <ul class="submenu"> 
+                <li><a href=solicitarBajaPremium.php>Dejar de ser PREMIUM</a></li>
+             </ul>
+             </li> <?php
+           }
+           else{ //---------------------------------------------------------------------------- MANDO SOLICITUD PARA CLASICO ------ ?>
+           	 <li><a href=#>SOLICITUD ENVIADA</a></li>  <?php
+           	}
+	} 
 
      ?>
      <?php // Mostra solo si esta logueado la casilla de mensajes
@@ -307,9 +320,10 @@
                  
                <li><a href=# > <i class="fas fa-cogs"></i>     <i class="fas fa-bars"></i></a>
                 <ul class="submenu"> 
-                    <li><a href=configuracionCuotaMensual.php>-CONFIG.CUOTA MENSUAL</a></li>
-                     
-                     <li><a href=ListarTodosLosUsuarios.php>-LISTA DE USUARIOS</a></li>
+                    <li><a href=configuracionCuotaMensual.php>CONFIG.CUOTA MENSUAL</a></li>
+                     <li><a href=ListarTodosLosUsuarios.php>LISTA DE USUARIOS</a></li>
+                     <li><a href="verListaEspera.php">LISTA DE ESPERA PARA PREMIUM</a></li>
+                     <li><a href="verListaEsperaClasico.php">LISTA DE ESPERA PARA CLASICO</a></li>
                </ul>
                </li>
          

@@ -117,11 +117,14 @@ $query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
 
 <br/>
 
+<?php //------------------------------------------- FORMULARIO MIS DATOS -------------------------------------------------------------------?>
+
+
  
  <form name="formulario" class="login-form" style="width:600px; background-color:#fff;float:left;margin-left: 30px;"><h2 align="center">  MIS DATOS</h2> <h4 align="center">
  	<?php
           
-      if($datosUsuario['tipoU']!="premium"){ 
+      if($datosUsuario['tipoU']!="premium"){ //-------------------------------------------------------- ES CLASICO--------------
 
         //BUSCA SI MANDO SOLICITUD PARA SR PREMIUM
 
@@ -129,7 +132,7 @@ $query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
         $resultInscripto = mysqli_query($con, $queryInscripto);
         $numInscripto=mysqli_num_rows($resultInscripto); 
 
-        if($numInscripto!=1){ //no mando solicitud  
+        if($numInscripto!=1){ //------------------------------------------------------------------ NO MANDO SOLICITUD PARA PREMIUM ------
         ?>
           <div class="popup2" onclick="myFunction2()" onmouseover="this.style.cssText='color:#0A88C0'" onmouseout="this.style.cssText='color:#000000'"> ¡QUIERO SER PREMIUM!
               <span class="popuptext2" id="myPopup2"><ul  style="list-style-type:disc;" >
@@ -150,10 +153,26 @@ $query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
               </ul></span>
           </div>   <?php     
         }
-        else{echo "SOLICITUD ENVIADA";} //MANDO SOLICITUD
+        else{echo "SOLICITUD ALTA PREMIUM ENVIADA";} //------------------------------------------------------- MANDO SOLICITUD PARA PREMIUM ------
         
       } 
-      else{ echo "YA SOS PREMIUM !!";}
+      else{ //-------------------------------------------------------------------------------------- ES PREMIUM ---------------
+
+        //BUSCA SI´PIDIO SER CLASICO
+        $queryInscripto = "SELECT * FROM esperaclasico WHERE idPersona ='$id' ";
+        $resultInscripto = mysqli_query($con, $queryInscripto);
+        $numInscripto=mysqli_num_rows($resultInscripto); 
+
+        if($numInscripto!=1){//----------------------------------------------------------------- NO MANDO SOLICITUD PARA CLASICO --- ?>
+              <ul class="menu" >
+            <li><a href=# onmouseover="this.style.cssText='color:#0A88C0'" onmouseout="this.style.cssText='color:#000000'" > YA SOS PREMIUM !! </a>
+             <ul class="submenu"style="background-color: #FFFFFF"onmouseover="this.style.cssText='color:#0A88C0';this.style.background-color='color:#FFFFFF'" onmouseout="this.style.cssText='color:#000000'; this.style.background-color='color:#FFFFFF'"> 
+                <li><a href=solicitarBajaPremium.php style="background-color: #FFFFFF"onmouseover="this.style.cssText='color:#0A88C0'" onmouseout="this.style.cssText='color:#000000'">Dejar de ser PREMIUM</a></li>
+             </ul>
+             </li> </ul><?php
+        }
+        else{echo "SOLICITUD BAJA PREMIUM ENVIADA";}//----------------------------------------------------- MANDO SOLICITUD PARA CLASICO----
+      }
       
        ?> </h4>
  	
@@ -229,6 +248,10 @@ $query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
 
 
  
+
+<?php // -----------------------------------------------   FORMULARIO FORMA DE PAGO  --------------------------------------------------------- ?>
+
+
  
 
        
@@ -244,10 +267,12 @@ $query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
         <li> <?php echo "    Titular: $datosTarjeta[titular]";?> </li>
       
          <li><?php echo "    Vencimiento: $datosTarjeta[vencimiento]";?> </li>
-                    
+         <br/>
+         <li style="color: #2AA6CF"><?php echo "<a style='color: #2AA6CF'  href='historialDePago.php?id=".$id."'>Ver historial de pago </a>";?></li>  
 
  
   </ul>
+
   
   <h3 align="center" style="font-size: 15px; color: #2AA6CF"><?php echo "<a style='color: #2AA6CF'  href='modificarFormaDePago.php?idT=".$datosUsuario['idTarjeta']."'>Editar </a>";?></h3>
   

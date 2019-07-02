@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2019 a las 20:55:41
+-- Tiempo de generación: 03-07-2019 a las 01:49:37
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.4
 
@@ -79,13 +79,6 @@ CREATE TABLE `config_hotsale` (
   `mes` int(11) NOT NULL,
   `duracion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `config_hotsale`
---
-
-INSERT INTO `config_hotsale` (`idConfigHotsale`, `dia`, `mes`, `duracion`) VALUES
-(21, 10, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -165,6 +158,13 @@ CREATE TABLE `hotsale` (
   `idSubasta` int(11) NOT NULL,
   `precio` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `hotsale`
+--
+
+INSERT INTO `hotsale` (`idHotsale`, `idSubasta`, `precio`) VALUES
+(1, 42, '555');
 
 -- --------------------------------------------------------
 
@@ -297,13 +297,14 @@ INSERT INTO `mensaje` (`idMensaje`, `idSubasta`, `contenido`, `leido`, `fecha`, 
 (175, NULL, 'Lamentamos informarle que ha sido rechazado para ser CLASICO.', 1, '2019-07-01 01:11:00', 2, 13, 11),
 (176, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', NULL, '2019-07-01 03:20:00', 2, 14, 12),
 (177, NULL, 'Lamentamos informarle que ya no eres usuario PREMIUM.', NULL, '2019-07-01 03:20:00', 2, 14, 6),
-(178, 35, 'La subasta se ha activado', NULL, '2019-07-01 04:59:00', 2, 13, 1),
-(179, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', NULL, '2019-07-01 05:14:00', 13, 2, 9),
-(180, NULL, 'Â¡FELICITACIONES!Ahora eres usuario CLASICO.', NULL, '2019-07-01 05:15:00', 2, 13, 10),
-(181, NULL, 'Pablo Perez: Quiero ser PREMIUM.', NULL, '2019-07-01 05:22:00', 13, 2, 3),
-(182, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', NULL, '2019-07-01 05:22:00', 2, 13, 4),
-(183, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', NULL, '2019-07-01 05:25:00', 13, 2, 9),
-(184, NULL, 'Â¡FELICITACIONES!Ahora eres usuario CLASICO.', NULL, '2019-07-01 05:26:00', 2, 13, 10);
+(178, 35, 'La subasta se ha activado', 1, '2019-07-01 04:59:00', 2, 13, 1),
+(179, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', 1, '2019-07-01 05:14:00', 13, 2, 9),
+(180, NULL, 'Â¡FELICITACIONES!Ahora eres usuario CLASICO.', 1, '2019-07-01 05:15:00', 2, 13, 10),
+(181, NULL, 'Pablo Perez: Quiero ser PREMIUM.', 1, '2019-07-01 05:22:00', 13, 2, 3),
+(182, NULL, 'Â¡FELICITACIONES!Ahora eres usuario PREMIUM.', 1, '2019-07-01 05:22:00', 2, 13, 4),
+(183, NULL, 'Pablo Perez: Quiero volver a ser CLASICO.', 1, '2019-07-01 05:25:00', 13, 2, 9),
+(184, NULL, 'Â¡FELICITACIONES!Ahora eres usuario CLASICO.', 1, '2019-07-01 05:26:00', 2, 13, 10),
+(185, 35, 'Has perdido la subasta', NULL, '2019-07-01 22:10:00', 2, 13, 2);
 
 -- --------------------------------------------------------
 
@@ -508,7 +509,7 @@ CREATE TABLE `subasta` (
   `cerrada` int(11) DEFAULT NULL,
   `year` int(11) NOT NULL,
   `cancelada` int(11) NOT NULL DEFAULT '0',
-  `enhotsale` int(11) NOT NULL
+  `enhotsale` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -517,16 +518,16 @@ CREATE TABLE `subasta` (
 
 INSERT INTO `subasta` (`idSubasta`, `precioMinimo`, `idSemana`, `fechaInicioInscripcion`, `fechaFinInscripcion`, `fechaInicioSubasta`, `fechaFinSubasta`, `idPropiedad`, `activa`, `cerrada`, `year`, `cancelada`, `enhotsale`) VALUES
 (32, '1000', 52, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 27, 1, 1, 2019, 0, 0),
-(33, '1100', 2, '2019-06-21', '2019-06-21', '2019-08-06', '2019-08-13 00:00:00', 27, 0, 0, 2020, 0, 0),
-(34, '1200', 4, '2019-06-21', '2019-06-28', '2019-08-20', '2019-08-27 00:00:00', 27, 0, 0, 2020, 0, 0),
-(35, '1300', 7, '2019-07-01', '2019-07-01', '2019-07-01', '2019-07-08 00:00:00', 27, 1, 0, 2020, 0, 0),
+(33, '1100', 2, '2019-06-21', '2019-06-21', '2019-07-01', '2019-07-01 22:10:00', 27, 1, 1, 2020, 0, 0),
+(34, '1200', 4, '2019-06-21', '2019-06-28', '2019-07-02', '2019-07-09 00:00:00', 27, 1, 0, 2020, 0, 0),
+(35, '1300', 7, '2019-07-01', '2019-07-01', '2019-07-01', '2019-07-01 22:10:00', 27, 1, 1, 2020, 0, 0),
 (36, '1000', 2, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 28, 1, 1, 2020, 0, 0),
 (37, '1400', 4, '2019-06-21', '2019-06-21', '2019-08-20', '2019-08-27 00:00:00', 28, 0, 0, 2020, 0, 0),
 (38, '1600', 8, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-21 09:50:00', 28, 1, 1, 2020, 0, 0),
 (39, '2000', 9, '2019-07-01', '2019-07-08', '2019-09-24', '2019-10-01 00:00:00', 28, 0, 0, 2020, 0, 0),
 (40, '1000', 6, '2019-08-03', '2019-08-10', '2019-09-03', '2019-09-10 00:00:00', 29, 0, 0, 2020, 0, 0),
 (41, '2000', 7, '2019-08-10', '2019-08-17', '2019-09-10', '2019-09-17 00:00:00', 29, 0, 0, 2020, 0, 0),
-(42, '3000', 3, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 29, 1, 1, 2020, 0, 0),
+(42, '3000', 3, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-28 00:00:00', 29, 1, 1, 2020, 0, 1),
 (43, '1000', 8, '2019-06-21', '2019-06-21', '2019-06-21', '2019-06-21 09:54:00', 29, 1, 1, 2020, 0, 0);
 
 -- --------------------------------------------------------
@@ -741,7 +742,7 @@ ALTER TABLE `config_cuota`
 -- AUTO_INCREMENT de la tabla `config_hotsale`
 --
 ALTER TABLE `config_hotsale`
-  MODIFY `idConfigHotsale` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idConfigHotsale` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cuota`
@@ -771,7 +772,7 @@ ALTER TABLE `ganador`
 -- AUTO_INCREMENT de la tabla `hotsale`
 --
 ALTER TABLE `hotsale`
-  MODIFY `idHotsale` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idHotsale` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `imagen`
@@ -789,7 +790,7 @@ ALTER TABLE `inscripto`
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
+  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`

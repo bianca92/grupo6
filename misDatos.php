@@ -156,22 +156,16 @@ $query = "SELECT * FROM tarjeta  WHERE idTarjeta ='$datosUsuario[idTarjeta]' ";
         else{echo "SOLICITUD ALTA PREMIUM ENVIADA";} //------------------------------------------------------- MANDO SOLICITUD PARA PREMIUM ------
         
       } 
-      else{ //-------------------------------------------------------------------------------------- ES PREMIUM ---------------
-
-        //BUSCA SI´PIDIO SER CLASICO
-        $queryInscripto = "SELECT * FROM esperaclasico WHERE idPersona ='$id' ";
-        $resultInscripto = mysqli_query($con, $queryInscripto);
-        $numInscripto=mysqli_num_rows($resultInscripto); 
-
-        if($numInscripto!=1){//----------------------------------------------------------------- NO MANDO SOLICITUD PARA CLASICO --- ?>
+      else{ //-------------------------------------------------------------------------------------- ES PREMIUM ---------------   ?>
+        
               <ul class="menu" >
             <li><a href=# onmouseover="this.style.cssText='color:#0A88C0'" onmouseout="this.style.cssText='color:#000000'" > YA SOS PREMIUM !! </a>
              <ul class="submenu"style="background-color: #FFFFFF"onmouseover="this.style.cssText='color:#0A88C0';this.style.background-color='color:#FFFFFF'" onmouseout="this.style.cssText='color:#000000'; this.style.background-color='color:#FFFFFF'"> 
                 <li><a href=solicitarBajaPremium.php style="background-color: #FFFFFF"onmouseover="this.style.cssText='color:#0A88C0'" onmouseout="this.style.cssText='color:#000000'">Dejar de ser PREMIUM</a></li>
              </ul>
              </li> </ul><?php
-        }
-        else{echo "SOLICITUD BAJA PREMIUM ENVIADA";}//----------------------------------------------------- MANDO SOLICITUD PARA CLASICO----
+        
+        
       }
       
        ?> </h4>

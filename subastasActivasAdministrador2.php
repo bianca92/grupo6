@@ -20,7 +20,7 @@ catch(Exception $e){
    header("Location:index.php");
 }
 
-$query = "SELECT  p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta, su.activa, su.idSubasta, su.cerrada, su.year, su.idSemana, su.cancelada
+$query = "SELECT  p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta, su.activa, su.idSubasta, su.cerrada, su.year, su.idSemana, su.cancelada, su.preciopremium
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -45,6 +45,7 @@ else{
         <th>Semana</th>
         <th>Año</th>
         <th>Precio Inicial</th>
+        <th>Precio Premium</th>
         <th>Inicio Subasta</th>
         <th>Fin    Subasta</th>
         <th>Puja Actual</th>
@@ -86,6 +87,7 @@ else{
                                            $fi= $week_start->format('d/m');echo "$fi" ;?></h4></td>
              <td><h4><?php  $fi= $week_start->format('Y');echo "$fi" ;?></h4></td>
             <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>
+            <td><h4><?php echo "$"."$row[preciopremium]" ?></h4></td>
             <td><h4><?php $fi=date('d/m/Y', strtotime($row['fechaInicioSubasta'])); echo"$fi" ?></h4></td>
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaFinSubasta'])); echo "$fs"; ?></h4></td>  
             <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>

@@ -13,6 +13,7 @@ $propiedad=$_POST['propiedad'];
 
 $semana=$_POST['datepicker'];
 $precioInicial=$_POST['precioInicial'];
+$precioPremium=$_POST['precioPremium'];
 
 #W (mayúscula) te devuelve el número de semana
 #w (minúscula) te devuelve el número de día dentro de la semana (0=domingo, #6=sabado)
@@ -54,8 +55,8 @@ $ofDesde = date ( 'Y-m-j' , $ofDesde);
 $ofHasta=strtotime ( '+7 day' , strtotime ( $ofDesde ) ) ;
 $ofHasta = date ( 'Y-m-j' , $ofHasta);
 
-$var_consulta="INSERT INTO subasta (idPropiedad,precioMinimo, idSemana, fechaInicioInscripcion, fechaFinInscripcion,fechaInicioSubasta, fechaFinSubasta,activa,cerrada,year,cancelada)
-                     values('$propiedad','$precioInicial','$numero','$insDesde','$insHasta','$ofDesde','$ofHasta',0,0, '$year',0)";
+$var_consulta="INSERT INTO subasta (idPropiedad,precioMinimo, idSemana, fechaInicioInscripcion, fechaFinInscripcion,fechaInicioSubasta, fechaFinSubasta,activa,cerrada,year,cancelada, preciopremium)
+                     values('$propiedad','$precioInicial','$numero','$insDesde','$insHasta','$ofDesde','$ofHasta',0,0, '$year',0, '$precioPremium')";
             	
 $var_resultado = $link->query($var_consulta);
 

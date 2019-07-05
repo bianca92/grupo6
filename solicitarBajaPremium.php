@@ -8,15 +8,15 @@ include("cabecera.php");
  
  $id=($_SESSION['id']);
 
+$consulta="UPDATE persona SET tipoU='clasico' WHERE idPersona='$id' ";
 
-$var_consulta="INSERT INTO esperaclasico (idPersona)
-                  values('$id')";
-            	
-$var_resultado = $link->query($var_consulta);
-$envio=mensajeSolicitarClasico($id);
+$resu = $link->query($consulta); 
+
+//le envio mensaje que se paso a clasico
+$envio=mensajeBajaPremium($id);
 
 
-echo '<script> alert("SOLICITUD ENVIADA");</script>';
+echo '<script> alert("BAJA AL SERVICIO PREMIUM EXITOSA");</script>';
 
 echo "<script> window.history.back();</script>";
 

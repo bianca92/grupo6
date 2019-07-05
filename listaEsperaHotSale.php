@@ -1,0 +1,132 @@
+<html>
+
+
+<?php
+
+include("clases.php");  
+include("cabecera.php");
+include("conexion.php");
+include("mostrarImagen.php");
+include("actualizarSegunFecha.php");
+$con=conectar();
+
+//para que no se pueda acceder a esta pagina si no esta logeado
+try{
+   $login= new Login();
+   $login->autorizar();
+}
+catch(Exception $e){
+   echo $e->getMessage();
+   header("Location:index.php");
+}
+
+$query = "SELECT p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, 
+                 su.idSubasta,su.activa,su.fechaFinInscripcion, su.year, su.idSemana, su.cerrada, su.cancelada, su.enhotsale
+          FROM subasta su INNER JOIN propiedad p ON su.idPropiedad=p.idPropiedad WHERE su.cancelada != 1 AND su.enhotsale = 0";
+$result = mysqli_query($con, $query);
+$num=mysqli_num_rows($result); 
+if ($num==0) {
+  echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
+}
+else{     ?>
+
+  <div class="container">
+
+    <div>
+      <h3>LISTA DE ESPERA PARA HOT SALE:</h3>
+      <h5>Seleccione las subastas que desee que esten en oferta en epoca de Hot Sale</h5>
+      <form method="POST" action="listaEsperaHotSale2.php">
+      <table class="table table-hover">
+         <thead>
+            <tr>
+            <th>Seleccion</th>
+            <th>Subastas</th>
+            <th>Titulo</th>
+            <th>Localidad</th>
+            <th>Semana</th>
+            <th>Año</th>    
+            <th>Precio Inicial</th>
+            <th>Inscriptos</th>
+            </tr>
+         </thead>
+        <tbody>
+  
+        <?php 
+         $auxiliar=true;
+         
+
+         while ($row = mysqli_fetch_array($result))  { 
+
+
+             $actualizar=actualizar($row['idSubasta']);
+             $row['activa']=$actualizar[0];
+             $row['cerrada']=$actualizar[1];
+             $row['cancelada']=actualizarHotSale($row['idSubasta']);
+             
+             
+             
+             $queryG = "SELECT * FROM ganador WHERE idSubasta = '$row[idSubasta]'";
+             $resultG = mysqli_query($con, $queryG);
+             $numG=mysqli_num_rows($resultG); 
+
+
+             if(($row['activa']==1)&&($row['cerrada']==1)&&($numG==0)&&($row['cancelada']!=1)){  
+
+                 $auxiliar=false;
+                 $imgs=ObtenerImgs($row['idPropiedad']);
+      ?>
+                 <tr>
+                  <td><input type="checkbox" name="check[]" value='<?php echo "$row[idSubasta]"?>'></td>
+                  <td> <?php echo '<img src="data:image/jpeg;base64,'.base64_encode($imgs[0]).'" style=width:30% />';?></td>
+                  <td><h4><?php echo "$row[titulo]" ?></h4> </td>
+                  <td><h4><?php echo" $row[localidad] ";?></h4></td>
+                  <td><h4><?php $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']); $fi= $week_start->format('d/m');echo "$fi" ;?></h4></td>
+                  <td><h4><?php  $fi= $week_start->format('Y');echo "$fi" ;?></h4></td>
+                  <td><h4><?php echo "$"."$row[precioMinimo]" ?></h4></td>        <?php
+
+
+                  $queryI = "SELECT * FROM inscripto WHERE idSubasta = '$row[idSubasta]'";
+                  $resultI = mysqli_query($con, $queryI);
+                  $numI=mysqli_num_rows($resultI); 
+                  if ($numI==0) {  // no hubo inscriptos  
+                    ?>
+                    <td><h4><?php echo "NO"?></h4></td>
+                    <?php
+                  }
+                  else{  ?>
+                    <td><h4><?php echo "SI"?></h4></td>
+                    <?php
+
+                  }
+                  ?>
+                  <td><?php echo "<a href='eliminar_subasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Eliminar semana</button> </a></br>" ;?>
+                  
+                 </tr>  
+      <?php } 
+         }?>      
+      
+        </tbody>
+      </table>
+
+      <input type="submit" value="Aceptar">
+      </form>
+      <?php
+ 
+      if ($auxiliar==true){
+          echo"<tr><td><h4>NO SE HAN ENCONTRADO RESULTADOS</h4></td></tr>";
+       } 
+}  
+
+mysqli_free_result($result);
+mysqli_close($con);
+
+?> 
+  
+</div>
+     
+
+ </div>
+
+ 
+   
+   </html>

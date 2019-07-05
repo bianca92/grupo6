@@ -23,7 +23,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-/* Popup container - can be anything you want */
+
 .popup {
   position: relative;
   display: inline-block;
@@ -34,7 +34,7 @@
   user-select: none;
 }
 
-/* The actual popup */
+
 .popup .popuptext {
   visibility: hidden;
   width: 1000px;
@@ -52,7 +52,7 @@
   margin-left: -1100px;
 }
 
-/* Popup arrow */
+
 .popup .popuptext::after {
   content: "";
   position: absolute;
@@ -64,14 +64,14 @@
   border-color: #555 transparent transparent transparent;
 }
 
-/* Toggle this class - hide and show the popup */
+
 .popup .show {
   visibility: visible;
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
 }
 
-/* Add animation (fade in the popup) */
+
 @-webkit-keyframes fadeIn {
   from {opacity: 0;} 
   to {opacity: 1;}
@@ -91,7 +91,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-/* Popup container - can be anything you want */
+
 .popup2 {
   position: relative;
   display: inline-block;
@@ -102,7 +102,6 @@
   user-select: none;
 }
 
-/* The actual popup */
 .popup2 .popuptext2 {
   visibility: hidden;
   width: 1000px;
@@ -120,7 +119,7 @@
   margin-left: -800px;
 }
 
-/* Popup arrow */
+
 .popup2 .popuptext2::after {
   content: "";
   position: absolute;
@@ -132,14 +131,14 @@
   border-color: #555 transparent transparent transparent;
 }
 
-/* Toggle this class - hide and show the popup */
+
 .popup2 .show2 {
   visibility: visible;
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
 }
 
-/* Add animation (fade in the popup) */
+
 @-webkit-keyframes fadeIn {
   from {opacity: 0;} 
   to {opacity: 1;}
@@ -171,8 +170,7 @@
                         
                         //ADMINISTRADOR
                         if($_SESSION['rol']=="1"){
-                        	//echo"<h3><a href=index.php><span class= 'glyphicon glyphicon-home'</span></a> | 
-      	           	         //    HOLA ADMINISTRADOR ".$_SESSION['nombre']." ! | <a href=salir.php><span class='glyphicon glyphicon-log-out'></span>CERRAR SESIÓN</a></h3>";
+                        	
       	           	             $opcion1="<a href'#'><span class'glyphicon-user'></span>Hola Administrador!</a>";
                                   $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>SALIR</a>";  
                                   $archivop="propiedadesAdmin.php"; $archivosu="subastasAdmin.php"; $archivoActUsu="subastasActivasAdministrador2.php"; $archivoTerminadas="subastasTerminadasAdministrador2.php";
@@ -182,8 +180,6 @@
                       else {
                       // USUARIO REGISTRADO
 						
-				                  //echo" <h3><a href=index.php><span class= 'glyphicon glyphicon-home'</span></a> | 
-	      	           	   //  HOLA ".$_SESSION['nombre']." ! | <a href=salir.php><span class='glyphicon glyphicon-log-out'></span>CERRAR SESIÓN</a></h3>";
 	                             $opcion1="<a href'#'><span class'glyphicon-user'></span>Hola $_SESSION[nombre] !</a>" ;  
                                $opcion2="<a href=salir.php><span class='glyphicon glyphicon-log-out'></span>SALIR</a>";
 	                             $archivop="listarPropiedades.php"; $archivosu="subastasUsuario.php"; $archivoActUsu="subastasActivasUsuario4.php"; $archivoTerminadas="subastasTerminadasUsuario.php"; 
@@ -195,7 +191,6 @@
 	            }
 			    else{ // NO LOGUEADO
 
-			    	//echo"<h3><a href=index.php><span class= 'glyphicon glyphicon-home'</span></a> | <a href=ingresar.php><span class='glyphicon glyphicon-log-in'></span> INGRESAR</a> |<a href=registrar.php><span class='glyphicon glyphicon-user'></span> REGISTRARSE</a></h3>";}
                         $opcion1="<a href=ingresar.php><span class='glyphicon glyphicon-log-in'></span> INGRESAR</a>"; 
 
                         $opcion2="<a href=registrar.php><span class='glyphicon glyphicon-user'></span> REGISTRARSE</a>"; 
@@ -219,9 +214,25 @@
        <ul class="submenu">
              <li><a href=<?php echo "$archivosu"; ?>>SUBASTAS NO COMENZADAS</a></li>
              <li><a href=<?php echo $archivoActUsu; ?>>SUBASTAS ACTIVAS</a></li>
-      <li><a href=<?php echo $archivoTerminadas; ?>>SUBASTAS TERMINADAS</a></li>
+              <li><a href=<?php echo $archivoTerminadas; ?>>SUBASTAS TERMINADAS</a></li>
           </ul>
       </li>
+      <?php
+      if($_SESSION['rol']=="1"){  // SI ES ADMINISTRADOR QUE MUESTRE SIEMPRE EL HOT SALE ?>
+
+          <li><a href=# style="background-color: #FF7516">HOT SALE</a>
+           <ul class="submenu" style="background-color: #FF7516">
+             <li><a href="configuracionHotSale.php">CONFIGURAR FECHA DEL HOT SALE</a></li>
+             <li><a href="listaEsperaHotSale.php">LISTA DE ESPERA PARA HOT SALE</a></li>
+             <li><a href="listaHotSale.php">SUBASTAS EN HOT SALE</a></li>
+          </ul>
+         </li>    <?php
+      }
+      else{ // ES USUARIO, que le muestre si esta en fecha EL HOT SALE  --------------------------------------------------------------------
+
+
+      }
+      ?>
      
      </ul>
 
@@ -232,7 +243,7 @@
      <ul class="menu" style="float:right">
       <?php // Mostra solo si es usurio clasico
 
-//----------------------------------------------------------------------------------------  ES CLASICO  ---------------------------------
+// ES CLASICO  
     if($verOpcionesLogeado==true and $_SESSION['tipoU']=="clasico"){                                   ?>
        
        <?php  //me fijo si el usuario no tiene una solicitud pendiente
@@ -240,13 +251,13 @@
                      WHERE idPersona='".$_SESSION['id']."'";
            $var_resultado = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$var_consulta);
            $num=mysqli_num_rows($var_resultado);  
-           if ($num==0){  //----------------------------------------------------------------------------  NO MANDO SOLICITUD PARA PREMIUM ----
+           if ($num==0){  //NO MANDO SOLICITUD PARA PREMIUM 
 
            		 $sql = "SELECT * FROM config_cuota WHERE idTipoUsuario='2'";
  				 $res = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$sql);
  				 $montoPremium = mysqli_fetch_array($res);
 
-				 // BOTON QUIERO SER PREMIUM CON POPUP-----------?>
+				 // BOTON QUIERO SER PREMIUM CON POPUP        ?>
               	<div class="popup2" onclick="myFunction2()"> ¡QUIERO SER PREMIUM!
               	<span class="popuptext2" id="myPopup2"><ul  style="list-style-type:disc;" >
       			<h6><li>Como usuario premium podra comprar de forma directa semanas que se vayan a subastar sin la necesidad de pujar.</li>
@@ -265,27 +276,18 @@
       			</ul></span>
 				</div>                
            <?php } 
-           else{ //------------------------------------------------------------------------------------ MANDO SOLICITUD PARA PREMIUM ----?>
+           else{ // MANDO SOLICITUD PARA PREMIUM    ?>
                 <li><a href=#>SOLICITUD ENVIADA</a></li>
      		<?php  }
     }
-    if($verOpcionesLogeado==true and $_SESSION['tipoU']=="premium"){ //------------------------------------- USUARIO PREMIUM -------
- 			//me fijo si el usuario no tiene una solicitud pendiente
-           $var_consulta="SELECT idPersona FROM esperaclasico
-                    	 WHERE idPersona='".$_SESSION['id']."'";
-           $var_resultado = mysqli_query(mysqli_connect('localhost','root','','grupo6'),$var_consulta);
-           $num=mysqli_num_rows($var_resultado);  
-           if ($num==0){ //---------------------------------------------------------------------------- NO MANDO SOLICITUD PARA CLASICO------?>
+    if($verOpcionesLogeado==true and $_SESSION['tipoU']=="premium"){ // USUARIO PREMIUM       ?>
           
           	 <li><a href=# > </i>ERES PREMIUM </a>
              <ul class="submenu"> 
                 <li><a href=solicitarBajaPremium.php>Dejar de ser PREMIUM</a></li>
              </ul>
              </li> <?php
-           }
-           else{ //---------------------------------------------------------------------------- MANDO SOLICITUD PARA CLASICO ------ ?>
-           	 <li><a href=#>SOLICITUD ENVIADA</a></li>  <?php
-           	}
+           
 	} 
 
      ?>
@@ -323,7 +325,7 @@
                     <li><a href=configuracionCuotaMensual.php>CONFIG.CUOTA MENSUAL</a></li>
                      <li><a href=ListarTodosLosUsuarios.php>LISTA DE USUARIOS</a></li>
                      <li><a href="verListaEspera.php">LISTA DE ESPERA PARA PREMIUM</a></li>
-                     <li><a href="verListaEsperaClasico.php">LISTA DE ESPERA PARA CLASICO</a></li>
+                     
                </ul>
                </li>
          
@@ -353,8 +355,7 @@ if($verOpcionesLogeado!=true){
 
      ?>
   
-      <li><?php echo"$opcion1"; ?></li> <?php
-//----------------------------------------------------------------------------------------------------------------------------------------?>
+      <li><?php echo"$opcion1"; ?></li> 
 <div class="popup" onclick="myFunction()"><p class='glyphicon glyphicon-user'> </p> REGISTRARSE
   <span class="popuptext" id="myPopup"><ul  style="list-style-type:disc;" >
       <h6><li>Como usuario registrado poseera dos creditos anuales, los cuales representan una semana al año cada uno.</li>

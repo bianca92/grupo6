@@ -223,7 +223,9 @@ if ($fin>$nuevafecha){
              $resuPremium = mysqli_query($con,  $consultaPremium);
              $rowPre= mysqli_fetch_array($resuPremium);
              if ($rowPre['tipoU']=="premium"&& $rowPre['credito']>0 ){
-                  echo "<a  href=#> <button type='button' class='btn btn-succes'>COMPRAR</button> </a>";}
+              //----------------------------------------------------------------------------- BOTON COMPRAR PREMIUM ---------------------
+              
+                  echo "<a  href='comprarPremium.php'> <button type='button' class='btn btn-succes'>COMPRAR</button> </a>";}
                  
                     echo "<a  href='detalle.php?prop=$row[idPropiedad]&busqueda=0&semanas=".serialize(0)."'> <button type='button' class='btn btn-succes'>Detalle propiedad</button> </a>";
                  

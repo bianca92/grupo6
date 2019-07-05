@@ -231,7 +231,9 @@ if(($credito==0)||($fecha_actual>=$fechaSubasta)){
 $ok="";
 
           
-    if($rowPer['tipoU']=='premium') { ?>
+    if($rowPer['tipoU']=='premium') { 
+      //------------------------------------------------------------------------------------------- BOTON COMPRA PREMIUM -----------------?>
+
         <a href="comprarPremium.php"><button class='btn btn-success' type="button" <?php echo comprobar($row['fechaInicioSubasta'],$rowPer['credito'],$ok)?> >COMPRAR</button></a>
      <?php echo $ok; } 
     }?>

@@ -239,10 +239,8 @@ function mensajeEliminarSubasta($idS){
     }
   }
 }
-
-//-------------------------------------------------------------------------------------------------- 9 ----------  SOLICITAR CLASICO  ------------
-//mensaje del usuario al adminitrador de que quiere ser clasico (baja premium) NUMERO 9
-function mensajeSolicitarClasico($idP){
+//------------------------------------------------------------------------------------------- 9 ----- BAJA PREMIUM ------------------------
+function mensajeBajaPremium($idP){
   $link=conectar();
 
 //selecciono el id del admin.
@@ -257,7 +255,7 @@ $query = "SELECT * FROM persona WHERE idPersona='$idP' ";
             $row = mysqli_fetch_array($result);
 
 
-   $contenido="$row[nombre] $row[apellido]: Quiero volver a ser CLASICO." ;
+   $contenido="$row[nombre] $row[apellido]: Realizo la BAJA del servicio PREMIUM." ;
    $fecha=date('Y-m-j-H:i');
   $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
                                     values('$contenido','$fecha','$row[0]','$idA[0]','9')";
@@ -265,79 +263,6 @@ $query = "SELECT * FROM persona WHERE idPersona='$idP' ";
    $var_resultado = $link->query($var_consulta);
   
 }
-
-//------------------------------------------------------------------------------------------------- 10 -------  ACEPTAR CLASICO  ------------------
-//mensaje que se acepto el cambio a clasico    NUMERO 10
-function mensajeSeAceptoClasico($idP){
-  $link=conectar();
-
-//selecciono el id del admin.
-$query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
-            $result = mysqli_query($link, $query);
-          $idA = mysqli_fetch_array($result);
-
-
-//le envio mensaje que fue aceptado como clasico
-
-
-
-   $contenido="¡FELICITACIONES!Ahora eres usuario CLASICO." ;
-   $fecha=date('Y-m-j-H:i');
-  $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
-                                    values('$contenido','$fecha','$idA[0]','$idP','10')";
-              
-   $var_resultado = $link->query($var_consulta);
-  
-}
-
-//------------------------------------------------------------------------------------------------- 11 --------  RECHAZO CLASICO  ----------------
-//mensaje que se rechazo el cambio a clasico   NUMERO 11
-function mensajeSeRechazoClasico($idP){
-  $link=conectar();
-
-//selecciono el id del admin.
-$query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
-            $result = mysqli_query($link, $query);
-          $idA = mysqli_fetch_array($result);
-
-
-//le envio mensaje que fue rechazado como clasico
-
-
-
-   $contenido="Lamentamos informarle que ha sido rechazado para ser CLASICO." ;
-   $fecha=date('Y-m-j-H:i');
-  $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
-                                    values('$contenido','$fecha','$idA[0]','$idP','11')";
-              
-   $var_resultado = $link->query($var_consulta);
-  
-}
-
-//--------------------------------------------------------------------------------------------------- 12 --------  ELIMINAR CLASICO  -------------
-//mensaje que se ya no es mas premium   NUMERO 6
-function mensajeEliminoClasico($idP){
-  $link=conectar();
-
-//selecciono el id del admin.
-$query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
-            $result = mysqli_query($link, $query);
-          $idA = mysqli_fetch_array($result);
-
-
-//le envio mensaje que fue rechazado como premium
-
-
-
-   $contenido="¡FELICITACIONES!Ahora eres usuario PREMIUM." ;
-   $fecha=date('Y-m-j-H:i');
-  $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
-                                    values('$contenido','$fecha','$idA[0]','$idP','12')";
-              
-   $var_resultado = $link->query($var_consulta);
-  
-}
-
 
 
 

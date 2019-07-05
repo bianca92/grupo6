@@ -37,9 +37,7 @@ $var_resultado = $link->query($var_consulta);
 			<form name="formulario" action="configuracionHotSale_2.php" method="POST" class="login-form" enctype="multipart/form-data" onsubmit="return validareg();">
 				
 				<div class="header">
-					<h1>CONFIGURACIÓN HOTSALE</h1><br/>
-          <br/>
-
+					<h1>CONFIGURACIÓN HOTSALE</h1>
 				</div>
 			 
 				
@@ -57,9 +55,7 @@ $var_resultado = $link->query($var_consulta);
                $row = mysqli_fetch_array($var_resultado);
                $fecha="$row[dia] - $row[mes]";
                $duracion=$row['duracion'];
-
               ?>
-
  
                      
                      <input type="text" name="idConfigHotsale" class="hidden" value='<?php echo "$row[idConfigHotsale]" ?>'>
@@ -77,7 +73,7 @@ $var_resultado = $link->query($var_consulta);
 
 
                    <label for="duracion">Dias de duracion: </br></label>
-					<input id="duracion"   type="number" name="duracion" class="input username" min=1 placeholder='<?php echo "$duracion" ?>' autocomplete="off" >
+					<input id="duracion"   type="number" name="duracion" class="input username" min=1 placeholder='<?php echo "$duracion" ?>' autocomplete="off" required="required">
 					
                 
 

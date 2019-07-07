@@ -108,7 +108,7 @@ function actualizarHotSale($idS){
 
     //AHORA SI COMPARO LAS FECHAS PARA LA LISTA.
 
-    if ($fechaH<$fechaA){
+    if ($fechaH>$fechaA){
         //la fecha del proximo hotsale $fechaHotsale es MENOR a la fecha 2 semanas antes de la subasta $fechaAntes
         //pensar en los cumpleaños, la fecha posterior es mas chica que la anterior
          $consulta="UPDATE subasta SET cancelada=1 WHERE idSubasta=$idS ";

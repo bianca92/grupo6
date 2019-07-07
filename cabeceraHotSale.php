@@ -13,11 +13,36 @@
 <body>
 	<div>
     <?php
-   
-	$todas= "listaHotSale.php";
+   	$todas= "listaHotSale.php";
 	$enHotSale= "listaActualHotSale.php";
 	$vendidasHS="listaHotSaleVendidas.php";
 	$sinVenderHS="listaHotSaleSinVender.php";
+ 
+  //datos hot sale
+    $consultaHotSale="SELECT * FROM config_hotsale";
+    $resu2 =  mysqli_query(mysqli_connect('localhost','root','','grupo6'),$consultaHotSale); 
+    $row2=mysqli_fetch_array($resu2);
+
+    //CREO LA FECHA DEL HOTSALE DE ESTE AÑO
+    $añoH=date("Y");
+    $fecha="$row2[dia]-$row2[mes]-$añoH";
+    $fechaHotsale= strtotime ( 'd-m-Y' , strtotime ( $fecha ) ) ;
+    $fechaH=strtotime($fechaHotsale);
+
+    //me fijo que el hotsale de este año no haya pasado
+    $fecha_actual=date('d-m-Y');
+
+    if ($fecha_actual > $fechaHotsale){
+       $añoH=$añoH + 1;
+       $fecha="$row2[dia]-$row2[mes]-$añoH";
+       //creo la fecha definitiva del hotsale
+       $fechaHotsale= date ( 'd-m-Y' , strtotime ( $fecha ) ) ;
+       //la paso a un formato comparable
+       $fechaH=strtotime($fechaHotsale);
+
+    }
+    $fechaH=date('d/m/Y', $fechaH);
+
 	
 
 	?>
@@ -35,6 +60,10 @@
       <li><a href=<?php echo $vendidasHS; ?>></i>VENDIDAS</a></li>
       <li><a href=<?php echo $sinVenderHS; ?>></i>SIN VENDER</a></li>
 
+    </ul>
+    <ul class="menu" style="float: right;">
+      <li><h4 style='color:#FFFFFF'>El proximo Hot Sale sera el <?php echo"$fechaH";?> </h4></li>
+      
     </ul>
    </div>
    </div>

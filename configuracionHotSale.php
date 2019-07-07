@@ -29,15 +29,46 @@ $var_resultado = $link->query($var_consulta);
 	</head>
 
 	<body>
+
+    <?php
+    //datos hot sale
+    $consulta="SELECT * FROM config_hotsale";
+    $resu2 = $link->query($consulta); 
+    $row2=mysqli_fetch_array($resu2);
+
+    //CREO LA FECHA DEL HOTSALE DE ESTE AÑO
+    $añoH=date("Y");
+    $fecha="$row2[dia]-$row2[mes]-$añoH";
+    $fechaHotsale= strtotime ( 'd-m-Y' , strtotime ( $fecha ) ) ;
+    $fechaH=strtotime($fechaHotsale);
+
+    //me fijo que el hotsale de este año no haya pasado
+    $fecha_actual=date('d-m-Y');
+
+    if ($fecha_actual > $fechaHotsale){
+       $añoH=$añoH + 1;
+       $fecha="$row2[dia]-$row2[mes]-$añoH";
+       //creo la fecha definitiva del hotsale
+       $fechaHotsale= date ( 'd-m-Y' , strtotime ( $fecha ) ) ;
+       //la paso a un formato comparable
+       $fechaH=strtotime($fechaHotsale);
+
+    }
+    $fechaH=date('d/m/Y', $fechaH);
+
+    ?>
 		
 		
 		<div id="wrapper">
+      <h4 style='color:#FF7516'>El proximo Hot Sale sera el <?php echo"$fechaH";?> </h4>
 
 
 			<form name="formulario" action="configuracionHotSale_2.php" method="POST" class="login-form" enctype="multipart/form-data" onsubmit="return validareg();">
 				
 				<div class="header">
-					<h1>CONFIGURACIÓN HOTSALE</h1>
+					<h1>CONFIGURACIÓN HOTSALE</h1><br/>
+          <br/>
+
 				</div>
 			 
 				
@@ -55,7 +86,9 @@ $var_resultado = $link->query($var_consulta);
                $row = mysqli_fetch_array($var_resultado);
                $fecha="$row[dia] - $row[mes]";
                $duracion=$row['duracion'];
+
               ?>
+
  
                      
                      <input type="text" name="idConfigHotsale" class="hidden" value='<?php echo "$row[idConfigHotsale]" ?>'>
@@ -73,7 +106,7 @@ $var_resultado = $link->query($var_consulta);
 
 
                    <label for="duracion">Dias de duracion: </br></label>
-					<input id="duracion"   type="number" name="duracion" class="input username" min=1 placeholder='<?php echo "$duracion" ?>' autocomplete="off" required="required">
+					<input id="duracion"   type="number" name="duracion" class="input username" min=1 placeholder='<?php echo "$duracion" ?>' autocomplete="off" >
 					
                 
 

@@ -11,31 +11,41 @@ include("cabecera.php");
  
  $fechaInicio=$_POST['datepicker'];
  $duracion=$_POST['duracion'];
+
+  //OBTENGO EL NUMERO DE LA SEMANA QUE EL ADMIN INGRESO
+$dia=date('d', strtotime($fechaInicio));
+//OBTENGO EL MES
+$mes=date('m', strtotime($fechaInicio));
+$year=date('Y', strtotime($fechaInicio));
+
+  $fecha_actual=date('Y-m-d');
+
+ if($fecha_actual>$fechaInicio){
+      $fechaInicio = strtotime ( '+1 year' , strtotime ( $fechaInicio )) ; 
+      $fechaInicio = date ( 'Y-m-d' , $fechaInicio ); 
+      $year= $year + 1;
+ }
  
-//sustraigo el dia y el mes
-$dia=substr("$fechaInicio",0, 2);
-$mes=substr("$fechaInicio",3, 2);
+
 // de esta manera se crea la fecha, lo dejo aca para no olvidarme como se hace
-$año=date("Y");
-$fecha="$dia-$mes-$año";
-$fechaInicio= date ( 'd-m-Y' , strtotime ( $fecha ) ) ;
+//$año=date("Y");
+//$fecha="$dia-$mes-$year";
+//$fechaInicio= date ( 'd-m-Y' , strtotime ( $fecha ) ) ;
 
 //---------------------------------------------------------------------
 
 //si es la primera vez que se configura creo la tabla
 if ($primeraVez==1){
 
-$var_consulta="INSERT INTO config_hotsale (dia,mes,duracion)
-                     values('$dia', '$mes','$duracion')";
+$var_consulta="INSERT INTO config_hotsale (dia,mes,year,fecha,duracion)
+                     values('$dia', '$mes','$year','$fechaInicio','$duracion')";
             	
 $var_resultado = $link->query($var_consulta);
 
-
-
- }
+}
 else{
 $idC=$_POST['idConfigHotsale'];
-$var_consulta="UPDATE config_hotsale SET dia='$dia', mes='$mes', duracion='$duracion' WHERE idConfigHotsale='$idC' ";
+$var_consulta="UPDATE config_hotsale SET dia='$dia', mes='$mes', year='$year', fecha='$fechaInicio' ,duracion='$duracion' WHERE idConfigHotsale='$idC' ";
             	
 $var_resultado = $link->query($var_consulta);}
 

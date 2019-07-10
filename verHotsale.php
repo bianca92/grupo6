@@ -63,10 +63,19 @@ $queryhotsale = "SELECT  hs.idHotsale, hs.precio, hs.fechaagregada, su.idSubasta
           </div>
        </div>
 </div>
+<?php }
+
+  if(isset($_SESSION['estado'])){
+     if($_SESSION['rol']=="0"){ ?>
+       <a href="listarHotsaleUsuario.php" class="btn btn-success" float="left">VER MÁS</a>
+<?php
+    
+  }}
+  else{ ?>
+       <a href="ingresar.php" class="btn btn-success" float="left">VER MÁS</a>
 <?php } ?>
-<a href="listarHotsaleUsuario.php" class="btn btn-success" float="left">VER MÁS</a>
-  </div> </div> </div> </div>
+  </div> </div> </div> </div> 
 
 
 </body>
-</html>  
+</html> 

@@ -27,7 +27,7 @@ catch(Exception $e){
 
     //CREO LA FECHA DEL HOTSALE DE ESTE AÑO
     $añoH=date("Y");
-    $fecha="$row2[dia]-$row2[mes]-$añoH";
+    $fecha="$row2[dia]-$row2[mes]-$row2[year]";
     $fechaHotsale= strtotime ( 'd-m-Y' , strtotime ( $fecha ) ) ;
     $fechaH=strtotime($fechaHotsale);
 
@@ -36,7 +36,7 @@ catch(Exception $e){
 
     if ($fecha_actual > $fechaHotsale){
        $añoH=$añoH + 1;
-       $fecha="$row2[dia]-$row2[mes]-$añoH";
+       $fecha="$row2[dia]-$row2[mes]-$row2[year]";
        //creo la fecha definitiva del hotsale
        $fechaHotsale= date ( 'd-m-Y' , strtotime ( $fecha ) ) ;
        //la paso a un formato comparable
@@ -47,7 +47,7 @@ catch(Exception $e){
 
 $query = "SELECT p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, 
                  su.idSubasta,su.activa,su.fechaFinInscripcion, su.year, su.idSemana, su.cerrada, su.cancelada, su.enhotsale
-          FROM subasta su INNER JOIN propiedad p ON su.idPropiedad=p.idPropiedad WHERE su.cancelada != 1 AND su.enhotsale = 0";
+          FROM subasta su INNER JOIN propiedad p ON su.idPropiedad=p.idPropiedad WHERE su.cancelada = 0 AND su.enhotsale = 0";
 $result = mysqli_query($con, $query);
 $num=mysqli_num_rows($result); 
 if ($num==0) {

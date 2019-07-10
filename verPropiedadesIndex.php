@@ -24,30 +24,35 @@ $query = "SELECT idPropiedad,titulo,localidad, eliminada FROM propiedad WHERE el
                    $num=mysqli_num_rows($result); 
      ?>
 
-  <div class="container">
-   
- 
- <?php
- //comtempla la cantidad de propiedades , xq 4, 5 o7 propiedades no se listaban
+  <div class="container-fluid" style="margin:10px; padding-right:10px" >
+   <?php // MOSTRAR HOTSALE SI ES LA TEMPORADA
+   $fecha_actual=date('Y-m-d');
+        //fecha de hotsale
+         $consultaHotSale="SELECT * FROM config_hotsale";
+         $resHotsale =  mysqli_query(mysqli_connect('localhost','root','','grupo6'),$consultaHotSale); 
+         $rowH=mysqli_fetch_array($resHotsale);
 
- //$resto= $num%3; $filas=$num/3;
- //if(($resto)!=0){
-   //$filas=$filas+1;}
- 
-   
-  //for($x = 1; $x <= $filas ; $x++){
-        
+          $dias=$rowH['duracion'];
+          $fechaHotsale=$rowH['fecha'];
+          //$fechaHotsale= strtotime ( 'd-m-Y' , strtotime ( $rowH['fechah'] ) ) ;
+           
+         
+           
+          $nuevafecha = strtotime ( '+'.$dias.'day' , strtotime ( $rowH['fecha'] )) ; 
+          $nuevafecha = date ( 'd/m/Y' , $nuevafecha ); 
+           if ($fecha_actual>=$fechaHotsale) { 
+             
+             include('verHotsale.php');
+           }
 
-  ?>
-  <div class="row">
-
-    <?php 
+     
     while ($row = mysqli_fetch_array($result)) {
    
      //for($i= 1; $i<= 3; $i++){
              //$row = mysqli_fetch_array($result);
      ?>
-      <div class="col-sm-4">
+ 
+      <div class="col-lg-4" style=" padding-right:5px" >
            
         <div class="thumbnail">
         

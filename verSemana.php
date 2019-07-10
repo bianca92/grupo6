@@ -32,7 +32,7 @@ $fecha_actual = date('Y-m-d');   $id=($_SESSION['id']);
 $fecha2 = new DateTime($fecha);
 $semana = $fecha2->format('W'); */
 
-$query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
+$query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo,su.preciopremium, su.fechaInicioSubasta, su.fechaFinSubasta,
           su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada,su.cancelada, su.year, su.idSemana,p.eliminada
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad and su.idSubasta=$subasta";
             $result = mysqli_query($con, $query);
@@ -65,7 +65,7 @@ $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMin
           
       if(($row['activa']==1)&&($row['cerrada']==1)){
             // PROPIEDAD ELIMINADA
-          if($row['eliminada']==1 or $row['cancelada']){
+          if($row['eliminada']==1 or $row['cancelada']==1){
             
              $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
       $fi= $week_start->format('d/m/Y'); ?>
@@ -87,13 +87,15 @@ $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMin
 
           }
           else{ // TODOS LOS DEMAS PROPIEDADES
-           $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
+
+           $consulWinner= "SELECT * FROM ganador WHERE idSubasta='$row[idSubasta]'";
             $resultWinner = mysqli_query($con, $consulWinner);
             $num = mysqli_num_rows($resultWinner);
            
            if ($num==0){
             $winnerMsj="NADIE HA GANADO";
-            $pujaMaxima="No hubo pujas";
+            $pujaMaxima="--";
+           
           }
            else {
             $rowWinner = mysqli_fetch_array($resultWinner);
@@ -108,12 +110,13 @@ $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMin
                    $winnerMsj="¡¡GANASTE LA SUBASTA!!"; }
                 else{
                   $winnerMsj="Perdiste la subasta";} 
+            }
              ?>
 
 
              <h4><p class= 'text-danger'><?php echo $winnerMsj ?></p><h4> 
              <h4><?php echo "Puja ganadora: $ $pujaMaxima.";?></h4>
-            <?php }} ?>
+            <?php } ?>
              <h6><?php echo "<p class=bg-primary >La subasta cerró el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."</p>";?></h6>
          <?php  }
      else{ 
@@ -230,12 +233,20 @@ if(($credito==0)||($fecha_actual>=$fechaSubasta)){
 
 $ok="";
 
-          
-    if($rowPer['tipoU']=='premium') { 
+          $consulPagado= "SELECT * FROM comprap WHERE idSubasta='$row[idSubasta]'";
+            $resultPagado = mysqli_query($con, $consulPagado);
+            $numPagado = mysqli_num_rows($resultPagado);
+            $rowPagado=mysqli_fetch_array($resultPagado);
+            //solo puede comprar si nadie mas la ha comprado
+    if($rowPer['tipoU']=='premium' && $numPagado==0) { 
       //------------------------------------------------------------------------------------------- BOTON COMPRA PREMIUM -----------------?>
 
-        <a href="comprarPremium.php"><button class='btn btn-success' type="button" <?php echo comprobar($row['fechaInicioSubasta'],$rowPer['credito'],$ok)?> >COMPRAR</button></a>
-     <?php echo $ok; } 
+        <a href='pagarSemana.php?sub=<?php echo $row["idSubasta"]?>&monto=<?php echo $row["preciopremium"]?>&ganador=<?php echo $rowPer["IdPersona"]?>&tipo=premium'><button class='btn btn-success' type="button" <?php echo comprobar($row['fechaInicioSubasta'],$rowPer['credito'],$ok)?> >COMPRAR</button></a>
+     <?php echo $ok; }
+
+     if($numPagado==1 && $rowPagado['idPersona']==$rowPer["IdPersona"]) {
+      echo "<h4 class=text-danger >Ya compraste esta propiedad</h4>";
+     }
     }?>
           </tr>  
          </table>

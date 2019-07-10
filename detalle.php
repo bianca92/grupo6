@@ -129,10 +129,10 @@ $query = "SELECT * FROM propiedad WHERE idPropiedad=$propiedad";
             $resulPer = mysqli_query($con, $queryPer);
             $rowPer = mysqli_fetch_array($resulPer);
             
-         if($rowPer['tipoU']=='premium') { 
+       //  if($rowPer['tipoU']=='premium') { 
           //---------------------------------------------------------------------------------- BOTON COMPRA PREMIUM ------------------------?>
-        <button class="btn btn-info " ><a href="comprarPremium.php">COMPRAR</a></button>
-     <?php }
+        <!---- <button class="btn btn-info " ><a href="comprarPremium.php">COMPRAR</a></button> --->
+     <?php // }
       ?></tr>
   </thead>
   <tbody>

@@ -229,7 +229,17 @@
          </li>    <?php
       }
       else{ // ES USUARIO, que le muestre si esta en fecha EL HOT SALE  --------------------------------------------------------------------
-
+        $fecha_actual=date('d-m-Y');
+        //fecha de hotsale
+         $consultaHotSale="SELECT * FROM config_hotsale";
+         $resHotsale =  mysqli_query(mysqli_connect('localhost','root','','grupo6'),$consultaHotSale); 
+         $rowH=mysqli_fetch_array($resHotsale);
+          
+          $fechaHotsale= strtotime ( 'd-m-Y' , strtotime ( $rowH['fecha'] ) ) ;
+           if ($fecha_actual>=$fechaHotsale) {
+             ?><li><a href="listarHotsaleUsuario.php" style="background-color: #FF7516">HOT SALE</a>
+             
+          <?php }
 
       }
       ?>

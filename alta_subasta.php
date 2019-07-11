@@ -62,7 +62,7 @@ $row = mysqli_fetch_array($var_resultado);
 					<input id="precio" type="number" name="precioInicial"  required="required"></div></br>
                     <div>
                     <label for="precioPremium">Precio Venta Premium: </br></label>
-                    <input id="precioP" type="number" name="precioPremium"  required="required"></div></br>
+                    <input id="precio" type="number" name="precioPremium"  required="required"></div></br>
                    <table  style="width:300px;"> <?php  ?>
                   <?php  ?> 
                      <tr>

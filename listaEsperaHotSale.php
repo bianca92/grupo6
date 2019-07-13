@@ -47,7 +47,7 @@ catch(Exception $e){
 
 $query = "SELECT p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaInicioInscripcion, 
                  su.idSubasta,su.activa,su.fechaFinInscripcion, su.year, su.idSemana, su.cerrada, su.cancelada, su.enhotsale
-          FROM subasta su INNER JOIN propiedad p ON su.idPropiedad=p.idPropiedad WHERE su.cancelada = 0 AND su.enhotsale = 0";
+          FROM subasta su INNER JOIN propiedad p ON su.idPropiedad=p.idPropiedad WHERE su.cancelada != 1 AND su.enhotsale = 0";
 $result = mysqli_query($con, $query);
 $num=mysqli_num_rows($result); 
 if ($num==0) {
@@ -59,7 +59,7 @@ else{     ?>
   <div class="container">
 
     <div>
-      <?php echo"<h4>El proximo Hot Sale sera el $fechaH </h4>"; ?>
+      <?php echo"<h4 style='color:#FF7516'>El proximo Hot Sale sera el $fechaH </h4>"; ?>
       <h3>LISTA DE ESPERA PARA HOT SALE:</h3>
       <h5>Seleccione las subastas que desee que esten en oferta en epoca de Hot Sale</h5>
       <form method="POST" action="listaEsperaHotSale2.php">
@@ -88,7 +88,7 @@ else{     ?>
              $actualizar=actualizar($row['idSubasta']);
              $row['activa']=$actualizar[0];
              $row['cerrada']=$actualizar[1];
-             $row['cancelada']=actualizarHotSale($row['idSubasta']);
+             
              
              
              
@@ -97,7 +97,13 @@ else{     ?>
              $numG=mysqli_num_rows($resultG); 
 
 
-             if(($row['activa']==1)&&($row['cerrada']==1)&&($numG==0)&&($row['cancelada']!=1)){  
+             if(($row['activa']==1)&&($row['cerrada']==1)&&($numG==0)){  // terminada sin ganador
+
+              $valor=actualizarHotSale($row['idSubasta']);
+              $row['cancelada']=$valor;
+
+              if($row['cancelada']!=1 ){
+
 
                  $auxiliar=false;
                  $imgs=ObtenerImgs($row['idPropiedad']);
@@ -129,19 +135,30 @@ else{     ?>
                   <td><?php echo "<a href='eliminar_subasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Eliminar semana</button> </a></br>" ;?>
                   
                  </tr>  
-      <?php } 
+      <?php }
+            else{
+            //ACTUALIZO EL ENHOTSALE=1 PARA QEU SE SEPA QUE SE DESCARTO ACA.
+             $cActualizar= "UPDATE subasta SET enhotsale='1' WHERE idSubasta='$row[idSubasta]' ";
+             $rActualizar = $con->query($cActualizar); 
+            }
+
+
+             }
          }?>      
       
         </tbody>
       </table>
 
-      <input type="submit" value="Aceptar">
-      </form>
+      
       <?php
  
       if ($auxiliar==true){
           echo"<tr><td><h4>NO SE HAN ENCONTRADO SEMANAS EN ESPERA</h4></td></tr>";
        } 
+       else{  ?>
+        <input type="submit" value="Aceptar">
+      </form>   <?php
+       }
 }  
 
 mysqli_free_result($result);

@@ -49,7 +49,25 @@ $var_consulta="UPDATE config_hotsale SET dia='$dia', mes='$mes', year='$year', f
             	
 $var_resultado = $link->query($var_consulta);}
 
+//restauro los descartados para el hot salae
+$consul="SELECT * FROM subasta WHERE cancelada = '1' AND enhotsale='1'";
+$resul= $link->query($consul);
+$cant = mysqli_num_rows($resul);
+if($cant!=0){
+while($row=mysqli_fetch_array($resul)){
 
+	//busco que no se haya publicado
+	$consul="SELECT * FROM hotsale WHERE idSubasta = '$row[idSubasta]' ";
+	$resul= $link->query($consul);
+	$cantHS = mysqli_num_rows($resul);
+
+	
+	if($cantHS==0 ){
+		$var_consulta="UPDATE subasta SET cancelada='0' , enhotsale='0'WHERE idSubasta='$row[idSubasta]' ";
+        $var_resultado = $link->query($var_consulta);
+	}
+
+}}
 
 echo '<script> alert("MODIFICACION EXITOSA");</script>';
 

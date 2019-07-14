@@ -43,7 +43,7 @@ $con=conectar();
         
 $queryhotsale = "SELECT  hs.idHotsale, hs.precio, hs.fechaagregada, su.idSubasta, su.idSemana, su.year, p.titulo, p.localidad, su.cancelada, p.idPropiedad
           FROM hotsale hs INNER JOIN subasta su ON hs.idSubasta = su.idSubasta INNER JOIN propiedad p ON su.idPropiedad = p.idPropiedad 
-          WHERE su.enhotsale = '1' AND su.cancelada = '0' ";
+          WHERE su.enhotsale = '1' AND su.cancelada = '0' AND idHotsale NOT IN (SELECT idHotsale FROM comprah )";
           $resulthotsale = mysqli_query($con, $queryhotsale);
           $numH=mysqli_num_rows($resulthotsale); 
   ?>                 
@@ -74,7 +74,7 @@ $queryhotsale = "SELECT  hs.idHotsale, hs.precio, hs.fechaagregada, su.idSubasta
              $week_start = new DateTime(); $week_start->setISODate((int)$rowH['year'],(int)$rowH['idSemana']);
                                            $fi= $week_start->format('d/m'); ?>
                  
-            <h3><?php echo "OFERTA $ $rowH[precio]"." ";?><a href="#.php" class="btn btn-danger" float="right">COMPRAR</a></h3>
+            <h3><?php echo "OFERTA $ $rowH[precio]"." ";?><a href="compraHotsale.php?hotsale=<?php echo $rowH['idHotsale']?>&monto=<?php echo $rowH['precio']?>" class="btn btn-danger" float="right">COMPRAR</a></h3>
             <h4><?php echo "para la semana de: $fi del año ";
             $fi= $week_start->format('Y'); echo "$fi " ; ?></h4> <?php } ?>
           </div>

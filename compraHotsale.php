@@ -9,12 +9,12 @@ include("conexion.php");
 
 
 
-//$link = mysqli_connect('localhost','root','','grupo6');
+
 $link=conectar();
-//$ganador = $_GET['ganador'];
+
 $idHotsale = $_GET['hotsale'];
 $monto = $_GET['monto'];
-//$tipo = $_GET['tipo'];
+
 
 
 $var_consulta= "SELECT * FROM tarjeta WHERE idPersona='$_SESSION[id]' ";
@@ -34,7 +34,19 @@ $row2 = mysqli_fetch_array($var_resultado);
 	</head>
 
 	<body>
-		
+		  <div class="well well-sm" style="background-color: #FF7516">
+         <?php  $consultaHotSale="SELECT * FROM config_hotsale";
+         $resHotsale =  mysqli_query(mysqli_connect('localhost','root','','grupo6'),$consultaHotSale); 
+         $rowH=mysqli_fetch_array($resHotsale);
+
+          $dias=$rowH['duracion'];
+          $fechaHotsale=$rowH['fecha'];
+          
+          $nuevafecha = strtotime ( '+'.$dias.'day' , strtotime ( $rowH['fecha'] )) ; 
+          $nuevafecha = date ( 'd/m/Y' , $nuevafecha );
+          echo"<h4> HOT SALE hasta ".$nuevafecha."</h4>";
+        ?>
+  </div> 
 		
 		<div id="wrapper" style="background-color: #EAB15A">
 

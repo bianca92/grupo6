@@ -77,7 +77,7 @@ $con=conectar();
 
 		while ($row=mysqli_fetch_array($result)){
 			
-			$arregloP [$p][0]= $row[fecha];
+			$arregloP [$p][0]= $row['fecha'];
 			$arregloP [$p][1]= "".date('d/m/Y-H:i', strtotime($row['fecha']))." - Compraste en Hot Sale a $ $row[precio] una semana en la propiedad \"$row[titulo]\".";
 			$p= $p+1;
 		}
@@ -104,7 +104,7 @@ $con=conectar();
 
 		while ($row=mysqli_fetch_array($result)){
 			
-			$arregloP [$i][0]= $row[fecha];
+			$arregloP [$i][0]= $row['fecha'];
 			$arregloP [$i][1]= "".date('d/m/Y-H:i', strtotime($row['fecha']))." - Compraste una semana con tu beneficio premium a $ $row[precioMinimo] en la propiedad \"$row[titulo]\".";
 			$i= $i+1;
 		}

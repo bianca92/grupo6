@@ -240,6 +240,7 @@ function mensajeEliminarSubasta($idS){
   }
 }
 //------------------------------------------------------------------------------------------- 9 ----- BAJA PREMIUM ------------------------
+//mensaje al administrador que alguien se dio de baja premium NUMERO 9.
 function mensajeBajaPremium($idP){
   $link=conectar();
 
@@ -263,7 +264,70 @@ $query = "SELECT * FROM persona WHERE idPersona='$idP' ";
    $var_resultado = $link->query($var_consulta);
   
 }
+//--------------------------------------------------------------------------------------------------------------------------------------
+//mensaje al nuevo ganador de la subasta. NUMERO 10
+function mensajeNuevoGanador($idS){
+  $link=conectar();
+  
+//selecciono el id del admin.
+
+  $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
+            $result = mysqli_query($link, $query);
+          $idA = mysqli_fetch_array($result);
 
 
+//selecciono el id del ganador
+     $query = "SELECT idPersona FROM ganador WHERE idSubasta='$idS' ";
+     $result = mysqli_query($link, $query);
+    
+     $idG = mysqli_fetch_array($result);
+
+   $fecha=date('Y-m-j-H:i');
+   //mando los mensajes
+$contenido="Has ganado la subasta, porque el ganador la ha rechazado.";
+      
+         $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero)
+                                    values('$idS','$contenido','$fecha','$idA[0]','$idG[0]','10')";
+              
+          $var_resultado = $link->query($var_consulta);
+  
+}
+//-----------------------------------------------------------------------------------------------------------NUMERO 11
+
+function compradaPorPremium($idS,$idU){
+  $link=conectar();
+  //selecciono el id de los inscriptos
+$query = "SELECT idPersona FROM inscripto WHERE idSubasta='$idS' ";
+            $resultI = mysqli_query($link, $query);
+            $num=mysqli_num_rows($resultI); 
+
+ if($num==0) {}          
+//selecciono el id del admin.
+else {
+  $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
+            $result = mysqli_query($link, $query);
+          $idA = mysqli_fetch_array($result);
+
+
+
+  
+   $fecha=date('Y-m-j-H:i');
+   //mando los mensajes
+    while($row = mysqli_fetch_array($resultI)){
+      $contenido="Un usuario premium ha comprado la semana.";
+      if($idU==$row[0]){
+        $contenido="Haz comprado la semana utilizando el beneficio premium.";
+      }
+
+         $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero)
+                                    values('$idS','$contenido','$fecha','$idA[0]','$row[0]','2')";
+              
+          $var_resultado = $link->query($var_consulta);
+  
+
+    }
+}
+
+}
 
 ?>

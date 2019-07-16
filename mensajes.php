@@ -88,7 +88,8 @@ else{
                                  case 8:
                                              echo "<a href='verSemana.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
                                             break;
-                                
+                                case 10:  echo "<a href='verSemana.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Ver subasta</button> </a></br>";
+                                            break;
                                  
 }
 

@@ -41,6 +41,7 @@ $var_resultado = $link->query($var_consulta);
 $var_consulta="UPDATE subasta SET activa=1, cerrada=1, fechaFinSubasta='$fecha' WHERE idSubasta='$subasta' ";           	
 $var_resultado = $link->query($var_consulta);
 
+$mensaje=compradaPorPremium($subasta,$ganador);
 
  }
 

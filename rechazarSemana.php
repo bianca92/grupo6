@@ -36,6 +36,8 @@ else {
 
 $var_consulta="UPDATE ganador SET idPersona='$idPersona', idPuja='$idPuja' WHERE idSubasta='$subasta' ";           	
 $var_resultado = $link->query($var_consulta);
+$mensaje= mensajeNuevoGanador($subasta);
+
 }
 
 
@@ -48,4 +50,7 @@ echo "<script> window.history.go(-1);</script>";
 
 <?php
 mysqli_close($link);
+
+
+
 ?>

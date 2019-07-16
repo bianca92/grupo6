@@ -54,6 +54,7 @@ return $estado;
 }
 function puntuacion($propiedad){ //promedio de puntos de una propiedad
 	 include_once("conexion.php");
+   include_once("contenidoMensaje.php");
 $link = conectar();
 $var_consulta3= "SELECT * FROM valoracion WHERE idPropiedad='$propiedad'";
 $var_resultado3 = mysqli_query($link, $var_consulta3); 
@@ -71,6 +72,77 @@ $media= $sum/ $count;
 }
 
 return $media;
+}
+
+
+
+function rechazoAutomatico(){
+ 
+ include_once("conexion.php");
+  $link=conectar();
+$ganador=($_SESSION['id']);
+  $var_consulta="SELECT * FROM persona WHERE idPersona=$ganador";             
+$var_resultado = $link->query($var_consulta);
+ $row = mysqli_fetch_array($var_resultado);
+ if ($row['credito']==0){
+     
+//saco las subastas que no estan pagadas
+$var_consulta2="SELECT g.idPersona, g.idSubasta, g.idPuja
+  FROM ganador g
+ WHERE NOT EXISTS (SELECT g.idSubasta FROM comprasu cs WHERE g.idPersona=cs.idPersona and g.idSubasta=cs.idSubasta)";             
+$var_resultado2 = $link->query($var_consulta2);
+$num=mysqli_num_rows($var_resultado2); 
+
+ if($num!=0){
+  //recorro las subastas impagas
+      while ($row2 = mysqli_fetch_array($var_resultado2)){
+   //si la subasta le pertenece a este usuario, tengo que hacer el rechazo
+        if($row2['idPersona']==$ganador){
+                  $var_consultaP="SELECT * FROM puja WHERE idPuja=$row2[idPuja]";             
+                   $var_resultadoP = $link->query($var_consultaP);
+                   $rowP = mysqli_fetch_array($var_resultadoP);
+               $monto=$rowP['cantidad'];
+               $subasta=$row2['idSubasta'];
+
+               $consulta1= "SELECT * FROM puja WHERE idSubasta='$subasta' ORDER BY cantidad DESC";
+                   $var_resultado1 = $link->query($consulta1);
+                   $idPuja=0;
+                   $idPersona=0;
+                   while ($row = mysqli_fetch_array($var_resultado1)){
+                         if($row['cantidad']<$monto && $row['idPersona']!=$ganador){
+                               $idPersona=$row['idPersona'];
+                               $idPuja=$row['idPuja'];
+                               break;
+                          }
+
+                    }
+                   //si no hay otro ganador, que borre
+                   if($idPuja==0 && $idPersona==0){
+                        $sql = "DELETE FROM ganador WHERE idSubasta=$subasta";
+                          $result = mysqli_query($link, $sql);
+                    }
+                   else {
+
+                         $sql="UPDATE ganador SET idPersona='$idPersona', idPuja='$idPuja' WHERE idSubasta='$subasta' ";            
+                           $result = $link->query($sql);
+                           $mensaje= mensajeNuevoGanador($subasta);
+                          }
+          
+
+         }
+   
+       }
+ }
+
+ 
+
+}
+
+
+
+
+
+
 }
 
 ?>

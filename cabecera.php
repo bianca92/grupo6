@@ -291,9 +291,9 @@
                 <li><a href=#>SOLICITUD ENVIADA</a></li>
      		<?php  }
     }
-    if($verOpcionesLogeado==true and $_SESSION['tipoU']=="premium"){ // USUARIO PREMIUM       ?>
+    if(($verOpcionesLogeado==true) and ($_SESSION['tipoU']=="premium")){ // USUARIO PREMIUM       ?>
           
-          	 <li><a href=# > </i>ERES PREMIUM </a>
+          	 <li><a href=# > ERES PREMIUM </a></li>
              <ul class="submenu"> 
                 <li><a href=solicitarBajaPremium.php>Dejar de ser PREMIUM</a></li>
              </ul>
@@ -336,7 +336,7 @@
                     <li><a href=configuracionCuotaMensual.php>CONFIG.CUOTA MENSUAL</a></li>
                      <li><a href=ListarTodosLosUsuarios.php>LISTA DE USUARIOS</a></li>
                      <li><a href="verListaEspera.php">LISTA DE ESPERA PARA PREMIUM</a></li>
-                     
+                     <li><a href="estadisticas.php">ESTADISTICAS</a></li>
                </ul>
                </li>
          

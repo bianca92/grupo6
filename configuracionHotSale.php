@@ -13,15 +13,11 @@
 $link=conectar();
 
 
-
-
 $var_consulta= "SELECT * FROM config_hotsale";
 $var_resultado = $link->query($var_consulta);
  $num=mysqli_num_rows($var_resultado); 
 
 ?>
-
-
 
 
 
@@ -72,10 +68,7 @@ $var_resultado = $link->query($var_consulta);
              
 
               ?>
-
- 
-                     
-                     <input type="text" name="idConfigHotsale" class="hidden" value='<?php echo "$row[idConfigHotsale]" ?>'>
+        <input type="text" name="idConfigHotsale" class="hidden" value='<?php echo "$row[idConfigHotsale]" ?>'>
 				  
 
                <?php

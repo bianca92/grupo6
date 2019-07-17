@@ -63,7 +63,7 @@ else {
 	  while($row = mysqli_fetch_array($resultI)){
       $contenido="Has perdido la subasta";
       if($idG[0]==$row[0]){
-        $contenido="Felicidades has ganado la subasta";
+        $contenido="Felicidades has ganado la subasta,tienes 7 dias para hacer el pago.";
       }
 
          $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero)
@@ -284,7 +284,7 @@ function mensajeNuevoGanador($idS){
 
    $fecha=date('Y-m-j-H:i');
    //mando los mensajes
-$contenido="Has ganado la subasta, porque el ganador la ha rechazado.";
+$contenido="Has ganado la subasta, porque el ganador la ha rechazado.Tienes 7 dias para hacer el pago.";
       
          $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero)
                                     values('$idS','$contenido','$fecha','$idA[0]','$idG[0]','10')";
@@ -320,13 +320,55 @@ else {
       }
 
          $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero)
-                                    values('$idS','$contenido','$fecha','$idA[0]','$row[0]','2')";
+                                    values('$idS','$contenido','$fecha','$idA[0]','$row[0]','11')";
               
           $var_resultado = $link->query($var_consulta);
   
 
     }
 }
+
+}
+//-------------------------------------------------------------------NUMERO 12---------------------------------------
+function rechazoAutCreditos($idS,$idU){
+  $link=conectar();
+
+  $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
+            $result = mysqli_query($link, $query);
+          $idA = mysqli_fetch_array($result);
+
+
+
+  
+   $fecha=date('Y-m-j-H:i');
+   //mando los mensajes
+        $contenido="Has perdido la siguente subasta porque ya no tienes creditos";
+      
+         $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero)
+                                    values('$idS','$contenido','$fecha','$idA[0]','$idU','12')";
+              
+          $var_resultado = $link->query($var_consulta);
+
+}
+//-----------------------------NUMERO 13-------------------------------------------------------------------------
+function rechazoAutDias($idS,$idU){
+  $link=conectar();
+
+  $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
+            $result = mysqli_query($link, $query);
+          $idA = mysqli_fetch_array($result);
+
+
+
+  
+   $fecha=date('Y-m-j-H:i');
+   //mando los mensajes
+        $contenido="Has perdido la siguente subasta, porque no has pagado a tiempo.";
+      
+         $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero)
+                                    values('$idS','$contenido','$fecha','$idA[0]','$idU','13')";
+              
+          $var_resultado = $link->query($var_consulta);
 
 }
 

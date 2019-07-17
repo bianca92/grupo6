@@ -8,6 +8,9 @@ include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
 include("actualizarSegunFecha.php");
+include("funciones.php");
+
+$rechazoautomatico=rechazoAutomatico();
 
 $con=conectar();
  //para que no se pueda acceder a esta pagina si no esta logeado
@@ -33,33 +36,43 @@ catch(Exception $e){
 
           
   <?php   
-   //BUSQUEDA
-if (!empty($_GET)){
-$fechaIngresada=$_GET['week'];
 
-//OBTENGO EL NUMERO DE LA SEMANA DE LA FECHA
-$numeroS=date('W', strtotime($fechaIngresada));
-//OBTENGO EL MES
-$mes=date('m', strtotime($fechaIngresada));
-//OBTENGO EL AÑO
-$year=date('Y', strtotime($fechaIngresada));
-if($mes=="12" && $numeroS=="1"){
-  $year=$year+1;
-}
-if($mes=="01" && $numeroS=="53"){
-  $year=$year-1;
-}
-if($mes=="01" && $numeroS=="52"){
-  $year=$year-1;
-}
-
-}
 ?>
 </head>
 <body>
 
 <div class="container"> 
 <?php
+//----------PRIMERA PARTE DE LA BUSQUEDA-------------------------------------------------------
+$pagina="subastasTerminadasUsuario";
+$fecha_actual = date('Y-m-d');
+$nuevafechaB = "1990-01-01";
+include("busqueda.php");
+   //BUSQUEDA
+if (!empty($_GET)){
+$inicio=$_GET['inicio'];
+$fin=$_GET['fin'];
+$lugar=$_GET['lugar'];
+
+$nuevafecha = strtotime ( '+2 month' , strtotime ( $inicio ) ) ;
+$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+
+if ($inicio!=0 && $fin!=0 && $fin>$nuevafecha){
+  echo '<script> alert("El rango debe ser inferior a 2 meses");</script>';
+  echo "<script> window.history.go(-1);</script>";
+}
+ if($inicio==0){$inicio="1990-01-01";
+
+}
+if($fin==0){$fin="2050-01-01";}
+
+
+
+
+}
+//-------------------------------------------------------------------------------------------
+
+
 $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta,
 su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.year,su.idSemana, su.cancelada, p.eliminada, su.enhotsale
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad";
@@ -92,18 +105,37 @@ if ($num==0) {
     $id=($_SESSION['id']);
   $auxiliar=true;
     while ($row = mysqli_fetch_array($result))  { 
-  
+     //----------------------------------SEGUNDA PARTE DE LA BUSQUEDA--------------------------
        if (!empty($_GET)){
            //si se recibio GET pero esta no es la subasta que no la muestre
            $muestra=false;
-           if($row['idSemana']==$numeroS && $row['year']==$year){
-            //si esta es la subasta que la muestre
-            $muestra=true;
-           }
+           $query2 = "SELECT * FROM propiedad WHERE idPropiedad=$row[idPropiedad]";
+            $result2 = mysqli_query($con, $query2);
+            $row2 = mysqli_fetch_array($result2);
+             $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
+          $week_start= $week_start->format('Y-m-d');
+           $week_end = strtotime ( '+6 day' , strtotime ( $week_start ) ) ;
+           $week_end = date ( 'Y-m-d' , $week_end); 
+           // busco si el lugar ingresado se encuentra entre la info de ubicacion e la propiead  
+            $ubicacion1 = stripos($row2['pais'], $lugar);
+             $ubicacion2 = stripos($row2['provincia'], $lugar);
+              $ubicacion3 = stripos($row2['localidad'], $lugar);
+          
+                
+          //COMPRUEBA SI LA MUESTRA
+         if(($week_start>=$inicio && $week_end<=$fin)&&($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false )){
+                 
+          $muestra=true;
+         
+          }
+      
+
        }
+
+
        else {//si no se recibio nada por GET que me muestre todo
         $muestra=true;}
-
+//-------------------------------------------------------------------------------------------------------------------------------------
       $actualizar=actualizar($row['idSubasta']);
       $row['activa']=$actualizar[0];
       $row['cerrada']=$actualizar[1];
@@ -233,7 +265,8 @@ $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
             $winnerPersona=$rowWinner['idPersona'];
             $winnerAccion=0;
                  if($winnerPersona==$id){ 
-
+                     $rechazoautomaticoDias=rechazoAutomaticoDias($row['idSubasta']);
+                     
                    $winnerMsj="¡¡GANASTE LA SUBASTA!!"; 
                    $ganador=1;
    $val=$rowWinner['idSubasta'];
@@ -264,7 +297,7 @@ echo "<a href='detalle.php?prop=$row[idPropiedad]&busqueda=0&semanas=".serialize
  $valoracionC = "SELECT * FROM valoracion WHERE idSubasta=$val";
                     $resultV = mysqli_query($con, $valoracionC);
                     
-$consulPagado= "SELECT * FROM comprasu WHERE idSubasta=$row[idSubasta]";
+$consulPagado= "SELECT * FROM comprasu WHERE idSubasta='$row[idSubasta]'";
             $resultPagado = mysqli_query($con, $consulPagado);
             $numPagado = mysqli_num_rows($resultPagado);
             //que solo le deje calificar si ya pago

@@ -52,6 +52,9 @@ $query = "SELECT * FROM propiedad WHERE eliminada != 1";
 
     <?php 
 $pagina="listarPropiedades";
+$fecha_actual = date('Y-m-d');
+$nuevafechaB = strtotime ( '+6 month' , strtotime ( $fecha_actual ) ) ;
+$nuevafechaB = date ( 'Y-m-d' , $nuevafechaB );
 include("busqueda.php");
 $fecha_actual = date('Y-m-d');
 $busqueda=0; $x=0;

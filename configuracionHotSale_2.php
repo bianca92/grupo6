@@ -58,7 +58,7 @@ $var_resultado = $link->query($var_consulta);
 }
 
 //restauro los descartados para el hot salae
-$consul="SELECT * FROM subasta WHERE cancelada = 1 AND enhotsale=1";
+$consul="SELECT * FROM subasta WHERE cancelada = '1' AND enhotsale='1'";
 $resul= mysqli_query($link, $consul);
 $cant = mysqli_num_rows($resul);
 if($cant!=0){
@@ -77,7 +77,7 @@ if($cant!=0){
 }
 
 //restauro los que entraron al hotsale cuando se iban a poder mostrar y ahora no
-$consul3="SELECT * FROM hotsale hs INNER JOIN subasta su ON hs.idSubasta=su.idSubasta WHERE su.cancelada = 0 AND su.enhotsale=1  ";
+$consul3="SELECT * FROM hotsale hs INNER JOIN subasta su ON hs.idSubasta=su.idSubasta WHERE su.cancelada = '0' AND su.enhotsale='1'  ";
 $resul3= $link->query($consul3);
 $cantHS3 = mysqli_num_rows($resul3);
 if($cantHS3!=0){

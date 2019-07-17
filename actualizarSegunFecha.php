@@ -77,25 +77,13 @@ function actualizarHotSale($idS){
     //------------------------------------------------------------------------------------
     //CREO LA FECHA DEL HOTSALE DE ESTE AÑO
     $añoH=date("Y");
-    $fecha="$row2[dia]-$row2[mes]-$añoH";
-    $fechaHotsale= strtotime ( 'd-m-Y' , strtotime ( $fecha ) ) ;
+    $fecha="$row2[dia]-$row2[mes]-$row2[year]";
+    $fechaHotsale= date ( 'd-m-Y' , strtotime ( $fecha ) ) ;
     $fechaH=strtotime($fechaHotsale);
-
-    //me fijo que el hotsale de este año no haya pasado
+    
     $fecha_actual=date('d-m-Y');
 
-    if ($fecha_actual > $fechaHotsale){
-       $añoH=$añoH + 1;
-       $fecha="$row2[dia]-$row2[mes]-$añoH";
-       //creo la fecha definitiva del hotsale
-       $fechaHotsale= date ( 'd-m-Y' , strtotime ( $fecha ) ) ;
-       //la paso a un formato comparable
-       $fechaH=strtotime($fechaHotsale);
-
-    }
     
-    //---------------------------------------------------------------------------------------
-
     //CREO LA FECHA DE LA SUBASTA
     $week_start = new DateTime();
     $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);

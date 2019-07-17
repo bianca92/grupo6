@@ -40,7 +40,9 @@ $query = "SELECT idPropiedad,titulo,localidad, eliminada FROM propiedad WHERE el
            
           $nuevafecha = strtotime ( '+'.$dias.'day' , strtotime ( $rowH['fecha'] )) ; 
           $nuevafecha = date ( 'd/m/Y' , $nuevafecha ); 
-           if ($fecha_actual>=$fechaHotsale) { 
+          //$finHotsale = date ( 'Y-m-d' , $nuevafecha ); 
+
+           if (($fecha_actual>=$fechaHotsale)&&($fecha_actual<=$nuevafecha)) { 
              
              include('verHotsale.php');
            }

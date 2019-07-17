@@ -9,6 +9,7 @@ include("conexion.php");
 include("mostrarImagen.php");
 include("actualizarSegunFecha.php");
 $con=conectar();
+$hayGanador=0;
 
 	//para que no se pueda acceder a esta pagina si no esta logeado
   try{
@@ -22,9 +23,9 @@ catch(Exception $e){
 
 $query = "SELECT  p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, su.fechaFinSubasta, su.activa, su.idSubasta, su.cerrada, su.year, su.idSemana, su.cancelada, su.preciopremium
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
-            $result = mysqli_query($con, $query);
-            $num=mysqli_num_rows($result); 
-  if ($num==0) {
+$result = mysqli_query($con, $query);
+$num=mysqli_num_rows($result); 
+if ($num==0) {
   echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
  }
 else{
@@ -67,9 +68,12 @@ else{
       //OBTENGO PUJA GANADORA DEL MOMENTO
        $pujaMaxima= $row['precioMinimo'];
        $pujaMaximaPuja="";
-           $var_consulta4= "SELECT cantidad, idPuja FROM puja WHERE idSubasta=$row[idSubasta]";
-            $result4 = mysqli_query($con, $var_consulta4);
+       
+       $var_consulta4= "SELECT cantidad, idPuja FROM puja WHERE idSubasta=$row[idSubasta]";
+       $result4 = mysqli_query($con, $var_consulta4);
+       $hayGanador= mysqli_num_rows($result4);
 
+            if($hayGanador>0){ // SI HUBIERON PUJAS ACTUALIZO LA PUJA MAXIMA
               //ACTUALIZO EL MINIMO SI YA HAY OFERTAS ANTERIORES
               while ($row4 = mysqli_fetch_array($result4)){
                   if ($row4['cantidad']>=$pujaMaxima){
@@ -77,6 +81,7 @@ else{
                         $pujaMaximaPuja=$row4['idPuja'];  
                           }
                 }
+            }
     $imgs=ObtenerImgs($row['idPropiedad']);
     ?>
         <tr>
@@ -92,9 +97,18 @@ else{
             <td><h4><?php $fs=date('d/m/Y', strtotime($row['fechaFinSubasta'])); echo "$fs"; ?></h4></td>  
             <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
             <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;?>  
-            <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
-           <td><?php echo "<a href='cerrar_subastaActiva.php?pugano=".$pujaMaximaPuja."&sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Cerrar subasta</button> </a></br>" ;
-            ?>
+            <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;
+            if($hayGanador>0){ //hay ganador      ?>
+
+              <td><?php echo "<a href='cerrar_subastaActiva.php?g=".$hayGanador."&pugano=".$pujaMaximaPuja."&sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Cerrar subasta</button> </a></br>" ;
+
+            }
+            else{   ?>
+               <td><?php echo "<a href='cerrar_subastaActiva.php?g=".$hayGanador."&sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Cerrar subasta</button> </a></br>" ;
+            
+            } ?> 
+
+          
              <td><?php echo "<a href='eliminar_subasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Eliminar subasta</button> </a></br>" ;
             ?>
          </tr>  

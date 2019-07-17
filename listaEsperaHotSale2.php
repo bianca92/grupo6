@@ -22,15 +22,7 @@ catch(Exception $e){
 
 
 
-
-
-
-
- 
-if (false) { //--------------------------------------------------------------------------  MODIFICAR ---------------------
-  echo "NO HA SELECCIONADO NINGUNA SUBASTA PARA PONER EN HOT SALE";
-}
-else{    
+if(isset($_POST["check"])){   
 //obtengo el arreglo con los id de las subastas seleccionadas para hotsale
 
 $paraHotSale = $_POST['check'];
@@ -113,10 +105,14 @@ $cantHotSale = count($paraHotSale); ?>
       <input type="submit" name="login" value="Guardar" class="button" />
       </form>
       <?php
-}  
-
-mysqli_free_result($result);
+      mysqli_free_result($result);
 mysqli_close($con);
+}  
+else{
+  echo "NO HA SELECCIONADO NINGUNA SUBASTA PARA PONER EN HOT SALE";
+}
+
+
 
 ?> 
   

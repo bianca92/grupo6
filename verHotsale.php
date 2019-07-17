@@ -59,7 +59,7 @@ $queryhotsale = "SELECT  hs.idHotsale, hs.precio, hs.fechaagregada, su.idSubasta
             <h3><?php echo "OFERTA <kbd>$ $rowH[precio]</kbd>";?></h3>
             <h4><?php echo "para la semana de: $fi del año ";
             $fi= $week_start->format('Y'); echo "$fi " ; ?>
-             <a href="#.php" class="btn btn-danger" float="right">COMPRAR</a></h4> <?php } ?>
+             </h4> <?php } ?>
           </div>
        </div>
 </div>

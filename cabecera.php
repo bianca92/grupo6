@@ -227,7 +227,7 @@
            <ul class="submenu" style="background-color: #FF7516">
              <li><a href="configuracionHotSale.php">CONFIGURAR FECHA DEL HOT SALE</a></li>
              <li><a href="listaEsperaHotSale.php">LISTA DE ESPERA PARA HOT SALE</a></li>
-             <li><a href="listaHotSale.php">SUBASTAS EN HOT SALE</a></li>
+             <li><a href="listaHotSale.php">SEMANAS EN HOT SALE</a></li>
           </ul>
          </li>    <?php
       }

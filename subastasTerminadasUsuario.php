@@ -57,7 +57,7 @@ $lugar=$_GET['lugar'];
 $nuevafecha = strtotime ( '+2 month' , strtotime ( $inicio ) ) ;
 $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 
-if ($inicio!=0 && $fin!=0 && $fin>$nuevafecha){
+if ($inicio!=0 && $fin!=0 && ($fin>$nuevafecha or $inicio>$fin)){
   echo '<script> alert("El rango debe ser inferior a 2 meses");</script>';
   echo "<script> window.history.go(-1);</script>";
 }
@@ -120,10 +120,12 @@ if ($num==0) {
             $ubicacion1 = stripos($row2['pais'], $lugar);
              $ubicacion2 = stripos($row2['provincia'], $lugar);
               $ubicacion3 = stripos($row2['localidad'], $lugar);
-          
-                
+              $titulo = stripos($row2['titulo'], $lugar);
+                 if(empty($lugar)){          
+             $ubicacion1=true;
+              }
           //COMPRUEBA SI LA MUESTRA
-         if(($week_start>=$inicio && $week_end<=$fin)&&($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false )){
+         if(($week_start>=$inicio && $week_end<=$fin)&&($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false or $titulo!==false )){
                  
           $muestra=true;
          
@@ -265,11 +267,14 @@ $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
             $winnerPersona=$rowWinner['idPersona'];
             $winnerAccion=0;
                  if($winnerPersona==$id){ 
-                     $rechazoautomaticoDias=rechazoAutomaticoDias($row['idSubasta']);
-                     
-                   $winnerMsj="¡¡GANASTE LA SUBASTA!!"; 
+                  $winnerMsj="¡¡GANASTE LA SUBASTA!!"; 
                    $ganador=1;
-   $val=$rowWinner['idSubasta'];
+                     $rechazoautomaticoDias=rechazoAutomaticoDias($row['idSubasta']);
+                     if($rechazoautomaticoDias==1){
+                        $ganador=0;
+                        $winnerMsj="Han pasado 7 dias ya no puedes adjudicarte la semana.";
+                      }                                   
+             $val=$rowWinner['idSubasta'];
                  }
                 else{
                   $winnerMsj="Perdiste la subasta";} 

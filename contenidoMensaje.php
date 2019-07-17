@@ -22,7 +22,7 @@ $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
 
 
    $contenido="La subasta se ha activado";
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
 	while($row = mysqli_fetch_array($resultI)){
          $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero)
                                     values('$idS','$contenido','$fecha','$idA[0]','$row[0]','1')";
@@ -58,16 +58,18 @@ else {
       $idG = mysqli_fetch_array($result);
      }
 
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
    //mando los mensajes
 	  while($row = mysqli_fetch_array($resultI)){
       $contenido="Has perdido la subasta";
+      $numero=2;
       if($idG[0]==$row[0]){
         $contenido="Felicidades has ganado la subasta,tienes 7 dias para hacer el pago.";
+        $numero=10;
       }
 
          $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero)
-                                    values('$idS','$contenido','$fecha','$idA[0]','$row[0]','2')";
+                                    values('$idS','$contenido','$fecha','$idA[0]','$row[0]','$numero')";
             	
           $var_resultado = $link->query($var_consulta);
 	
@@ -94,7 +96,7 @@ $query = "SELECT * FROM persona WHERE idPersona='$idP' ";
 
 
    $contenido="$row[nombre] $row[apellido]: Quiero ser PREMIUM." ;
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
   $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
                                     values('$contenido','$fecha','$row[0]','$idA[0]','3')";
               
@@ -142,7 +144,7 @@ $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
 
 
    $contenido="Lamentamos informarle que ha sido rechazado para ser PREMIUM." ;
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
   $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
                                     values('$contenido','$fecha','$idA[0]','$idP','5')";
               
@@ -166,7 +168,7 @@ $query = "SELECT idPersona FROM persona WHERE tipoU='administra' ";
 
 
    $contenido="Lamentamos informarle que ya no eres usuario PREMIUM." ;
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
   $var_consulta="INSERT INTO mensaje (contenido,fecha,idDe,idPara,numero)
                                     values('$contenido','$fecha','$idA[0]','$idP','6')";
               
@@ -197,7 +199,7 @@ else {
 
      
  $contenido="El monto de la cuota mensual ha sido modificada, el nuevo monto es $ $monto.";
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
    //mando los mensajes
     while($row = mysqli_fetch_array($resultI)){
      
@@ -232,7 +234,7 @@ function mensajeEliminarSubasta($idS){
     $idA = mysqli_fetch_array($result);
 
     $contenido="Se ha eliminado una subasta a la que te inscribiste";
-    $fecha=date('Y-m-j-H:i');
+    $fecha=date('Y-m-j-H:i:s');
     while($row = mysqli_fetch_array($resultI)){  //mensaje para inscriptos
        $var_consulta="INSERT INTO mensaje (idSubasta,contenido,fecha,idDe,idPara,numero) values('$idS','$contenido','$fecha','$idA[0]','$row[0]','8')";
        $var_resultado = $link->query($var_consulta);
@@ -282,7 +284,7 @@ function mensajeNuevoGanador($idS){
     
      $idG = mysqli_fetch_array($result);
 
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
    //mando los mensajes
 $contenido="Has ganado la subasta, porque el ganador la ha rechazado.Tienes 7 dias para hacer el pago.";
       
@@ -311,7 +313,7 @@ else {
 
 
   
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
    //mando los mensajes
     while($row = mysqli_fetch_array($resultI)){
       $contenido="Un usuario premium ha comprado la semana.";
@@ -340,7 +342,7 @@ function rechazoAutCreditos($idS,$idU){
 
 
   
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
    //mando los mensajes
         $contenido="Has perdido la siguente subasta porque ya no tienes creditos";
       
@@ -361,7 +363,7 @@ function rechazoAutDias($idS,$idU){
 
 
   
-   $fecha=date('Y-m-j-H:i');
+   $fecha=date('Y-m-j-H:i:s');
    //mando los mensajes
         $contenido="Has perdido la siguente subasta, porque no has pagado a tiempo.";
       

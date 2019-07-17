@@ -7,7 +7,9 @@ include("cabecera.php");
 include("conexion.php");
 include("mostrarImagen.php");
 include("actualizarSegunFecha.php");
+include("funciones.php");
 
+$rechazoautomatico=rechazoAutomatico();
 //para que no se pueda acceder a esta pagina si no esta logeado
 try{
 $login= new Login();
@@ -107,8 +109,14 @@ $query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMin
             $winnerPersona=$rowWinner['idPersona'];
             $winnerAccion=0;
                  if($winnerPersona==$id){ 
-                    $ganador=1;
-                   $winnerMsj="¡¡GANASTE LA SUBASTA!!"; }
+                    $ganador=1;  
+                    $winnerMsj="¡¡GANASTE LA SUBASTA!!";
+                     $rechazoautomaticoDias=rechazoAutomaticoDias($row['idSubasta']);
+                      if($rechazoautomaticoDias==1){
+                        $ganador=0;
+                        $winnerMsj="Han pasado 7 dias ya no puedes adjudicarte la semana.";
+                      }
+                  }
                 else{
                   $winnerMsj="Perdiste la subasta";} 
 
@@ -233,7 +241,19 @@ echo "<a href='calificar.php?sub=".$row['idSubasta']."&prop=".$row['idPropiedad'
         <h4><?php echo "Puja Actual: $ $pujaMaxima.";?></h4>
       <?php
                echo "<p class=bg-primary >La subasta cierra el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."<p>";
-               echo "<a href='Pujar.php?idS=".$row[0]."&idU=".$id."&min=".$row['precioMinimo']."'> <button type='button' class='btn btn-succes'>Pujar</button> </a>" ;
+              
+               if($rowPer['credito']==0){
+                  echo "<a href=# <button type='button'  disabled class='btn btn-succes'>Pujar</button> </a>" ; echo "No puedes realizar una puja.No tienes mas creditos.";
+
+               }
+                 else {
+
+                   echo "<a href='Pujar.php?idS=".$row[0]."&idU=".$id."&min=".$row['precioMinimo']."'> <button type='button' class='btn btn-succes'>Pujar</button> </a>" ;
+                 }      
+
+
+
+
                        } //2
 
                        

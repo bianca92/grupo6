@@ -149,7 +149,7 @@ function rechazoAutomaticoDias($subasta){
   $link=conectar();
   $ganador=($_SESSION['id']);
 
-  $consultaAux= "SELECT * FROM mensaje WHERE (idPara=$ganador AND idSubasta=$subasta) AND (numero='2' OR numero='10')"; 
+  $consultaAux= "SELECT * FROM mensaje WHERE (idPara=$ganador AND idSubasta=$subasta) AND numero='10'"; 
   $var_resultadoAux= $link->query($consultaAux);
   $rowAux = mysqli_fetch_array($var_resultadoAux);
  $fecha_actual=strtotime(date('Y-m-j-H:i'));
@@ -198,10 +198,10 @@ $row2 = mysqli_fetch_array($var_resultado2);
                           }
           
 
-         
+     return 1;    
    }
       
-
+return 0;
 
 
 }

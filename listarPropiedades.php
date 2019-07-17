@@ -69,9 +69,14 @@ $busqueda=1;
 $nuevafecha = strtotime ( '+2 month' , strtotime ( $inicio ) ) ;
 $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 
-if ($fin>$nuevafecha){
+if ($inicio!=0 && $fin!=0 && ($fin>$nuevafecha or $inicio>$fin) ){
   echo '<script> alert("El rango debe ser inferior a 2 meses");</script>';
-  echo "<script> window.location ='subastasUsuario.php' ;</script>";}
+  echo "<script> window.history.go(-1);</script>";
+}
+ if($inicio==0){$inicio="1990-01-01";
+
+}
+if($fin==0){$fin="2050-01-01";}
 
 
 
@@ -111,10 +116,13 @@ if ($fin>$nuevafecha){
             $ubicacion1 = stripos($row['pais'], $lugar);
              $ubicacion2 = stripos($row['provincia'], $lugar);
               $ubicacion3 = stripos($row['localidad'], $lugar);
-          
+               $titulo = stripos($row['titulo'], $lugar);
+           if(empty($lugar)){          
+             $ubicacion1=true;
+              }
                 
           //GUARDA EN UN ARREGLO LAS SEMANAS DISPONIBLES DE LA PROPIEDAD BUSqUEDA
-if(($week_start>=$inicio && $week_end<=$fin && (($fecha_actual<$row2['fechaFinInscripcion']&& $tipo=="clasico")or($fecha_actual<$row2['fechaFinSubasta']&& $tipo=="premium")))&&($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false )){
+if(($week_start>=$inicio && $week_end<=$fin && (($fecha_actual<$row2['fechaFinInscripcion']&& $tipo=="clasico")or($fecha_actual<$row2['fechaFinSubasta']&& $tipo=="premium")))&&($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false or $titulo!==false )){
            $week_start= date('d-m-Y', strtotime($week_start));
           $semanasDisponibles[$i]=$week_start;
           $muestra=true;

@@ -104,7 +104,7 @@ else{
 
                          </td>
                               <td> <br><?php echo "".date('d/m/Y', strtotime($row['fecha'])).""; ?> </td>
-                                <td> <br><?php echo "".date('H:i', strtotime($row['fecha'])).""; ?> </td>
+                                <td> <br><?php echo "".date('H:i:s', strtotime($row['fecha'])).""; ?> </td>
                                 
                           </tr>
                          

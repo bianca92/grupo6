@@ -31,7 +31,34 @@ if ($num==0) {
 else{     ?>
 
   <div class="container">
+    <?php
+    //----------PRIMERA PARTE DE LA BUSQUEDA-------------------------------------------------------
+$pagina="subastasAdmin";
+$fecha_actual = date('Y-m-d');
+$nuevafechaB = "1990-01-01";
+include("busqueda.php");
+   //BUSQUEDA
+if (!empty($_GET)){
+$inicio=$_GET['inicio'];
+$fin=$_GET['fin'];
+$lugar=$_GET['lugar'];
 
+$nuevafecha = strtotime ( '+2 month' , strtotime ( $inicio ) ) ;
+$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+
+if ($inicio!=0 && $fin!=0 && ($fin>$nuevafecha or $inicio>$fin) ){
+  echo '<script> alert("El rango debe ser inferior a 2 meses");</script>';
+  echo "<script> window.history.go(-1);</script>";
+}
+ if($inicio==0){$inicio="1990-01-01";
+
+}
+if($fin==0){$fin="2050-01-01";}
+
+
+}
+//-------------------------------------------------------------------------------------------
+?>
     <div>
       <h4>SUBASTAS NO COMENZADAS:</h4>
       <table class="table table-hover">
@@ -55,11 +82,49 @@ else{     ?>
 
          while ($row = mysqli_fetch_array($result))  { 
 
+              //----------------------------------SEGUNDA PARTE DE LA BUSQUEDA--------------------------
+       if (!empty($_GET)){
+           //si se recibio GET pero esta no es la subasta que no la muestre
+           $muestra=false;
+           $query2 = "SELECT * FROM propiedad WHERE idPropiedad=$row[idPropiedad]";
+            $result2 = mysqli_query($con, $query2);
+            $row2 = mysqli_fetch_array($result2);
+             $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
+          $week_start= $week_start->format('Y-m-d');
+           $week_end = strtotime ( '+6 day' , strtotime ( $week_start ) ) ;
+           $week_end = date ( 'Y-m-d' , $week_end); 
+           // busco si el lugar ingresado se encuentra entre la info de ubicacion e la propiead  
+            $ubicacion1 = stripos($row2['pais'], $lugar);
+             $ubicacion2 = stripos($row2['provincia'], $lugar);
+              $ubicacion3 = stripos($row2['localidad'], $lugar);
+              $titulo = stripos($row2['titulo'], $lugar);
+              if(empty($lugar)){          
+             $ubicacion1=true;
+              }
+                
+          //COMPRUEBA SI LA MUESTRA
+    if(($week_start>=$inicio && $week_end<=$fin)&&($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false or $titulo!==false )){
+                 
+          $muestra=true;
+         
+          }
+      
+
+       }
+
+
+       else {//si no se recibio nada por GET que me muestre todo
+        $muestra=true;}
+//--------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
              $actualizar=actualizar($row['idSubasta']);
              $row['activa']=$actualizar[0];
              $row['cerrada']=$actualizar[1];
 
-             if($row['activa']!=1){
+             if($row['activa']!=1 && $muestra==true){
 
                  $auxiliar=false;
                  $imgs=ObtenerImgs($row['idPropiedad']);

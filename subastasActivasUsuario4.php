@@ -38,7 +38,35 @@ else{
 <div class="container">
     
 <?php  
- // for($x = 1; $x <=($num/3) ; $x++){      
+ 
+  //----------PRIMERA PARTE DE LA BUSQUEDA-------------------------------------------------------
+$pagina="subastasActivasUsuario";
+$fecha_actual = date('Y-m-d');
+$nuevafechaB = "1990-01-01";
+include("busqueda.php");
+   //BUSQUEDA
+if (!empty($_GET)){
+$inicio=$_GET['inicio'];
+$fin=$_GET['fin'];
+$lugar=$_GET['lugar'];
+
+$nuevafecha = strtotime ( '+2 month' , strtotime ( $inicio ) ) ;
+$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+
+if ($inicio!=0 && $fin!=0 && ($fin>$nuevafecha or $inicio>$fin) ){
+  echo '<script> alert("El rango debe ser inferior a 2 meses");</script>';
+  echo "<script> window.history.go(-1);</script>";
+}
+ if($inicio==0){$inicio="1990-01-01";
+
+}
+if($fin==0){$fin="2050-01-01";}
+
+
+
+
+}
+//-------------------------------------------------------------------------------------------     
 ?>
   <div class="row">
 
@@ -49,6 +77,44 @@ else{
     $id=($_SESSION['id']);
  $auxiliar=true;
     while ($row = mysqli_fetch_array($result))  { 
+      //----------------------------------SEGUNDA PARTE DE LA BUSQUEDA--------------------------
+       if (!empty($_GET)){
+           //si se recibio GET pero esta no es la subasta que no la muestre
+           $muestra=false;
+           $query2 = "SELECT * FROM propiedad WHERE idPropiedad=$row[idPropiedad]";
+            $result2 = mysqli_query($con, $query2);
+            $row2 = mysqli_fetch_array($result2);
+             $week_start = new DateTime(); $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
+          $week_start= $week_start->format('Y-m-d');
+           $week_end = strtotime ( '+6 day' , strtotime ( $week_start ) ) ;
+           $week_end = date ( 'Y-m-d' , $week_end); 
+           // busco si el lugar ingresado se encuentra entre la info de ubicacion e la propiead  
+            $ubicacion1 = stripos($row2['pais'], $lugar);
+             $ubicacion2 = stripos($row2['provincia'], $lugar);
+              $ubicacion3 = stripos($row2['localidad'], $lugar);
+              $titulo = stripos($row2['titulo'], $lugar);
+               if(empty($lugar)){          
+             $ubicacion1=true;
+              }
+                
+          //COMPRUEBA SI LA MUESTRA
+         if(($week_start>=$inicio && $week_end<=$fin)&&($ubicacion1!==false or $ubicacion2!==false or $ubicacion3!==false or $titulo!==false )){
+                 
+          $muestra=true;
+         
+          }
+      
+
+       }
+
+
+       else {//si no se recibio nada por GET que me muestre todo
+        $muestra=true;}
+//--------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
       $actualizar=actualizar($row['idSubasta']);
        $row['activa']=$actualizar[0];
       $row['cerrada']=$actualizar[1];
@@ -68,7 +134,7 @@ else{
                      }
                   //--------------------------------------------------------------------
                   //SI ESTA ACTIVA QUE LA MUESTRE
-     if(($inscripto==true)&&($row['activa']==1)&&($row['cerrada']!=1)){
+     if(($inscripto==true)&&($row['activa']==1)&&($row['cerrada']!=1)&&($muestra==true)){
       $auxiliar=false;
   ?>
 
@@ -177,7 +243,20 @@ else{
              <h4><?php echo "Puja Actual: $ $pujaMaxima.";?></h4>
              <?php
              echo "<p class=bg-primary >La subasta cierra el ".date('d/m/Y', strtotime($row['fechaFinSubasta']))."<p>";
-               echo "<a href='Pujar.php?idS=".$row[0]."&idU=".$id."&min=".$row['precioMinimo']."'> <button type='button' class='btn btn-succes'>Pujar</button> </a>" ;
+              
+             
+               $queryPer = "SELECT * FROM persona WHERE idPersona=$id";
+       $resulPer = mysqli_query($con, $queryPer);
+       $rowPer = mysqli_fetch_array($resulPer);
+
+              if($rowPer['credito']==0){
+               
+                echo "<a href=# <button type='button'  disabled class='btn btn-succes'>Pujar</button> </a>" ; echo "No puedes realizar una puja.No tienes mas creditos.";}
+
+               else {
+                    echo "<a href='Pujar.php?idS=".$row[0]."&idU=".$id."&min=".$row['precioMinimo']."'> <button type='button' class='btn btn-succes'>Pujar</button> </a>" ;
+
+               }
 
               
 

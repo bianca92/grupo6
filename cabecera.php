@@ -186,6 +186,8 @@
                                $premium="solicitarPremium.php";
                                $mensajes="mensajes.php";
 			                         $verOpcionesLogeado=true;
+
+                               include('actualizarCreditos.php');
        
                       }
 		            }

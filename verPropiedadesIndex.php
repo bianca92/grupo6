@@ -7,7 +7,7 @@
 include("clases.php");  
   include("mostrarImagen.php");
 include("conexion.php");
-
+include("actualizarHotSale.php");
 $con=conectar();
 
   if(isset($_GET['msj'])){

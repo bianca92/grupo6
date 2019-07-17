@@ -74,6 +74,11 @@ FROM(SELECT s.idPropiedad,c.monto, c.fecha, p.titulo, p.localidad FROM comprap a
      SELECT s.idPropiedad,c.monto, c.fecha, p.titulo, p.localidad FROM comprah as c NATURAL JOIN hotsale as h NATURAL JOIN subasta as s NATURAL JOIN propiedad as p ) 
    c GROUP by idPropiedad order by total desc ';
    $result = mysqli_query($con, $query);
+
+  $queryp = 'SELECT COUNT(idPuja) as pujas, idPropiedad, p.titulo, p.localidad, max(pu.cantidad) as total 
+             FROM puja as pu NATURAL JOIN subasta as s NATURAL JOIN propiedad as p 
+             where idSubasta in(SELECT idSubasta from comprasu) GROUP BY p.idPropiedad ORDER BY `pujas` DESC';
+ $resultp = mysqli_query($con, $queryp);
    
 ?>
 
@@ -98,6 +103,26 @@ FROM(SELECT s.idPropiedad,c.monto, c.fecha, p.titulo, p.localidad FROM comprap a
                  </tr><td><?php echo $row['titulo']." ".$row['localidad']; ?></td>
               <td><?php echo $row['cantidad']; ?></td>
               <td><?php echo "$ ".$row['total'];?></td></tr>
+             <?php } ?>
+             
+             </tbody>
+            </table> 
+            <h1></h1> <h1></h1>
+            <table>
+            <thead>
+                <tr>
+                  <h4 style="font-family: sans-serif;">CANTIDAD DE PUJAS POR PROPIEDAD</h4>
+                    <th>RESIDENCIA</th>
+                    <th>CANTIDAD</th>
+                    <th>VENTAS</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+              <?php while ($rowP = mysqli_fetch_array($resultp, MYSQLI_ASSOC)) { ?>
+                 </tr><td><?php echo $rowP['titulo']." ".$rowP['localidad']; ?></td>
+              <td><?php echo $rowP['pujas']; ?></td>
+              <td><?php echo "$ ".$rowP['total'];?></td></tr>
              <?php } ?>
              
              </tbody>

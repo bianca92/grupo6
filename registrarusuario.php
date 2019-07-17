@@ -39,12 +39,13 @@ else{
         }
         else{//si el usuario no existe se da de alta en la base de  datos;
 
-            $fechaActual = date('Y-m-d-H:i');         
+            $fechaActual = date('Y-m-d-H:i');  $year_actual=date('Y');        
             $nuevaFecha = "01/".$venc;
             $nueva= date('Y-m-d',strtotime($nuevaFecha));
                
           //CARGAR DATOS DEL USUARIO
-            $query="INSERT INTO persona (dni,nombre,apellido,telefono,email,clave,tipoU,rol,credito,ciudad,fechaRegistro,fechaNacimiento, fechaModificacion)values('$dni','$n','$a','$t','$e','$p','clasico','0','2','$c','$fechaActual', '$nac', '$fechaActual')";
+            $query="INSERT INTO persona (dni,nombre,apellido,telefono,email,clave,tipoU,rol,credito,ciudad,fechaRegistro,fechaNacimiento, fechaModificacion,acreditado)
+                    values('$dni','$n','$a','$t','$e','$p','clasico','0','2','$c','$fechaActual', '$nac', '$fechaActual', '$year_actual')";
             $resul5=mysqli_query($con,$query);
 
             $id=mysqli_insert_id($con);

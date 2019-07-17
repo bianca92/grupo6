@@ -13,9 +13,9 @@
   
   
      <div class="col-md-3" >
-       <div class="panel-group" style="background-color: #33C1FF">
-    <div class="panel panel-default" style="background-color: #33C1FF;font-family: sans-serif;">
-      <div class="panel-heading" style="background-color: #FF7516"><H4><a href= "estadisticas.php">ESTADISTICAS</a></H4></div>
+       <div class="panel-group" style="background-color: #white">
+    <div class="panel panel-default" style="background-color: #white;font-family: sans-serif;">
+      <div class="panel-heading" style="background-color: #82E0AA"><H4><a href= "estadisticas.php">ESTADISTICAS</a></H4></div>
       <div class="panel-body">
      
       <ul class="nav nav-pills nav-stacked" >

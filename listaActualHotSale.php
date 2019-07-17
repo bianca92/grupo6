@@ -30,7 +30,7 @@ $result = mysqli_query($con, $query);
 $num=mysqli_num_rows($result); 
 
 if ($num==0) {
-    echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
+    echo"<h4 style='color:#CE050E'>NO SE HAN ENCONTRADO RESULTADOS</h4>";
 }
 else{     ?>
 
@@ -58,8 +58,15 @@ else{     ?>
 
           
           $row['cancelada']=actualizarHotSale($row['idSubasta']);
+
+          //busco si se vendio
+          $queryC = "SELECT  * FROM comprah WHERE idHotsale='$row[idHotsale]' ";
+          $resultC = mysqli_query($con, $queryC);
+          $numC=mysqli_num_rows($resultC); 
+
+
                   
-          if($row['cancelada']!=1){
+          if($row['cancelada']!=1 && $numC==0){
                       
               $auxiliar=false;
              
@@ -85,7 +92,7 @@ else{     ?>
       </table>         <?php
       
       if ($auxiliar==true){
-          echo"<tr><td><h4>NO SE HAN ENCONTRADO RESULTADOS</h4></td></tr>";
+          echo"<tr><td><h4 style='color:#CE050E'>NO SE HAN ENCONTRADO RESULTADOS</h4></td></tr>";
       }
 }  
 mysqli_free_result($result);

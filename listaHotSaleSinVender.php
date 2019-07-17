@@ -30,7 +30,7 @@ $result = mysqli_query($con, $query);
 $num=mysqli_num_rows($result); 
 
 if ($num==0) {
-    echo"<h4>NO SE HAN ENCONTRADO RESULTADOS</h4>";
+    echo"<h4 style='color:#CE050E'>NO SE HAN ENCONTRADO RESULTADOS</h4>";
 }
 else{     ?>
 
@@ -85,7 +85,7 @@ else{     ?>
       </table>         <?php
       
       if ($auxiliar==true){
-          echo"<tr><td><h4>NO SE HAN ENCONTRADO RESULTADOS</h4></td></tr>";
+          echo"<tr><td><h4 style='color:#CE050E'>NO SE HAN ENCONTRADO RESULTADOS</h4></td></tr>";
       }
 }  
 mysqli_free_result($result);

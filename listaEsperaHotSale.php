@@ -52,7 +52,7 @@ $result = mysqli_query($con, $query);
 $num=mysqli_num_rows($result); 
 if ($num==0) {
   echo"<h4 style='color:#FF7516'>El proximo Hot Sale sera el $fechaH </h4>";
-  echo"<h4>NO SE HAN ENCONTRADO SEMANAS EN ESPERA</h4>";
+  echo"<h4 style='color:#CE050E'>NO SE HAN ENCONTRADO SEMANAS EN ESPERA</h4>";
 }
 else{     ?>
 
@@ -97,7 +97,12 @@ else{     ?>
              $numG=mysqli_num_rows($resultG); 
 
 
-             if(($row['activa']==1)&&($row['cerrada']==1)&&($numG==0)){  // terminada sin ganador
+             $queryP = "SELECT * FROM comprap WHERE IdSubasta = '$row[idSubasta]'";
+             $resultP = mysqli_query($con, $queryP);
+             $numP=mysqli_num_rows($resultP); 
+
+
+             if(($row['activa']==1)&&($row['cerrada']==1)&&($numG==0)&&($numP==0)){  // terminada sin ganador
 
               $valor=actualizarHotSale($row['idSubasta']);
               $row['cancelada']=$valor;
@@ -153,7 +158,7 @@ else{     ?>
       <?php
  
       if ($auxiliar==true){
-          echo"<tr><td><h4>NO SE HAN ENCONTRADO SEMANAS EN ESPERA</h4></td></tr>";
+          echo"<tr><td><h4 style='color:#CE050E'>NO SE HAN ENCONTRADO SEMANAS EN ESPERA</h4></td></tr>";
        } 
        else{  ?>
         <input type="submit" value="Aceptar">

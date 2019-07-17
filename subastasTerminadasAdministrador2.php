@@ -65,15 +65,17 @@ else{
           $auxiliar=false; 
        //-------------------------------------------------------------------------------------------
          //OBTENGO PUJA GANADORA 
-       $pujaMaxima= "--";
+       $pujaMaxima= "-";
        $pujaMaximaPersona="";
        $mailPer="NO HUBO GANADOR";
         
            $var_consulta4= "SELECT * FROM ganador inner join puja on ganador.idPuja=puja.idPuja WHERE ganador.idSubasta=$row[idSubasta]";
             $result4 = mysqli_query($con, $var_consulta4);
             $numG = mysqli_num_rows($result4);
-         
+            $col=0;
             if($numG!=0){
+
+              $col=1;
 
               //OBTENGO EL MONTO MAXIMO DE PUJA Y QUIEN LO HIZO (GANADOR)
               $row4 = mysqli_fetch_array($result4);
@@ -95,6 +97,7 @@ else{
                 $resultPremium = mysqli_query($con, $consulPremium);
                  $numPremium = mysqli_num_rows($resultPremium);
                  if ($numPremium!=0){
+                  $col=2;
                   $rowPremium = mysqli_fetch_array($resultPremium);
 
                 $consuPers="SELECT email FROM persona WHERE idPersona=$rowPremium[idPersona]";
@@ -126,7 +129,7 @@ else{
 
        <?php     //SI LA PROPIEDAD DE LA SEMANA ESTA ELIMINADA
        if (($row['cancelada']==1 or $row['eliminada']==1) && $mailPer=="NO HUBO GANADOR" && $row['enhotsale']!=1) {
-         echo"<td></td><td>ELIMINADA</td><td></td>";
+         echo"<td></td><td style='color:#FE0813'>ELIMINADA</td><td></td>";
        }
        else{
           if($row['cancelada']==1 && $row['enhotsale']==1){  
@@ -138,7 +141,7 @@ else{
 
              if($nHS==0){   //no entro al hot sale      
               ?>
-                <td></td>
+                <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
                <td><h4><?php echo "$mailPer" ?></h4></td>
                <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
                <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ; 
@@ -146,7 +149,7 @@ else{
              }
              else{  //entro al hot sale y no se vendio
               ?>
-              <td></td>
+              <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
                <td><h4><?php echo "NO SE VENDIO EN EL HOT SALE" ?></h4></td>
             <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
             <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;
@@ -158,7 +161,7 @@ else{
             if($row['enhotsale']==1 && $row['cancelada']!=1){ // esta en hot sale
 
               //busco si se vendi en hot sale
-             $cCHS= "SELECT * FROM comprah c INNER JOIN hotsale h ON c.idHotsale=h.idHotsale WHERE h.idSubasta=$row[idSubasta]";
+             $cCHS= "SELECT * FROM comprah c INNER JOIN hotsale h ON c.idHotsale=h.idHotsale INNER JOIN persona p ON c.idPersona=p.IdPersona WHERE h.idSubasta=$row[idSubasta]";
              $rCHS = mysqli_query($con, $cCHS);
              $nCHS = mysqli_num_rows($rCHS);
 
@@ -166,25 +169,38 @@ else{
              if($nCHS==1){  //se vendio en hot sale    
              $rowCHS= mysqli_fetch_array($rCHS);   ?>
               <td><h4><?php echo "$ $rowCHS[precio]" ?></h4></td>
-               <td><h4><?php echo "VENDIDA EN EL HOT SALE" ?></h4></td>
+               <td><h4 style='color:#FF7516'><?php echo "$rowCHS[email]" ?></h4></td>
                <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
                <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;
              }
              else{ //aun no se vendio       ?>
               <td></td>
-               <td><h4><?php echo "PUBLICADA EN HOT SALE" ?></h4></td>
+               <td><h4 style='color:#FF7516'><?php echo "PUBLICADA EN HOT SALE" ?></h4></td>
                <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
                <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;
              }
 
             }
-            else{     ?>
+            else{ 
+              if($mailPer=="NO HUBO GANADOR"){    ?>
               <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
                <td><h4><?php echo "$mailPer" ?></h4></td>
               <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
              <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;
             }
-          } ?>
+            else{     ?>
+              <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
+                <?php if($col == 1){    ?>
+               <td><h4 style='color:#1BAB01'><?php echo "$mailPer" ?></h4></td>  <?php
+             } 
+             if($col==2){ ?>
+               <td><h4 style='color:#0223AF'><?php echo "$mailPer" ?></h4></td>  <?php
+
+             } ?>
+              <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
+             <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;
+            }}
+          }?>
             
             <td><?php //echo "<a href='eliminar_subasta.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>Eliminar subasta</button> </a></br>" ;
        }?>

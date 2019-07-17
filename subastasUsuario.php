@@ -21,8 +21,8 @@ catch(Exception $e){
 $con=conectar();
 
 
-$query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.fechaInicioSubasta, 
-su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.idSemana, su.year, su.cancelada
+$query = "SELECT su.idSubasta, p.idPropiedad, p.titulo,p.localidad ,su.precioMinimo, su.preciopremium, su.fechaInicioSubasta, su.fechaFinSubasta,
+su.fechaInicioInscripcion, su.fechaFinInscripcion, su.activa, su.cerrada, su.idSemana, su.year, su.cancelada, p.eliminada
           FROM propiedad p INNER JOIN subasta su ON p.idPropiedad=su.idPropiedad WHERE su.cancelada!=1";
             $result = mysqli_query($con, $query);
             $num=mysqli_num_rows($result); 
@@ -222,11 +222,12 @@ if ($fin>$nuevafecha){
              $consultaPremium= "SELECT * FROM persona WHERE idPersona='$id'";
              $resuPremium = mysqli_query($con,  $consultaPremium);
              $rowPre= mysqli_fetch_array($resuPremium);
+             
              if ($rowPre['tipoU']=="premium"&& $rowPre['credito']>0 ){
               //----------------------------------------------------------------------------- BOTON COMPRAR PREMIUM ---------------------
               
-                  echo "<a  href='comprarPremium.php'> <button type='button' class='btn btn-succes'>COMPRAR</button> </a>";}
-                 
+                   echo"<a href='pagarSemana.php?sub=$row[idSubasta]&monto=$row[preciopremium]&ganador=$id&tipo=premium'><button class='btn btn-success' type='button' >COMPRAR</button></a>";
+                  }
                     echo "<a  href='detalle.php?prop=$row[idPropiedad]&busqueda=0&semanas=".serialize(0)."'> <button type='button' class='btn btn-succes'>Detalle propiedad</button> </a>";
                  
                

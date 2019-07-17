@@ -148,11 +148,25 @@ else{
 
              }
              else{  //entro al hot sale y no se vendio
-              ?>
+              //busco si se vendio en el hot sale pasado
+              $cCHS= "SELECT * FROM comprah c INNER JOIN hotsale h ON c.idHotsale=h.idHotsale INNER JOIN persona p ON c.idPersona=p.IdPersona WHERE h.idSubasta=$row[idSubasta]";
+             $rCHS = mysqli_query($con, $cCHS);
+             $nCHS = mysqli_num_rows($rCHS);
+
+             if($nCHS==0){
+                 ?>
               <td><h4><?php echo "$"."$pujaMaxima" ?></h4></td>
                <td><h4><?php echo "NO SE VENDIO EN EL HOT SALE" ?></h4></td>
             <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
+            <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;   
+              }
+              else{
+              $rowCHS= mysqli_fetch_array($rCHS);    ?>
+                <td><h4><?php echo "$"."$rowCHS[monto]" ?></h4></td>
+               <td><h4 style='color:#FF7516'><?php echo "$rowCHS[email]" ?></h4></td>
+            <td><?php echo "<a href='listaPujas.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>PUJAS</button> </a></br>" ;?> 
             <td><?php echo "<a href='inscriptos.php?sub=".$row['idSubasta']."'> <button type='button' class='btn btn-succes'>INSCRIPTOS</button> </a></br>" ;
+              }
 
              }
 

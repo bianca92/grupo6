@@ -287,7 +287,7 @@ $consulWinner= "SELECT * FROM ganador WHERE idSubasta=$row[idSubasta]";
               $val=$row['idSubasta'];          
                   }
 
-         if ($numP>0 && $rowP['idPersona']!=$id){$winnerMsj="Un usuario premium ha comprado esta semana.";}
+         if ($numP>0 && $rowP['idPersona']!=$id){$winnerMsj="Un usuario premium ha comprado esta semana."; $pujaMaxima="-";}
 
             } ?>
 

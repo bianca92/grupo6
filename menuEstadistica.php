@@ -25,6 +25,7 @@
      
         <li><a href="gananciasMensuales.php?ver='premium'">PREMIUM</a></li>
         <li><a href="gananciasMensuales.php?ver='clasico'">CLASICO</a></li>
+         <li><a href="pujasPorPropiedad.php">Cantidad de pujas por propiedad</a></li>
        
        
       </ul>

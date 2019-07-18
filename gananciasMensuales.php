@@ -59,7 +59,7 @@ th { text-align:center ;
 }
  
 tr, td{ text-align:center ;
-    border: 1px solid rgb(66, 159, 202);
+    border: 1px solid rgb(66, 159, 202); 
     border-radius: 5px;
 }
 </style>

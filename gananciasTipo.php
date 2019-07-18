@@ -62,7 +62,7 @@ $arrayp = array(); $arrayh = array(); $arrays = array();
      $arrayp[$i]= 0;
      $arrayh[$i]= 0;
      $arrays[$i]= 0;}
-     var_dump($arrayp);
+     
  
       //PREMIUM
         

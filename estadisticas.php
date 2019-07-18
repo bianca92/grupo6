@@ -107,26 +107,7 @@ FROM(SELECT s.idPropiedad,c.monto, c.fecha, p.titulo, p.localidad FROM comprap a
              
              </tbody>
             </table> 
-            <h1></h1> <h1></h1>
-            <table>
-            <thead>
-                <tr>
-                  <h4 style="font-family: sans-serif;">CANTIDAD DE PUJAS POR PROPIEDAD</h4>
-                    <th>RESIDENCIA</th>
-                    <th>CANTIDAD</th>
-                    <th>VENTAS</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-              <?php while ($rowP = mysqli_fetch_array($resultp, MYSQLI_ASSOC)) { ?>
-                 </tr><td><?php echo $rowP['titulo']." ".$rowP['localidad']; ?></td>
-              <td><?php echo $rowP['pujas']; ?></td>
-              <td><?php echo "$ ".$rowP['total'];?></td></tr>
-             <?php } ?>
-             
-             </tbody>
-            </table> 
+            
 
     </div>  
   </div> 

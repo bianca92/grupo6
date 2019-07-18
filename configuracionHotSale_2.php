@@ -73,6 +73,20 @@ if($cant!=0){
       $var_consultaA="UPDATE subasta SET cancelada='0' , enhotsale='0'WHERE idSubasta='$row[idSubasta]' ";
       $var_resultadoA = $link->query($var_consultaA);
     }
+    else{
+      //calculo la semana subastada
+      $week_start = new DateTime();
+      $week_start->setISODate((int)$row['year'],(int)$row['idSemana']);
+      $fechaSubasta= $week_start->format('Y-m-d');
+      //le resto las semanas
+      $fechaAntes=date('Y-m-d',strtotime($fechaSubasta."- 2 week"));
+
+      if($fechaFin<=$fechaAntes){ //sipuede entrar en la proxima subasta que la saque de cancelada
+        $var_consulta="UPDATE subasta SET cancelada='0' WHERE idSubasta='$row[idSubasta]' ";
+         $var_resultado = $link->query($var_consulta);
+      }
+
+    }
   }
 }
 

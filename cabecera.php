@@ -233,8 +233,7 @@
       }
       else{ // ES USUARIO, que le muestre si esta en fecha EL HOT SALE  --------------------------------------------------------------------
         ?>
-        <li><a href="comprasHotSaleUsuario.php" >COMPRAS HOT SALE</a>   <?php
-
+      	<li><a href="comprasHotSaleUsuario.php" >COMPRAS HOT SALE</a> 	<?php
         $fecha_actual=date('Y-m-d');
         //fecha de hotsale
          $consultaHotSale="SELECT * FROM config_hotsale";

@@ -140,7 +140,7 @@ tr, td{ text-align:center ;
         $(function () {
             var colors = Highcharts.getOptions().colors,
             categories = [<?php for($y=0; $y<=$c-1; $y++){ echo "'".$meses[$y]."',";}?>    ],
-            name = 'Meses',
+            name = 'ventas por ',
             data = [
             <?php for($x=0;$x<=$c-1;$x++){ ?>    
             {
